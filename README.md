@@ -42,3 +42,12 @@ And run this command
 
 ```bash
 pip install -r requirements.txt
+```
+### Feedback
+
+We'd love to hear your feedback on how the project is going, so feel free to complete GitHub issues for anything you'd like to suggest or any bugs/issues you have.
+<div align="left">
+  <a href="https://github.com/amberjayne07/HelpMe/issues"><img width="186" height="39.6" alt="Default+IcnBtn" src="https://github.com/user-attachments/assets/f8c0ff80-a574-4ad6-a685-5cfc1f36c174" /></a>
+</div>
+
+
