@@ -19,9 +19,13 @@ This is a work-in-progress project and will be continuously developed. If you ha
 * **Moderation**: Admin tools to remove content that isn't suitable for the platform.
 * **Notifications**: See how your posts are getting on with your personalised feed, and take action without leaving it!
 
+### Technologies
+* We're using Django & Python, in addition to JavaScript, JQuery and AJAX throughout this project
+* We are also using the CSS Framework of INSERT CSS FRAMEWORK HERE with the INSERT UI LAYER HERE on top for greater user experience.
+
 ### Contributing
 
-Please check our [documentation](https://duckduckgo.com) for information on the requirements we are trying to meet at high level. Pull requests will not be accepted if they sit outside of these requirements. 
+Please check our [documentation](https://github.com/amberjayne07/HelpMe/blob/main/DOCS/reqs.md) for information on the requirements we are trying to meet at high level. Pull requests will not be accepted if they sit outside of these requirements. 
 
 First, clone the GitHub repo, either using your favourite UI based tool, or through the terminal:
 
