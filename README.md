@@ -23,6 +23,11 @@ This is a work-in-progress project and will be continuously developed. If you ha
 * We're using Django & Python, in addition to JavaScript, JQuery and AJAX throughout this project
 * We are also using the CSS Framework of INSERT CSS FRAMEWORK HERE with the INSERT UI LAYER HERE on top for greater user experience.
 
+> [!NOTE]  
+> Due to our CSS Framework used, we will be using specific versions of Django and Python. Do not use versions lower than these when contributing to the repository
+> * Django: ** Version 6.0.3
+> * Python: ** Version 3.12
+
 ### Contributing
 
 Please check our [documentation](https://github.com/amberjayne07/HelpMe/blob/main/DOCS/reqs.md) for information on the requirements we are trying to meet at high level. Pull requests will not be accepted if they sit outside of these requirements. 
@@ -47,7 +52,7 @@ pip install -r requirements.txt
 
 We'd love to hear your feedback on how the project is going, so feel free to complete GitHub issues for anything you'd like to suggest or any bugs/issues you have.
 <div align="left">
-  <a href="https://github.com/amberjayne07/HelpMe/issues"><img width="186" height="39.6" alt="Default+IcnBtn" src="https://github.com/user-attachments/assets/f8c0ff80-a574-4ad6-a685-5cfc1f36c174" /></a>
+  <a href="https://github.com/amberjayne07/HelpMe/issues/new"><img width="186" height="39.6" alt="Default+IcnBtn" src="https://github.com/user-attachments/assets/f8c0ff80-a574-4ad6-a685-5cfc1f36c174" /></a>
 </div>
 
 
