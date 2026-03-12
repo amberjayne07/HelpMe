@@ -21,12 +21,12 @@ This is a work-in-progress project and will be continuously developed. If you ha
 
 ### Technologies
 * We're using Django & Python, in addition to JavaScript, JQuery and AJAX throughout this project
-* We are also using the CSS Framework of INSERT CSS FRAMEWORK HERE with the INSERT UI LAYER HERE on top for greater user experience.
+* We are also using the Tailwind CSS framework with the Shadcn UI layer on top for greater user experience. Notably, we'll be using a fork of Shadcn known as <b>shadcn-django</b> for better utility in our codebase. You can find this fork [here](https://shadcn-django.com)
 
 > [!NOTE]  
 > Due to our CSS Framework used, we will be using specific versions of Django and Python. Do not use versions lower than these when contributing to the repository
-> * Django: ** Version 6.0.3
-> * Python: ** Version 3.12
+> * Django: Version 6.0.3
+> * Python: Version 3.12
 
 ### Contributing
 
