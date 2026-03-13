@@ -32,7 +32,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=30, unique=True)
     email = models.EmailField(unique=True)
     dateOfBirth = models.DateField()
-    picture = models.ImageField(upload_to='user_pics/')
+    picture = models.ImageField(upload_to='profilepics/')
     joinDate = models.DateField(auto_now_add=True)
     passwordHint = models.CharField(max_length=100)
 
@@ -84,7 +84,6 @@ class Question(models.Model):
 
 class Comment(models.Model):
     commentID = models.UUIDField(primary_key=True)
-    #there is a one to one relationship between comment and notification
     username = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
     postedDate = models.DateTimeField(auto_now_add=True)
@@ -114,7 +113,6 @@ class Notification(models.Model):
 
 
 class Poll(models.Model):
-    #one to one relationship between question and poll
     pollID = models.UUIDField(primary_key=True)
     questionID = models.OneToOneField(Question, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, blank=True)

@@ -101,7 +101,7 @@ def populate():
             'full_name': 'User One',
             'email': 'user1@example.com',
             'date_of_birth': '1990-01-01',
-            'picture': 'default.png',
+            'picture': 'profilepics/default.png',
             'password_hint': 'My first pet'
         },
         'user2': {
@@ -110,7 +110,7 @@ def populate():
             'full_name': 'User Two',
             'email': 'user2@example.com',
             'date_of_birth': '1990-02-02',
-            'picture': 'default.png',
+            'picture': 'profilepics/default.png',
             'password_hint': 'My favorite color'
         },
         'admin': {
@@ -119,7 +119,7 @@ def populate():
             'full_name': 'Admin User',
             'email': 'admin@example.com',
             'date_of_birth': '1985-05-05',
-            'picture': 'default.png',
+            'picture': 'profilepics/default.png',
             'password_hint': 'Admin hint'
         },
         'limited_user': {
@@ -128,7 +128,7 @@ def populate():
             'full_name': 'Limited User',
             'email': 'limited@example.com',
             'date_of_birth': '1995-03-03',
-            'picture': 'default.png',
+            'picture': 'profilepics/default.png',
             'password_hint': 'Limited access'
         }
     }
