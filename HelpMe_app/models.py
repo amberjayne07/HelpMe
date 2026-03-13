@@ -33,13 +33,13 @@ class Category(models.Model):
     slug = models.SlugField()
 
     def __str__(self):
-        return self.categoryID
+        return self.name
 
 
 class Question(models.Model):
     questionID = models.UUIDField(primary_key=True)
     categoryID = models.ForeignKey(Category, on_delete=models.CASCADE)
-    username = models.CharField(max_length=30)
+    username = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=240)
     description = models.TextField()
     likes = models.PositiveIntegerField(default=0)
@@ -47,8 +47,17 @@ class Question(models.Model):
     lastUpdated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.questionID
+        return self.title
 
+class Comment(models.Model):
+    commentID = models.UUIDField(primary_key=True)
+    #there is a one to one relationship between comment and notification
+    username = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.TextField()
+    postedDate = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.commentID
 
 class Notification(models.Model):
     notificationID = models.UUIDField(primary_key=True)
@@ -65,34 +74,26 @@ class Notification(models.Model):
     ]
     notificationType = models.CharField(max_length=10, choices=NOTIFICATION_TYPES)
     isRead = models.BooleanField(default=False)
+    commentID = models.OneToOneField(Comment, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return self.notificationID
+        return str(self.notificationID)
 
 
 class Poll(models.Model):
+    #one to one relationship between question and poll
     pollID = models.UUIDField(primary_key=True)
-    questionID = models.ForeignKey(Question, on_delete=models.CASCADE)
+    questionID = models.OneToOneField(Question, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, blank=True)
 
     def __str__(self):
         return self.pollID
 
 
-class Comment(models.Model):
-    commentID = models.UUIDField(primary_key=True)
-    username = models.CharField(max_length=30)
-    text = models.TextField()
-    postedDate = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.commentID
-
-
 class PollItem(models.Model):
     pollItemID = models.UUIDField(primary_key=True)
     pollID = models.ForeignKey(Poll, on_delete=models.CASCADE)
-    username = models.CharField(max_length=30)
+    username = models.ForeignKey(User, on_delete=models.CASCADE)
     commentID = models.ForeignKey(Comment, on_delete=models.SET_NULL, null=True, blank=True)
     content = models.CharField(max_length=50)
     
