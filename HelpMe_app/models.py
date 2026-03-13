@@ -23,11 +23,17 @@ class User(AbstractBaseUser):
 
     USERNAME_FIELD = 'username'
 
+    def __str__(self):
+        return self.username
+
 
 class Category(models.Model):
     categoryID = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField()
+
+    def __str__(self):
+        return self.categoryID
 
 
 class Question(models.Model):
@@ -39,6 +45,9 @@ class Question(models.Model):
     likes = models.PositiveIntegerField(default=0)
     datePosted = models.DateTimeField(auto_now_add=True)
     lastUpdated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.questionID
 
 
 class Notification(models.Model):
@@ -57,11 +66,17 @@ class Notification(models.Model):
     notificationType = models.CharField(max_length=10, choices=NOTIFICATION_TYPES)
     isRead = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.notificationID
+
 
 class Poll(models.Model):
     pollID = models.UUIDField(primary_key=True)
     questionID = models.ForeignKey(Question, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, blank=True)
+
+    def __str__(self):
+        return self.pollID
 
 
 class Comment(models.Model):
@@ -69,6 +84,9 @@ class Comment(models.Model):
     username = models.CharField(max_length=30)
     text = models.TextField()
     postedDate = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.commentID
 
 
 class PollItem(models.Model):
@@ -89,3 +107,6 @@ class PollItem(models.Model):
         (DECLINED, 'Declined'),
     ]
     approvalStatus = models.CharField(max_length=10, choices=APPROVAL_CHOICES, default=NEUTRAL)
+
+    def __str__(self):
+        return self.pollItemID
