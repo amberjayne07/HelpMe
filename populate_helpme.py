@@ -195,7 +195,7 @@ def populate():
     for q_data in questions_data:
         question, created = add_question(
             category=categories[q_data['category']],
-            username=q_data['username'],
+            username=users[q_data['username']],
             title=q_data['title'],
             description=q_data['description'],
             likes=q_data['likes']
@@ -211,18 +211,17 @@ def populate():
         ('admin', 'Use semantic HTML and validate your code.')
     ]
     for username, text in comment_data:
-        comment, created = add_comment(username, text)
+        comment, created = add_comment(users[username], text)
         comments.append(comment)
     print(f'- Created {len(comments)} comments')
 
     # Create polls and poll items
     poll1, _ = add_poll(questions[0], 'Best way to learn Python?')
     poll2, _ = add_poll(questions[1], 'Preferred framework?')
-    
-    add_poll_item(poll1, 'admin', 'Official Python Tutorial', comment=comments[0], approval_status='APPROVED')
-    add_poll_item(poll1, 'user1', 'Online courses like Coursera', approval_status='NEUTRAL')
-    add_poll_item(poll2, 'user2', 'Django', comment=comments[1], approval_status='APPROVED')
-    add_poll_item(poll2, 'limited_user', 'Flask', approval_status='DECLINED')
+    add_poll_item(poll1, users['admin'], 'Official Python Tutorial', comment=comments[0], approval_status='APPROVED')
+    add_poll_item(poll1, users['user1'], 'Online courses like Coursera', approval_status='NEUTRAL')
+    add_poll_item(poll2, users['user2'], 'Django', comment=comments[1], approval_status='APPROVED')
+    add_poll_item(poll2, users['limited_user'], 'Flask', approval_status='DECLINED')
     print('- Created 2 polls with 4 poll items')
 
     # Create notifications
@@ -233,7 +232,7 @@ def populate():
         (questions[2], 'admin', 'SUGGESTION', False)
     ]
     for question, username, notif_type, is_read in notification_data:
-        notif, created = add_notification(question, username, notif_type, is_read)
+        notif, created = add_notification(question, users[username], notif_type, is_read)
         notifications.append(notif)
     print(f'- Created {len(notifications)} notifications')
 

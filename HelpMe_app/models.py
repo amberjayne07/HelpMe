@@ -32,7 +32,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=30, unique=True)
     email = models.EmailField(unique=True)
     dateOfBirth = models.DateField()
-    picture = models.ImageField(upload_to='profilepics/')
+    picture = models.ImageField(upload_to='profilepics/',default='profilepics/default.png')
     joinDate = models.DateField(auto_now_add=True)
     passwordHint = models.CharField(max_length=100)
 
