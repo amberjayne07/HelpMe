@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+{% block header_block %}
+
+{% endblock %}
+{% block content_block %}
+    <div class="px-4">
+        <h1 class="text-2xl">Hi there, let's get you <b>registered</b>.</h1>
+        <div class="flex flex-row flex-wrap items-center justify-center gap-8 w-full">
+            <div class="flex-1 min-w-[300px]">
+                <form class='w-2/3 space-y-4'>
+
+                    <c-form.field>
+                        <c-form.label for='email'>Your full name</c-form.label>
+                        <c-input id='email' type='text' placeholder='e.g. John Doe'></c-input>
+                    </c-form.field>
+                    <c-form.field>
+                        <c-form.label for='email'>Date of birth</c-form.label>
+                        <c-input id='email' type='text' placeholder='e.g. 04/07/2005'></c-input>
+                    </c-form.field>
+
+                    <c-form.field>
+                        <c-form.label for='password'>Password</c-form.label>
+                        <c-input id='password' type='password' placeholder='Password'></c-input>
+                    </c-form.field>
+
+                    <c-form.field>
+                        <c-form.label for='password'>Password hint (optional)</c-form.label>
+                        <c-input id='password' type='text' placeholder='Password hint'></c-input>
+                    </c-form.field>
+
+                    <c-form.field>
+                        <c-form.label for='password'>Username</c-form.label>
+                        <c-input id='password' type='text' placeholder='e.g. johndoe123'></c-input>
+                    </c-form.field>
+
+                    <c-form.field>
+                        <c-form.label for='email'>Email address</c-form.label>
+                        <c-input id='email' type='email' placeholder='e.g. johndoe123@email.com'></c-input>
+                    </c-form.field>
+
+
+                    <c-button type='submit'>Finish</c-button>
+                </form>
+            </div>
+            <div class="flex-1 min-w-[300px]">
+                <img src="{% static 'images/helpme_logo.png' %}" alt="helpMe Logo" class="h-auto w-auto p-8">
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

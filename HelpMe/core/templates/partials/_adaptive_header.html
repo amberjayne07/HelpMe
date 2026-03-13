@@ -1,0 +1,26 @@
+{% load static %}
+<div class="flex items-center justify-between">
+    <div class="flex items-center gap-1">
+        <img src="{% static 'images/helpme_logo.png' %}" alt="helpMe Logo" class="h-10 w-auto">
+        <c-button variant="ghost" href="{% url 'helpMe:home' %}">
+            <i data-lucide="home" class="w-5 h-5 mr-2"></i>
+            Home
+        </c-button>
+        <c-button variant="ghost" href="{% url 'helpMe:about' %}">
+            <i data-lucide="info" class="w-5 h-5 mr-2"></i>
+            About
+        </c-button>
+    </div>
+
+    <div class="flex items-center gap-2">
+        {% include "partials/_create_post_form.html" %}
+
+        {% if user.is_authenticated %}
+            <c-button href="{% url 'helpMe:login' %}">Login</c-button>
+            <c-button variant="outline" href="{% url 'helpMe:register' %}">Sign up</c-button>
+        {% else %}
+            {% include "partials/_notification_sheet.html" %}
+            {% include "partials/_account_popover.html" %}
+        {% endif %}
+    </div>
+</div>

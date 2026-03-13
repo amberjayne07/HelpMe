@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+{% block header_block %}
+
+{% endblock %}
+{% block content_block %}
+    <div class="px-4">
+        <h1 class="text-2xl">Hey, let's <b>login</b>.</h1>
+        <div class="flex flex-row flex-wrap items-center justify-center gap-8 w-full">
+            <div class="flex-1 min-w-[300px]">
+                <form class='w-2/3 space-y-4'>
+
+                    <c-form.field>
+                        <c-form.label for='email'>Username or email</c-form.label>
+                        <c-input id='email' type='email' placeholder='Email'></c-input>
+                    </c-form.field>
+
+                    <c-form.field>
+                        <c-form.label for='password'>Password</c-form.label>
+                        <c-input id='password' type='password' placeholder='Password'></c-input>
+                    </c-form.field>
+
+
+                    <span>
+                        <c-button type='submit' variant="link">Forgotten password?</c-button>
+                    </span>
+                    <c-button type='submit'>Sign in</c-button>
+                    <c-button type='register' variant="ghost">Register</c-button>
+                </form>
+            </div>
+            <div class="flex-1 min-w-[300px]">
+                <img src="{% static 'images/helpme_logo.png' %}" alt="helpMe Logo" class="h-auto w-auto p-8">
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

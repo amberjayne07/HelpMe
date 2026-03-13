@@ -1,0 +1,31 @@
+{% load static %}
+
+<c-sheet>
+            <c-sheet.trigger>
+                <c-button variant='ghost' size="icon">
+                    <i data-lucide="bell" class="w-5 h-5"></i>
+                </c-button>
+            </c-sheet.trigger>
+
+            <c-sheet.content
+                    side='right'
+                    class="!inset-y-4 !right-4 !h-[calc(100vh-2rem)] w-[400px] !rounded-3xl border shadow-2xl bg-white p-6 outline-none flex flex-col"
+            >
+                <c-sheet.header>
+                    <c-sheet.title class="text-2xl font-bold">Notifications</c-sheet.title>
+                    <c-sheet.description class="text-slate-500">
+                        Comments show here.
+                    </c-sheet.description>
+                </c-sheet.header>
+
+                <div class="my-6 border-t border-slate-100"></div>
+
+                <div class="flex-grow flex flex-col items-center justify-center text-center space-y-4">
+                    <p class="text-sm text-slate-400">No new notifications yet!</p>
+                </div>
+
+                <div class="mt-auto pt-6">
+                    <c-button variant="ghost" class="w-full rounded-full">Mark all as read</c-button>
+                </div>
+            </c-sheet.content>
+        </c-sheet>

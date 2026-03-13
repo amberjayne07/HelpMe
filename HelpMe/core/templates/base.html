@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HelpMe - {% block title %}{% endblock %}</title>
+
+    <!--Install JQuery, icons, JavaScript access-->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!--Activate Lucinde Icons from wireframes-->
+    <script src="{% static 'js/lucinde_icons.js' %}"></script>
+
+    <!--Use main Shadcn-Django stylesheet-->
+    <link rel="stylesheet" href="{% static 'css/output.css' %}"/>
+
+    <!--Override existing Shadcn-Django with HelpMe custom css.-->
+    <link rel="stylesheet" href="{% static 'css/helpme_overrides.css' %}"/>
+</head>
+
+<body class="min-h-screen flex flex-col m-0 p-0 font-sans">
+    {% block header_block %}
+        <header class="w-full px-6 py-3">
+            {% include "partials/_adaptive_header.html" %}
+        </header>
+    {% endblock %}
+
+    <main class="flex-grow container mx-auto px-4 py-8">
+        {% block content_block %}{% endblock %}
+    </main>
+
+    {% block footer %}
+        <footer class="px-6 py-3">
+            {% include "partials/_site_footer.html" %}
+        </footer>
+    {% endblock %}
+
+    {% block footer_scripts %}
+
+    {% endblock %}
+</body>
+</html>
