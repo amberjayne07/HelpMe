@@ -14,9 +14,23 @@
                     <div id="search_results" class="hidden border-t bg-white text-left">
                         <c-command.list>
                             <c-command.empty>
-                                <body class="justify-center gap-12">
-                                    <c-button variant="link">No results found, post to get answers...</c-button>
-                                </body>
+                                <div class="flex flex-col items-center justify-center py-10 px-4 space-y-4">
+                                    <div class="bg-slate-100 p-3 rounded-full">
+                                        <i data-lucide="search-x" class="w-8 h-8 text-slate-400"></i>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <p class="text-sm font-medium text-slate-900">No results found :(</p>
+                                        <p class="text-xs text-slate-500">Post your question to get the help you need.</p>
+                                    </div>
+
+                                    <c-dialog>
+                                        <c-dialog.trigger class="flex items-center gap-2">
+                                            <i data-lucide="badge-plus" class="w-4 h-4"></i> Add Post
+                                        </c-dialog.trigger>
+                                        {% include "partials/_create_post_form.html" %}
+                                    </c-dialog>
+                                </div>
                             </c-command.empty>
                             <c-command.group heading='Trending'>
                                 <c-command.item value='1'>Test1</c-command.item>

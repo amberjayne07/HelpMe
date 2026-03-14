@@ -1,47 +1,44 @@
 {% load static %}
-<c-dialog>
-    <c-dialog.trigger variant="ghost"><i data-lucide="badge-plus"></i></c-dialog.trigger>
-    <c-dialog.content>
-        <c-dialog.header>
-            <div class="text-3xl">Create <b>post</b>.</div>
-        </c-dialog.header>
-        <c-dialog.description class="columns-2">
-            <form class='w-2/3 space-y-4'>
 
-                <c-form.field>
-                    <c-form.label for='title'>Title</c-form.label>
-                    <c-input id='title' type='text' placeholder='Title'></c-input>
-                    <c-form.description>
-                        This will be your question name.
-                    </c-form.description>
-                </c-form.field>
+<c-dialog.content>
+    <c-dialog.header>
+        <div class="text-3xl">Create <b>post</b>.</div>
+    </c-dialog.header>
+    <c-dialog.description class="columns-2">
+        <form class='w-2/3 space-y-4'>
 
-                <c-form.field>
-                    <c-form.label for='content'>Content</c-form.label>
-                    <c-textarea placeholder='Type your message here.'/>
-                    <div class='items-top flex space-x-2'>
-                        <c-checkbox id='addpoll' class="peer"/>
-                        <div class='grid gap-1.5 leading-none'>
-                            <label
-                                    for='terms'
-                                    class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-                            >
-                                Add a poll
-                            </label>
-                        </div>
+            <c-form.field>
+                <c-form.label for='title'>Title</c-form.label>
+                <c-input id='title' type='text' placeholder='Title'></c-input>
+                <c-form.description>
+                    This will be your question name.
+                </c-form.description>
+            </c-form.field>
+
+            <c-form.field>
+                <c-form.label for='content'>Content</c-form.label>
+                <c-textarea placeholder='Type your message here.'/>
+                <div class='items-top flex space-x-2'>
+                    <c-checkbox id='addpoll' class="peer"/>
+                    <div class='grid gap-1.5 leading-none'>
+                        <label
+                                for='terms'
+                                class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                        >
+                            Add a poll
+                        </label>
                     </div>
-                </c-form.field>
-            </form>
-            <form>
-                    {% include "partials/_create_poll_form.html" %}
-            </form>
+                </div>
+            </c-form.field>
+        </form>
+        <form>
+            {% include "partials/_create_poll_form.html" %}
+        </form>
 
-        </c-dialog.description>
+    </c-dialog.description>
 
-        <div class='flex justify-end gap-2 pt-4'>
-            <c-button variant='outline' @click='hideDialog'>Cancel</c-button>
-            <c-button variant='default'>Upload</c-button>
-        </div>
-    </c-dialog.content>
-</c-dialog>
-
+    <div class='flex justify-end gap-2 pt-4'>
+        <c-button variant='outline' @click='hideDialog'>Cancel</c-button>
+        <c-button variant='default'>Upload</c-button>
+    </div>
+</c-dialog.content>

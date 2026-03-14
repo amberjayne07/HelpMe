@@ -1,26 +1,44 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block title_block %}About{% endblock %}
+
 {% block content_block %}
-    <div class="px-4">
-        {% block heading_block %}<h1 class="text-2xl"><b>About</b> us.</h1>{% endblock %}
-        <div class="flex flex-row flex-wrap items-center justify-center gap-8 w-full py-6">
-            <c-card class="flex-1 min-w-[300px]">
-                <c-card.header>
-                    <c-card.title>We are <b>helpMe</b>.</c-card.title>
-                    <c-card.description>The one place to receive clear concise advice on problems, discuss topics and
-                        vote
-                        on answers.
-                    </c-card.description>
-                </c-card.header>
-                <c-card.footer>
-                    Created for Web Application Systems project. Group B.
-                </c-card.footer>
-            </c-card>
-            <div class="flex-1 min-w-[300px] ">
-                <img src="{% static 'images/helpme_logo.png' %}" alt="helpMe Logo" class="h-auto w-auto p-8">
-            </div>
-        </div>
+<div class="flex flex-col min-h-[calc(100vh-200px)] px-4 max-w-5xl mx-auto">
+
+    <div class="py-4">
+        <h1 class="text-3xl"><b>About</b> us.</h1>
     </div>
 
+    <div class="flex-grow flex flex-col justify-center">
+
+        <div class="flex flex-row flex-wrap items-center justify-center gap-12 w-full py-12">
+
+            <c-card class="flex-1 min-w-[320px] bg-slate-50/50 border-none shadow-none rounded-[40px] p-8">
+                <c-card.header>
+                    <c-card.title class="text-2xl mb-4">We are <b>helpMe.</b></c-card.title>
+                    <c-card.description class="text-base leading-relaxed text-slate-600">
+                        The one place to receive, clear, concise advice on their problems,
+                        discuss topics and vote on answers.
+                    </c-card.description>
+                </c-card.header>
+                <c-card.content class="mt-8 text-sm text-slate-400">
+                    <p>Created for Web Applications Systems Project. Group B.</p>
+                </c-card.content>
+            </c-card>
+
+            <div class="flex-1 min-w-[320px] flex flex-col items-center justify-center text-center">
+                <div class="max-w-[240px] mb-6">
+                    <img src="{% static 'images/helpme_logo.png' %}" alt="helpMe Logo" class="w-full h-auto drop-shadow-sm">
+                </div>
+
+                <div class="space-y-1">
+                    <p class="text-sm font-medium text-slate-800">Version 2026.03.14</p>
+                    <p class="text-xs text-slate-400">© 2026 helpMe</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 {% endblock %}

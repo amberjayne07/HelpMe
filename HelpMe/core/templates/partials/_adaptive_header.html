@@ -1,47 +1,52 @@
 {% load static %}
 
 {% with url_name=request.resolver_match.url_name %}
-<div class="flex items-center justify-between relative z-50">
+    <div class="flex items-center justify-between relative z-50">
 
-    <div class="flex items-center gap-1">
-        <div class="relative h-10 w-auto px-2 flex items-center overflow-hidden">
-            <img src="{% static 'images/helpme_logo.png' %}" alt="helpMe Logo" class="h-full w-auto">
-            <a href="{% url 'HelpMe_app:home' %}" class="absolute inset-0 z-10"></a>
-        </div>
-
-        {% if url_name != 'login' and url_name != 'sign_up' and url_name != 'home' %}
-            <c-button variant="ghost" class="relative overflow-hidden">
-                <i data-lucide="home" class="w-5 h-5 mr-2"></i> Home
+        <div class="flex items-center gap-1">
+            <div class="relative h-10 w-auto px-2 flex items-center overflow-hidden">
+                <img src="{% static 'images/helpme_logo.png' %}" alt="helpMe Logo" class="h-full w-auto">
                 <a href="{% url 'HelpMe_app:home' %}" class="absolute inset-0 z-10"></a>
-            </c-button>
+            </div>
 
-            <c-button variant="ghost" class="relative overflow-hidden">
-                <i data-lucide="info" class="w-5 h-5 mr-2"></i> About
-                <a href="{% url 'HelpMe_app:about_us' %}" class="absolute inset-0 z-10"></a>
-            </c-button>
-        {% endif %}
-    </div>
-
-    <div class="flex items-center gap-2">
-        {% if url_name != 'login' and url_name != 'sign_up' %}
-
-            {% if user.is_authenticated %}
-                {% include "partials/_create_post_form.html" %}
-                {% include "partials/_notification_sheet.html" %}
-                {% include "partials/_account_popover.html" %}
-            {% else %}
-                <c-button class="relative overflow-hidden">
-                    Login
-                    <a href="{% url 'HelpMe_app:login' %}" class="absolute inset-0 z-10"></a>
+            {% if url_name != 'login' and url_name != 'sign_up' and url_name != 'home' %}
+                <c-button variant="{% if url_name == 'home' %}default{% else %}ghost{% endif %}"
+                          class="relative overflow-hidden {% if url_name == 'home' %}!bg-black !text-white !rounded-full{% endif %}">
+                    <i data-lucide="home" class="w-5 h-5 mr-2"></i> Home
+                    <a href="{% url 'HelpMe_app:home' %}" class="absolute inset-0 z-10"></a>
                 </c-button>
 
-                <c-button variant="outline" class="relative overflow-hidden">
-                    Sign up
-                    <a href="{% url 'HelpMe_app:sign_up' %}" class="absolute inset-0 z-10"></a>
+                <c-button variant="{% if url_name == 'about_us' %}default{% else %}ghost{% endif %}"
+                          class="relative overflow-hidden {% if url_name == 'about_us' %}!bg-black !text-white !rounded-full{% endif %}">
+                    <i data-lucide="info" class="w-5 h-5 mr-2"></i> About
+                    <a href="{% url 'HelpMe_app:about_us' %}" class="absolute inset-0 z-10"></a>
                 </c-button>
             {% endif %}
+        </div>
 
-        {% endif %}
+        <div class="flex items-center gap-2">
+            {% if url_name != 'login' and url_name != 'sign_up' %}
+
+                {% if user.is_authenticated %}
+                    <c-dialog>
+                        <c-dialog.trigger variant="ghost"><i data-lucide="badge-plus"></i></c-dialog.trigger>
+                        {% include "partials/_create_post_form.html" %}
+                    </c-dialog>
+                    {% include "partials/_notification_sheet.html" %}
+                    {% include "partials/_account_popover.html" %}
+                {% else %}
+                    <c-button class="relative overflow-hidden">
+                        Login
+                        <a href="{% url 'HelpMe_app:login' %}" class="absolute inset-0 z-10"></a>
+                    </c-button>
+
+                    <c-button variant="outline" class="relative overflow-hidden">
+                        Sign up
+                        <a href="{% url 'HelpMe_app:sign_up' %}" class="absolute inset-0 z-10"></a>
+                    </c-button>
+                {% endif %}
+
+            {% endif %}
+        </div>
     </div>
-</div>
 {% endwith %}
