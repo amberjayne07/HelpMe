@@ -28,7 +28,7 @@
                             <c-form.field>
                                 <c-form.label for='dob'>Date of birth</c-form.label>
                                 <div class="relative">
-                                    <c-input id='dob' type='text' placeholder='DD/MM/YYYY'/>
+                                    <c-input id='dob' type='date' placeholder='DD/MM/YYYY'/>
                                     <i data-lucide="calendar"
                                        class="absolute right-3 top-2.5 w-4 h-4 text-slate-400"></i>
                                 </div>
@@ -59,7 +59,6 @@
                     </div>
                     <c-button type='submit'>
                         <i data-lucide="circle-arrow-right" class="w-4 h-4 mr-2"></i> Finish
-                        <a href="{% url 'HelpMe_app:home' %}" class="absolute inset-0 z-10"></a>
                     </c-button>
                 </form>
             </div>
