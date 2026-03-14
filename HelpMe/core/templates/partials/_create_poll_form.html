@@ -1,23 +1,32 @@
 {% load static %}
 
-<form class='w-2/3 space-y-4'>
-    <div class="text-3xl">Issue <b>poll</b>.</div>
-    <c-input type="radio">Same as issue title</c-input>
-    <c-input type="radio" size="sm">Custom</c-input>
+<div class="space-y-6">
+    <div class="space-y-4">
+        <div class="text-sm font-bold uppercase tracking-wider opacity-40">Poll Question</div>
 
-    <div class="text-shadow-md">Answers</div>
-    <c-form.field>
-        <c-form.label for='content'>Content</c-form.label>
-        <c-textarea placeholder='Type your message here.'/>
-        <div class='items-top flex space-x-2'>
-            <c-checkbox id='terms'/>
-            <div class='grid gap-1.5 leading-none'>
-                <label
-                        for='terms'
-                        class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
-                    Add a poll
-                </label>
+        <div class="space-y-3">
+            <div class="flex items-center space-x-3">
+                <input type="radio" name="poll_title_type" id="same_title" class="w-4 h-4 cursor-pointer" checked>
+                <label for="same_title" class="text-sm cursor-pointer opacity-60">Same as issue title</label>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <input type="radio" name="poll_type" id="custom_title" class="w-4 h-4 cursor-pointer">
+                <label for="custom_title" class="text-sm cursor-pointer opacity-60">Custom question title</label>
             </div>
         </div>
-    </c-form.field>
-</form>
+    </div>
+
+    <div class="space-y-4 pt-4 border-t border-slate-200/40">
+        <div class="text-sm font-bold uppercase tracking-wider opacity-40">Answers</div>
+
+        <div class="space-y-3">
+            <c-input placeholder="Option 1" />
+            <c-input placeholder="Option 2" />
+
+            <c-button variant="outline" size="sm" class="w-full border-dashed opacity-60">
+                <i data-lucide="plus" class="w-3 h-3 mr-2"></i> Add option
+            </c-button>
+        </div>
+    </div>
+</div>

@@ -2,26 +2,38 @@ from http.client import HTTPResponse
 
 from django.shortcuts import render
 
+from HelpMe_app.forms import *
+from HelpMe_app.models import *
+
 
 def home(request):
-    return render(request, 'home.html')
-
+    categories = Category.objects.prefetch_related('question_set').all()
+    return render(request, 'home.html', {'categories': categories})
 
 def post_overview(request):
     return render(request, 'post_overview.html')
 
-
 def about(request):
     return render(request, 'about_us.html')
 
-
 def sign_up(request):
-    return render(request, 'authentication/sign_up.html')
-
+    form = RegistrationForm()
+    return render(request, 'authentication/sign_up.html', {'form': form})
 
 def login(request):
     return render(request, 'authentication/login.html')
 
-
 def my_account(request):
     return render(request, 'authentication/my_account.html')
+
+def test_everything(request):
+    context = {
+        'users': User.objects.all(),
+        'categories': Category.objects.all(),
+        'questions': Question.objects.all(),
+        'comments': Comment.objects.all(),
+        'notifications': Notification.objects.all(),
+        'polls': Poll.objects.all(),
+        'poll_items': PollItem.objects.all(),
+    }
+    return render(request, 'testing_only/test_everything.html', context)

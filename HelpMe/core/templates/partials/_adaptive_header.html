@@ -26,12 +26,12 @@
 
         <div class="flex items-center gap-2">
             {% if url_name != 'login' and url_name != 'sign_up' %}
-
+                <c-dialog>
+                    <c-dialog.trigger variant="ghost"><i data-lucide="badge-plus"></i></c-dialog.trigger>
+                    {% include "partials/_create_post_form.html" %}
+                </c-dialog>
                 {% if user.is_authenticated %}
-                    <c-dialog>
-                        <c-dialog.trigger variant="ghost"><i data-lucide="badge-plus"></i></c-dialog.trigger>
-                        {% include "partials/_create_post_form.html" %}
-                    </c-dialog>
+
                     {% include "partials/_notification_sheet.html" %}
                     {% include "partials/_account_popover.html" %}
                 {% else %}
@@ -50,3 +50,7 @@
         </div>
     </div>
 {% endwith %}
+
+{% block footer_scripts %}
+    <script src="{% static 'js/create_post_poll_toggle.js' %}"></script>
+{% endblock %}

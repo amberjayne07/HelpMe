@@ -1,10 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% load static %}
 
-</body>
-</html>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 text-left">
+    {% for question in category.question_set.all %}
+        <c-card class="flex flex-col border rounded-[24px] p-6 shadow-sm hover:shadow-md transition-shadow">
+
+            <div class="flex-1">
+                <h3 class="text-lg font-bold leading-snug mb-2">
+                    {{ question.title }}
+                </h3>
+                <p class="text-sm opacity-70 line-clamp-3 mb-6">
+                    {{ question.description }}
+                </p>
+            </div>
+
+            <div class="flex items-center justify-between pt-4 border-t">
+                <div class="flex items-center gap-2">
+                    <img src="
+                            {% if 'default.png' in question.username.picture.url %}{% static 'images/profilepic_default_temp.png' %}{% else %}{{ question.username.picture.url }}{% endif %}"
+                         class="w-6 h-6 rounded-full object-cover border"
+                         alt="{{ question.username.username }}">
+                    <span class="text-xs font-semibold">@{{ question.username.username }}</span>
+                </div>
+
+                <div class="flex items-center gap-3 opacity-50">
+                    <div class="flex items-center gap-1">
+                        <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                        <span class="text-xs">12</span></div>
+                    <div class="flex items-center gap-1">
+                        <i data-lucide="heart" class="w-3.5 h-3.5"></i>
+                        <span class="text-xs">{{ question.likes }}</span>
+                    </div>
+                </div>
+            </div>
+
+        </c-card>
+    {% empty %}
+        <div class="col-span-full py-12 text-center opacity-30">
+            <p>No questions found in this category.</p>
+        </div>
+    {% endfor %}
+</div>

@@ -56,7 +56,8 @@
 }
 
 
-/* ANIMATIONS FOR ALL PAGES */
+/* ANIMATIONS */
+/* ALL PAGES */
 /* Before page loads */
 main {
     opacity: 0;
@@ -151,3 +152,37 @@ main {
     filter: blur(45px);
 }
 
+/* Custom scroll and dialog for creating posts */
+.dialog-scroll-window {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    z-index: 50;
+    padding: 2rem 1rem;
+}
+
+/* This is the magic: it centers on desktop if there's room,
+   but stays at the top on mobile so you can scroll down */
+@media (min-width: 768px) {
+    .dialog-scroll-window {
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.post-dialog-wrapper {
+    width: 100%;
+    max-width: 600px; /* Slightly wider default */
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    margin: auto 0; /* Ensures vertical centering when items-center is active */
+}
+
+@media (min-width: 768px) {
+    .post-dialog-wrapper.is-expanded {
+        max-width: 1050px;
+    }
+}

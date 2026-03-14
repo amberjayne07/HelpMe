@@ -1,44 +1,45 @@
 {% load static %}
 
-<c-dialog.content>
-    <c-dialog.header>
-        <div class="text-3xl">Create <b>post</b>.</div>
-    </c-dialog.header>
-    <c-dialog.description class="columns-2">
-        <form class='w-2/3 space-y-4'>
+<c-dialog.content class="c-dialog-content-override [&>button]:hidden">
+    <div x-data="postDialog" x-cloak class="dialog-scroll-window">
+        <div class="post-dialog-wrapper" :class="{ 'is-expanded': showPoll }">
+            <div class="w-full text-left">
+                <h1 class="text-4xl">Create <b>post.</b></h1>
+            </div>
+            <div class="flex flex-col md:flex-row items-start justify-center gap-10">
+                <div class="w-full md:flex-1">
+                    <c-card class="glass-panel p-8 md:p-10 !rounded-[32px] w-full shadow-2xl">
+                        <form class="space-y-6">
+                            <c-form.field>
+                                <c-form.label for="title">Title</c-form.label>
+                                <c-input id="title" placeholder="Title" class="py-6"/>
+                            </c-form.field>
 
-            <c-form.field>
-                <c-form.label for='title'>Title</c-form.label>
-                <c-input id='title' type='text' placeholder='Title'></c-input>
-                <c-form.description>
-                    This will be your question name.
-                </c-form.description>
-            </c-form.field>
+                            <c-form.field>
+                                <c-form.label for="content">Content</c-form.label>
+                                <c-textarea placeholder="Type your message here." class="min-h-[160px]"/>
 
-            <c-form.field>
-                <c-form.label for='content'>Content</c-form.label>
-                <c-textarea placeholder='Type your message here.'/>
-                <div class='items-top flex space-x-2'>
-                    <c-checkbox id='addpoll' class="peer"/>
-                    <div class='grid gap-1.5 leading-none'>
-                        <label
-                                for='terms'
-                                class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-                        >
-                            Add a poll
-                        </label>
-                    </div>
+                                <div class="flex items-center space-x-3 pt-4">
+                                    <c-checkbox id="addpoll" @click="togglePoll"/>
+                                    <label for="addpoll" class="text-sm font-medium cursor-pointer">Add a poll</label>
+                                </div>
+                            </c-form.field>
+
+                            <div class="flex justify-end gap-3 pt-6">
+                                <c-button variant="outline" @click="hideDialog(); reset();">Cancel</c-button>
+                                <c-button variant="default" class="px-8">Upload</c-button>
+                            </div>
+                        </form>
+                    </c-card>
                 </div>
-            </c-form.field>
-        </form>
-        <form>
-            {% include "partials/_create_poll_form.html" %}
-        </form>
-
-    </c-dialog.description>
-
-    <div class='flex justify-end gap-2 pt-4'>
-        <c-button variant='outline' @click='hideDialog'>Cancel</c-button>
-        <c-button variant='default'>Upload</c-button>
+                <div x-show="showPoll" class="w-full md:w-[400px]">
+                    <div class="mb-4 opacity-40 text-xs font-bold uppercase tracking-widest">Poll Settings</div>
+                    <c-card class="glass-panel p-8 md:p-10 !rounded-[32px] w-full bg-white/5 shadow-2xl">
+                        {% include "partials/_create_poll_form.html" %}
+                    </c-card>
+                </div>
+            </div>
+            <div class="h-10 md:hidden"></div>
+        </div>
     </div>
 </c-dialog.content>

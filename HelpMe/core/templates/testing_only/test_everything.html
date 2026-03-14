@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title_block %}Debug{% endblock %}
+
+{% block content_block %}
+<section class="max-w-6xl mx-auto py-12 px-4 space-y-12">
+
+    <div>
+        <h2 class="text-xl font-bold mb-4 border-b">Users ({{ users.count }})</h2>
+        <ul class="space-y-2">
+            {% for user in users %}
+            <li class="text-sm">
+                <strong>{{ user.username }}</strong> | {{ user.email }} | Type: {{ user.type }} | DOB: {{ user.dateOfBirth }}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div>
+        <h2 class="text-xl font-bold mb-4 border-b">Questions ({{ questions.count }})</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {% for q in questions %}
+            <div class="p-4 border rounded">
+                <p class="font-bold">{{ q.title }}</p>
+                <p class="text-xs">By: {{ q.username.username }} in {{ q.categoryID.name }}</p>
+                <p class="text-sm mt-2 italic">"{{ q.description|truncatewords:10 }}"</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div>
+        <h2 class="text-xl font-bold mb-4 border-b">Polls ({{ polls.count }})</h2>
+        {% for poll in polls %}
+        <div class="mb-6">
+            <h3 class="font-semibold">{{ poll.title }} <span class="text-xs font-normal">ID: {{ poll.pollID }}</span></h3>
+            <ul class="ml-6 mt-2 list-disc text-sm">
+                {% for item in poll_items %}
+                    {% if item.pollID == poll %}
+                    <li>{{ item.content }} (Status: {{ item.approvalStatus }} by {{ item.username.username }})</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div>
+        <h2 class="text-xl font-bold mb-4 border-b">Notifications ({{ notifications.count }})</h2>
+        <table class="w-full text-left text-sm">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Type</th>
+                    <th>Read?</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for n in notifications %}
+                <tr>
+                    <td>{{ n.username.username }}</td>
+                    <td>{{ n.notificationType }}</td>
+                    <td>{{ n.isRead|yesno:"YES,NO" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</section>
+{% endblock %}
