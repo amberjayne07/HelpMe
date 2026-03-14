@@ -1,26 +1,47 @@
 {% load static %}
-<div class="flex items-center justify-between">
+
+{% with url_name=request.resolver_match.url_name %}
+<div class="flex items-center justify-between relative z-50">
+
     <div class="flex items-center gap-1">
-        <img src="{% static 'images/helpme_logo.png' %}" alt="helpMe Logo" class="h-10 w-auto">
-        <c-button variant="ghost" href="">
-            <i data-lucide="home" class="w-5 h-5 mr-2"></i>
-            Home
-        </c-button>
-        <c-button variant="ghost" href="">
-            <i data-lucide="info" class="w-5 h-5 mr-2"></i>
-            About
-        </c-button>
+        <div class="relative h-10 w-auto px-2 flex items-center overflow-hidden">
+            <img src="{% static 'images/helpme_logo.png' %}" alt="helpMe Logo" class="h-full w-auto">
+            <a href="{% url 'HelpMe_app:home' %}" class="absolute inset-0 z-10"></a>
+        </div>
+
+        {% if url_name != 'login' and url_name != 'sign_up' and url_name != 'home' %}
+            <c-button variant="ghost" class="relative overflow-hidden">
+                <i data-lucide="home" class="w-5 h-5 mr-2"></i> Home
+                <a href="{% url 'HelpMe_app:home' %}" class="absolute inset-0 z-10"></a>
+            </c-button>
+
+            <c-button variant="ghost" class="relative overflow-hidden">
+                <i data-lucide="info" class="w-5 h-5 mr-2"></i> About
+                <a href="{% url 'HelpMe_app:about_us' %}" class="absolute inset-0 z-10"></a>
+            </c-button>
+        {% endif %}
     </div>
 
     <div class="flex items-center gap-2">
-        {% include "partials/_create_post_form.html" %}
+        {% if url_name != 'login' and url_name != 'sign_up' %}
 
-        {% if user.is_authenticated %}
-            <c-button href="">Login</c-button>
-            <c-button variant="outline" href="">Sign up</c-button>
-        {% else %}
-            {% include "partials/_notification_sheet.html" %}
-            {% include "partials/_account_popover.html" %}
+            {% if user.is_authenticated %}
+                {% include "partials/_create_post_form.html" %}
+                {% include "partials/_notification_sheet.html" %}
+                {% include "partials/_account_popover.html" %}
+            {% else %}
+                <c-button class="relative overflow-hidden">
+                    Login
+                    <a href="{% url 'HelpMe_app:login' %}" class="absolute inset-0 z-10"></a>
+                </c-button>
+
+                <c-button variant="outline" class="relative overflow-hidden">
+                    Sign up
+                    <a href="{% url 'HelpMe_app:sign_up' %}" class="absolute inset-0 z-10"></a>
+                </c-button>
+            {% endif %}
+
         {% endif %}
     </div>
 </div>
+{% endwith %}

@@ -1,11 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
-{% block header_block %}
-
-{% endblock %}
+{% block title_block %}Sign up{% endblock %}
 {% block content_block %}
     <div class="px-4">
-        <h1 class="text-2xl">Hi there, let's get you <b>registered</b>.</h1>
+        {% block heading_block %}<h1 class="text-2xl">Hi there, let's get you <b>registered</b>.</h1>{% endblock %}
         <div class="flex flex-row flex-wrap items-center justify-center gap-8 w-full">
             <div class="flex-1 min-w-[300px]">
                 <form class='w-2/3 space-y-4'>

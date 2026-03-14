@@ -1,18 +1,28 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>HelpMe - {% block title %}{% endblock %}</title>
+    <meta name="author" content="Web Application Systems Group B - Aaron, Amber, Angelo, Iona, Joseph">
+    <title>HelpMe - {% block title_block %}{% endblock %}</title>
 
     <!--Install JQuery, icons, JavaScript access-->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
+    <!--Favicon for web browser.-->
+    <link rel="icon" href="{% static 'images/favicon.png' %}">
+
+
+    <!-- JAVASCRIPT -->
     <!--Activate Lucinde Icons from wireframes-->
     <script src="{% static 'js/lucinde_icons.js' %}"></script>
+    <!--Use animations for every page-->
+    <script defer src="{% static 'js/page_animations.js' %}"></script>
 
+    <!-- CSS -->
     <!--Use main Shadcn-Django stylesheet-->
     <link rel="stylesheet" href="{% static 'css/output.css' %}"/>
 
@@ -32,9 +42,13 @@
     </main>
 
     {% block footer %}
-        <footer class="px-6 py-3">
-            {% include "partials/_site_footer.html" %}
-        </footer>
+        {% with url_name=request.resolver_match.url_name %}
+            {% if url_name != 'about_us' %}
+                <footer class="px-6 py-3">
+                    {% include "partials/_site_footer.html" %}
+                </footer>
+            {% endif %}
+        {% endwith %}
     {% endblock %}
 
     {% block footer_scripts %}

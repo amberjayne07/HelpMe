@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
+{% block title_block %}My account{% endblock %}
 {% block content_block %}
     <div class="px-4">
-        <h1 class="text-2xl">My <b>account</b>.</h1>
+        {% block heading_block %}<h1 class="text-2xl">My <b>account</b>.</h1>{% endblock %}
 
     </div>
 

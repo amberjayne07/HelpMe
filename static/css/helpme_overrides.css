@@ -43,3 +43,17 @@
 [data-radix-collection] [class*="bg-black/80"] {
     backdrop-filter: blur(4px);
 }
+
+
+/* ANIMATIONS FOR ALL PAGES */
+/* Before page loads */
+main {
+    opacity: 0;
+    transform: scale(0.98);
+    transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+}
+
+.page-visible {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+}

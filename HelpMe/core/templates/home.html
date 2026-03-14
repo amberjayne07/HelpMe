@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% block title_block %}Home{% endblock %}
 {% block content_block %}
     <div class="flex flex-col items-center justify-center w-full space-y-12">
 
@@ -13,7 +13,11 @@
                     <c-command.input id="search_input" placeholder='Search for issues or make a new one'/>
                     <div id="search_results" class="hidden border-t bg-white text-left">
                         <c-command.list>
-                            <c-command.empty>No results found.</c-command.empty>
+                            <c-command.empty>
+                                <body class="justify-center gap-12">
+                                    <c-button variant="link">No results found, post to get answers...</c-button>
+                                </body>
+                            </c-command.empty>
                             <c-command.group heading='Trending'>
                                 <c-command.item value='1'>Test1</c-command.item>
                                 <c-command.item value='2'>Test2</c-command.item>
@@ -38,6 +42,7 @@
                     </c-button>
 
                     <c-tabs.list class="bg-muted/50 rounded-full flex items-center p-1">
+                        <!--Foreach in categories goes here-->
                         <c-tabs.trigger value='social' class="rounded-full px-4">Social</c-tabs.trigger>
                         <c-tabs.trigger value='school' class="rounded-full px-4">School</c-tabs.trigger>
                         <c-tabs.trigger value='health' class="rounded-full px-4">Health</c-tabs.trigger>
@@ -55,6 +60,7 @@
                 </div>
 
                 <div class="w-full max-w-5xl text-center">
+                    <!--Foreach in categories goes here-->
                     <c-tabs.content value='social' class="text-muted-foreground animate-in fade-in duration-300">
                         Displaying top Social stuff
                     </c-tabs.content>

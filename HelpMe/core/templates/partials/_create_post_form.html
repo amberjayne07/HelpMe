@@ -4,9 +4,8 @@
     <c-dialog.content>
         <c-dialog.header>
             <div class="text-3xl">Create <b>post</b>.</div>
-            <
         </c-dialog.header>
-        <c-dialog.description>
+        <c-dialog.description class="columns-2">
             <form class='w-2/3 space-y-4'>
 
                 <c-form.field>
@@ -21,7 +20,7 @@
                     <c-form.label for='content'>Content</c-form.label>
                     <c-textarea placeholder='Type your message here.'/>
                     <div class='items-top flex space-x-2'>
-                        <c-checkbox id='terms'/>
+                        <c-checkbox id='addpoll' class="peer"/>
                         <div class='grid gap-1.5 leading-none'>
                             <label
                                     for='terms'
@@ -32,6 +31,9 @@
                         </div>
                     </div>
                 </c-form.field>
+            </form>
+            <form>
+                    {% include "partials/_create_poll_form.html" %}
             </form>
 
         </c-dialog.description>
