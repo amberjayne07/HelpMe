@@ -1,50 +1,72 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block title_block %}Sign up{% endblock %}
+
 {% block content_block %}
-    <div class="px-4">
-        {% block heading_block %}<h1 class="text-2xl">Hi there, let's get you <b>registered</b>.</h1>{% endblock %}
-        <div class="flex flex-row flex-wrap items-center justify-center gap-8 w-full">
-            <div class="flex-1 min-w-[300px]">
-                <form class='w-2/3 space-y-4'>
+    <section class="max-w-6xl mx-auto min-h-[70vh] flex items-center justify-center py-12 px-4 relative z-10">
+        <div class="w-full max-w-[600px]">
+            <h1 class="text-3xl mb-6">Hi there, let's get you <b>registered.</b></h1>
+            <div class="glass-panel p-8 rounded-[32px]">
+                <form class="space-y-6">
+                    <div class="flex flex-col md:flex-row gap-8 items-start">
+                        <div class="flex flex-col items-center justify-center flex-shrink-0 group">
+                            <div class="relative w-24 h-24 rounded-full border border-slate-200 overflow-hidden bg-slate-100 flex items-center justify-center">
+                                <img src="{% static 'images/profilepic_default_temp.png' %}"
+                                     class="w-full h-full object-cover">
+                            </div>
+                            <c-button variant="outline" size="sm" class="mt-3">
+                                <i data-lucide="image-plus" class="w-5 h-5 mr-2"></i>Change picture
+                                <!-- Add add picture logic here :) -->
+                            </c-button>
+                        </div>
+                        <div class="flex-1 w-full space-y-4">
+                            <c-form.field>
+                                <c-form.label for='full_name'>Your full name</c-form.label>
+                                <c-input id='full_name' type='text' placeholder='e.g. John Doe'/>
+                            </c-form.field>
+                            <c-form.field>
+                                <c-form.label for='dob'>Date of birth</c-form.label>
+                                <div class="relative">
+                                    <c-input id='dob' type='text' placeholder='DD/MM/YYYY'/>
+                                    <i data-lucide="calendar"
+                                       class="absolute right-3 top-2.5 w-4 h-4 text-slate-400"></i>
+                                </div>
+                            </c-form.field>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <c-form.field>
+                            <c-form.label for='username'>Username</c-form.label>
+                            <c-input id='username' type='text' placeholder='e.g. johndoe123'/>
+                        </c-form.field>
 
-                    <c-form.field>
-                        <c-form.label for='email'>Your full name</c-form.label>
-                        <c-input id='email' type='text' placeholder='e.g. John Doe'></c-input>
-                    </c-form.field>
-                    <c-form.field>
-                        <c-form.label for='email'>Date of birth</c-form.label>
-                        <c-input id='email' type='text' placeholder='e.g. 04/07/2005'></c-input>
-                    </c-form.field>
+                        <c-form.field>
+                            <c-form.label for='email'>Email address</c-form.label>
+                            <c-input id='email' type='email' placeholder='e.g. johndoe123@email.com'/>
+                        </c-form.field>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <c-form.field>
+                            <c-form.label for='password'>Password</c-form.label>
+                            <c-input id='password' type='password' placeholder='Password'/>
+                        </c-form.field>
 
-                    <c-form.field>
-                        <c-form.label for='password'>Password</c-form.label>
-                        <c-input id='password' type='password' placeholder='Password'></c-input>
-                    </c-form.field>
-
-                    <c-form.field>
-                        <c-form.label for='password'>Password hint (optional)</c-form.label>
-                        <c-input id='password' type='text' placeholder='Password hint'></c-input>
-                    </c-form.field>
-
-                    <c-form.field>
-                        <c-form.label for='password'>Username</c-form.label>
-                        <c-input id='password' type='text' placeholder='e.g. johndoe123'></c-input>
-                    </c-form.field>
-
-                    <c-form.field>
-                        <c-form.label for='email'>Email address</c-form.label>
-                        <c-input id='email' type='email' placeholder='e.g. johndoe123@email.com'></c-input>
-                    </c-form.field>
-
-
-                    <c-button type='submit'>Finish</c-button>
+                        <c-form.field>
+                            <c-form.label for='hint'>Password hint (optional)</c-form.label>
+                            <c-input id='hint' type='text' placeholder='Password hint'/>
+                        </c-form.field>
+                    </div>
+                    <c-button type='submit'>
+                        <i data-lucide="circle-arrow-right" class="w-4 h-4 mr-2"></i> Finish
+                        <a href="{% url 'HelpMe_app:home' %}" class="absolute inset-0 z-10"></a>
+                    </c-button>
                 </form>
             </div>
-            <div class="flex-1 min-w-[300px]">
-                <img src="{% static 'images/helpme_logo.png' %}" alt="helpMe Logo" class="h-auto w-auto p-8">
+            <div class="pt-8 flex items-center justify-left gap-2">
+                <p class="opacity-60">Already have an account?</p>
+                <a href="{% url 'HelpMe_app:login' %}" class="opacity-100 font-semibold hover:underline">Sign in</a>
             </div>
         </div>
-    </div>
-
+    </section>
 {% endblock %}

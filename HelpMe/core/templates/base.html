@@ -1,36 +1,44 @@
 {% load static %}
+{% with url_name=request.resolver_match.url_name %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="author" content="Web Application Systems Group B - Aaron, Amber, Angelo, Iona, Joseph">
+        <title>HelpMe - {% block title_block %}{% endblock %}</title>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="author" content="Web Application Systems Group B - Aaron, Amber, Angelo, Iona, Joseph">
-    <title>HelpMe - {% block title_block %}{% endblock %}</title>
+        <!--Install JQuery, icons, JavaScript access-->
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="https://unpkg.com/lucide@latest"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    <!--Install JQuery, icons, JavaScript access-->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <!--Favicon for web browser.-->
+        <link rel="icon" href="{% static 'images/favicon.png' %}">
 
-    <!--Favicon for web browser.-->
-    <link rel="icon" href="{% static 'images/favicon.png' %}">
+        <!-- Cosmetics, CSS and animations, including JS  -->
+        <!--Use main Shadcn-Django CSS stylesheet-->
+        <link rel="stylesheet" href="{% static 'css/output.css' %}"/>
 
+        <!--Override existing Shadcn-Django with HelpMe custom css.-->
+        <link rel="stylesheet" href="{% static 'css/helpme_overrides.css' %}"/>
 
-    <!-- JAVASCRIPT -->
-    <!--Activate Lucinde Icons from wireframes-->
-    <script src="{% static 'js/lucinde_icons.js' %}"></script>
-    <!--Use animations for every page-->
-    <script defer src="{% static 'js/page_animations.js' %}"></script>
+        <!--Activate Lucide Icons from wireframes-->
+        <script src="{% static 'js/lucide_icons.js' %}"></script>
 
-    <!-- CSS -->
-    <!--Use main Shadcn-Django stylesheet-->
-    <link rel="stylesheet" href="{% static 'css/output.css' %}"/>
+        <!--Use animations for every page-->
+        <script defer src="{% static 'js/cosmetics/page_animations.js' %}"></script>
 
-    <!--Override existing Shadcn-Django with HelpMe custom css.-->
-    <link rel="stylesheet" href="{% static 'css/helpme_overrides.css' %}"/>
-</head>
+        <!--Watch for page glows to stop animations when needed. -->
+        <script src="{% static 'js/cosmetics/page_background_glow_watch.js' %}"></script>
+    </head>
 
-<body class="min-h-screen flex flex-col m-0 p-0 font-sans">
+    <body class="min-h-screen flex flex-col m-0 p-0 font-sans">
+    {% if url_name in GLOW_PAGES %}
+        <div class="background-glow"
+             data-glow-pages="{{ GLOW_PAGES|join:',' }}"
+             data-current-page="{{ url_name }}">
+        </div>
+    {% endif %}
     {% block header_block %}
         <header class="w-full px-6 py-3">
             {% include "partials/_adaptive_header.html" %}
@@ -54,5 +62,6 @@
     {% block footer_scripts %}
 
     {% endblock %}
-</body>
-</html>
+    </body>
+    </html>
+{% endwith %}

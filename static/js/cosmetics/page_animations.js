@@ -30,8 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const isInternal = link.hostname === window.location.hostname;
             const isNotNewTab = link.target !== "_blank";
             const isNotSpecial = !link.hasAttribute('data-no-transition') &&
-                                !link.href.includes('#') &&
-                                link.href !== "javascript:void(0);";
+                !link.href.includes('#') &&
+                link.href !== "javascript:void(0);";
 
             if (isInternal && isNotNewTab && isNotSpecial) {
                 e.preventDefault();

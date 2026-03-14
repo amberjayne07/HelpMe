@@ -1,11 +1,16 @@
-<div class="flex items-center justify-between w-full">
-    <div class="flex items-center gap-4">
-        <div class="font-bold">helpMe</div>
+<section class="w-full">
+    <div class="grid grid-cols-3 items-center w-full">
+        <div class="text-1xl">
+            We're <b>helpMe</b>.
+        </div>
+        <div class="text-center text-sm opacity-40">
+            © 2026 helpMe | Created for Web Applications Systems Project. Group B.
+        </div>
+        <div class="flex justify-end">
+            <c-button variant="link" class="relative overflow-hidden">
+                <i data-lucide="info" class="w-5 h-5 mr-2"></i> About
+                <a href="{% url 'HelpMe_app:about_us' %}" class="absolute inset-0 z-10"></a>
+            </c-button>
+        </div>
     </div>
-    <div class="flex items-center gap-2">
-        <c-button variant="link" class="relative overflow-hidden">
-            <i data-lucide="info" class="w-5 h-5 mr-2"></i> About
-            <a href="{% url 'HelpMe_app:about_us' %}" class="absolute inset-0 z-10"></a>
-        </c-button>
-    </div>
-</div>
+</section>

@@ -64,6 +64,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'HelpMe_app.context_processors.glow_settings',  # Added glow settings to settings for context changing.
             ],
         },
     },
@@ -118,3 +119,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+
+# HelpMe Exclusives for Cosmetics.
+# Pages that should use the glow animation and background extension.
+
+GLOW_PAGES = ['my_account', 'login', 'sign_up', 'about_us']

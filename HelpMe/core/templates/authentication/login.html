@@ -2,34 +2,38 @@
 {% load static %}
 {% block title_block %}Login{% endblock %}
 {% block content_block %}
-    <div class="px-4">
-        {% block heading_block %}<h1 class="text-2xl">Hey, let's <b>login</b>.</h1>{% endblock %}
-        <div class="flex flex-row flex-wrap items-center justify-center gap-8 w-full">
-            <div class="flex-1 min-w-[300px]">
-                <form class='w-2/3 space-y-4'>
-
+    <section
+            class="max-w-6xl mx-auto min-h-[70vh] flex items-center justify-center md:justify-between gap-12 px-4 relative z-10">
+        <div class="w-full max-w-[400px]">
+            <h1 class="text-3xl mb-6">Hey, let's <b>login</b>.</h1>
+            <div class="glass-panel p-8 rounded-[32px]">
+                <form class='space-y-4'>
                     <c-form.field>
                         <c-form.label for='email'>Username or email</c-form.label>
-                        <c-input id='email' type='email' placeholder='Email'></c-input>
+                        <c-input id='email' type='email' placeholder='Email'/>
                     </c-form.field>
-
                     <c-form.field>
                         <c-form.label for='password'>Password</c-form.label>
-                        <c-input id='password' type='password' placeholder='Password'></c-input>
+                        <c-input id='password' type='password' placeholder='Password'/>
                     </c-form.field>
-
-
-                    <span>
-                        <c-button type='submit' variant="link">Forgotten password?</c-button>
-                    </span>
-                    <c-button type='submit'>Sign in</c-button>
-                    <c-button type='register' variant="ghost">Register</c-button>
+                    <div class="flex flex-col gap-4 pt-2">
+                        <a href="{% url 'HelpMe_app:login' %}" class="font-semibold hover:underline">Forgotten
+                            password?</a>
+                        <div class="flex items-center gap-3">
+                            <c-button type='submit' class="flex-1">
+                                <i data-lucide="circle-arrow-right" class="w-4 h-4 mr-2"></i> Sign in
+                            </c-button>
+                            <c-button variant="outline" class="flex-1 relative overflow-hidden">
+                                <i data-lucide="key-round" class="w-4 h-4 mr-2"></i> Register
+                                <a href="{% url 'HelpMe_app:sign_up' %}" class="absolute inset-0 z-10"></a>
+                            </c-button>
+                        </div>
+                    </div>
                 </form>
             </div>
-            <div class="flex-1 min-w-[300px]">
-                <img src="{% static 'images/helpme_logo.png' %}" alt="helpMe Logo" class="h-auto w-auto p-8">
-            </div>
         </div>
-    </div>
-
+        <div class="hidden md:block max-w-[600px] w-full">
+            <img src="{% static 'images/login_exp.png' %}" alt="Experience" class="w-full h-auto">
+        </div>
+    </section>
 {% endblock %}
