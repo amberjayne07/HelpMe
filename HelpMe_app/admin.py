@@ -3,6 +3,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.html import format_html
 from .models import User, Category, Question, Notification, Poll, Comment, PollItem
 
+
 class UserAdmin(BaseUserAdmin):
     list_display = ('username', 'email', 'full_name', 'type', 'is_staff')
     list_filter = ('type', 'is_staff', 'is_superuser', 'is_active')
@@ -11,7 +12,8 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         ('Personal', {'fields': ('full_name', 'email', 'dateOfBirth', 'picture', 'passwordHint')}),
-        ('User permissions', {'fields': ('type', 'is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+        ('User permissions',
+         {'fields': ('type', 'is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login', 'joinDate')}),
     )
 
@@ -30,10 +32,12 @@ class UserAdmin(BaseUserAdmin):
     # Create image preview.
     def image_preview(self, obj):
         if obj.picture:
-            return format_html('<img src="{}" style="width: 45px; height: 45px; border-radius: 50%;" />', obj.picture.url)
+            return format_html('<img src="{}" style="width: 45px; height: 45px; border-radius: 50%;" />',
+                               obj.picture.url)
         return "No image found"
 
     image_preview.short_description = 'Preview'
+
 
 # Register models so they appear in the admin site
 admin.site.register(User, UserAdmin)

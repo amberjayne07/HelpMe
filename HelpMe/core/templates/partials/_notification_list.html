@@ -1,0 +1,23 @@
+<div class="{% if is_unread and not read_notifications %}pt-0{% else %}px-4{% endif %} space-y-4 pb-10 overflow-y-auto max-h-[calc(100vh-200px)]">
+    {% for notif in notifications %}
+        <div class="notification-item w-full {% if not is_unread %}opacity-60 grayscale-[0.3]{% endif %}">
+            {% include "partials/_notification_card.html" %}
+        </div>
+    {% empty %}
+        <div class="opacity-60 text-center py-20">
+            <p class="text-md font-semibold">
+                {% if is_unread %}No new notifications.{% else %}No history yet.{% endif %}
+            </p>
+        </div>
+    {% endfor %}
+
+    {% if is_unread and notifications %}
+        <c-button variant="outline" class="w-full font-bold mark-all-btn mb-2">
+            Mark all as read
+        </c-button>
+    {% elif not is_unread and notifications %}
+        <c-button variant="outline" class="w-full text-red-500 hover:bg-red-50 font-bold clear-history-btn mb-2">
+            <i data-lucide="trash-2" class="w-4 h-4 mr-2"></i> Clear history
+        </c-button>
+    {% endif %}
+</div>

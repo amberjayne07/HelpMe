@@ -7,12 +7,9 @@
 {% block content_block %}
     <section id="signing-in" next-url="{{ redirect_url }}"
              class="fixed inset-0 flex items-center justify-center">
-
         <div class="flex flex-col items-center space-y-8 text-center">
-
             <div class="relative w-24 h-24 rounded-full border overflow-hidden opacity-90">
-                <img src="
-                        {% if user.picture %}{{ user.picture.url }}{% else %}{% static 'images/profilepic_default_temp.png' %}{% endif %}"
+                <img src="{% if user.picture %}{{ user.picture.url }}{% else %}{% static 'images/profilepic_default_temp.png' %}{% endif %}"
                      alt="{{ user.username }}"
                      class="w-full h-full object-cover">
             </div>
@@ -28,9 +25,7 @@
         </div>
     </section>
 {% endblock %}
-
 {% block footer_block %}{% endblock %}
-
 {% block footer_scripts %}
     <script defer src="{% static 'js/authentication/redirect_after_auth.js' %}"></script>
 {% endblock %}

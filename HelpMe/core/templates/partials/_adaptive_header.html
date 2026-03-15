@@ -36,7 +36,7 @@
                 <c-dialog>
                     <c-dialog.trigger variant="ghost" class="circle-btn-icononly"><i data-lucide="badge-plus"></i>
                     </c-dialog.trigger>
-                    {% include "partials/_create_post_form.html" %}
+                    <!-- Show form, temporarily removed -->
                 </c-dialog>
                 {% if user.is_authenticated %}
                     {% include "partials/_notification_sheet.html" %}
@@ -57,7 +57,3 @@
         </div>
     </div>
 {% endwith %}
-
-{% block footer_scripts %}
-    <script src="{% static 'js/create_post_poll_toggle.js' %}"></script>
-{% endblock %}

@@ -2,97 +2,100 @@
 {% load static %}
 {% block title_block %}{{ question.title }}{% endblock %}
 {% block content_block %}
-<div class="max-w-4xl mx-auto py-12 px-4 space-y-8">
-    <header class="space-y-4">
-        <h1 class="text-3xl font-bold tracking-tight">
-            {{ question.title }}
-        </h1>
+    <div class="max-w-4xl mx-auto py-12 px-4 space-y-8">
+        <header class="space-y-4">
+            <h1 class="text-3xl font-bold tracking-tight">
+                {{ question.title }}
+            </h1>
 
-        <div class="flex items-center justify-between py-4">
-            <div class="flex items-center gap-3">
-                <img src="{% if 'default.png' in question.username.picture.url %}{% static 'images/profilepic_default_temp.png' %}{% else %}{{ question.username.picture.url }}{% endif %}"
-                     class="w-10 h-10 rounded-full border object-cover"
-                     alt="{{ question.username.username }}">
-                <div>
-                    <p class="font-semibold text-sm">@{{ question.username.username }}</p>
-                    <p class="text-xs">{{ question.datePosted|date:"j F Y" }}</p>
+            <div class="flex items-center justify-between py-4">
+                <div class="flex items-center gap-3">
+                    <img src="
+                            {% if 'default.png' in question.username.picture.url %}{% static 'images/profilepic_default_temp.png' %}{% else %}{{ question.username.picture.url }}{% endif %}"
+                         class="w-10 h-10 rounded-full border object-cover"
+                         alt="{{ question.username.username }}">
+                    <div>
+                        <p class="font-semibold text-sm">@{{ question.username.username }}</p>
+                        <p class="text-xs">{{ question.datePosted|date:"j F Y" }}</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <c-button variant="outline">
+                        <i data-lucide="heart"></i>
+                        <span class="font-medium">{{ question.likes }}</span>
+                    </c-button>
+
                 </div>
             </div>
+        </header>
 
-            <div class="flex items-center gap-2">
-                <c-button variant="outline">
-                    <i data-lucide="heart"></i>
-                    <span class="font-medium">{{ question.likes }}</span>
-                </c-button>
-
+        <div class="bg-white border rounded-2xl p-6 shadow-sm">
+            <div class="prose max-w-none">
+                <p class="text-lg leading-relaxed">
+                    {{ question.description }}
+                </p>
             </div>
         </div>
-    </header>
 
-    <div class="bg-white border rounded-2xl p-6 shadow-sm">
-        <div class="prose max-w-none">
-            <p class="text-lg leading-relaxed">
-                {{ question.description }}
-            </p>
-        </div>
-    </div>
+        {% if question.poll %}
+            <section class="bg-white border rounded-2xl p-6 space-y-4">
+                <div class="flex items-center gap-2 mb-2">
+                    <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
+                    <h2 class="text-xl font-bold">{{ question.poll.title }}</h2>
+                </div>
 
-    {% if question.poll %}
-    <section class="bg-white border rounded-2xl p-6 space-y-4">
-        <div class="flex items-center gap-2 mb-2">
-            <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
-            <h2 class="text-xl font-bold">{{ question.poll.title }}</h2>
-        </div>
+                <div class="grid gap-3">
+                    {% for item in question.poll.pollitem_set.all %}
+                        <button class="flex items-center justify-between w-full p-4 transition-all text-left">
+                            <span class="font-medium">{{ item.content }}</span>
+                            <span class="text-xs">Vote</span>
+                        </button>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
 
-        <div class="grid gap-3">
-            {% for item in question.poll.pollitem_set.all %}
-                <button class="flex items-center justify-between w-full p-4 bg-white border rounded-xl hover:bg-neutral-50 transition-all text-left">
-                    <span class="font-medium">{{ item.content }}</span>
-                    <span class="text-xs">Vote</span>
-                </button>
-            {% endfor %}
-        </div>
-    </section>
-    {% endif %}
+        <section class="space-y-6 pt-6">
+            <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-bold">Comments</h2>
+                <div class="text-sm">Sorted by Newest</div>
+            </div>
 
-    <section class="space-y-6 pt-6">
-        <div class="flex items-center justify-between">
-            <h2 class="text-2xl font-bold">Comments</h2>
-            <div class="text-sm">Sorted by Newest</div>
-        </div>
-
-        <div class="p-4 border rounded-xl">
+            <div class="p-4 border rounded-xl">
             <textarea class="w-full p-3 bg-white border rounded-lg text-sm focus:outline-none"
                       rows="3"
                       placeholder="Write a helpful response..."></textarea>
-            <div class="flex justify-end mt-3">
-                <c-button class="rounded-lg">Post Comment</c-button>
+                <div class="flex justify-end mt-3">
+                    <c-button class="rounded-lg">Post Comment</c-button>
+                </div>
             </div>
-        </div>
 
-        <div class="space-y-4">
-            {% for comment in question.comments.all %}
-                <div class="p-5 bg-white border rounded-xl flex items-start gap-4 shadow-sm">
-                    <img src="{% if 'default.png' in comment.username.picture.url %}{% static 'images/profilepic_default_temp.png' %}{% else %}{{ comment.username.picture.url }}{% endif %}"
-                         class="w-8 h-8 rounded-full border object-cover flex-shrink-0"
-                         alt="{{ comment.username.username }}">
-                    <div class="flex-1">
-                        <div class="flex items-center justify-between mb-1">
-                            <p class="text-xs font-bold">@{{ comment.username.username }}</p>
-                            <p class="text-[10px] uppercase tracking-wider">{{ comment.postedDate|timesince }} ago</p>
+            <div class="space-y-4">
+                {% for comment in question.comments.all %}
+                    <div class="p-5 bg-white border rounded-xl flex items-start gap-4 shadow-sm">
+                        <img src="
+                                {% if 'default.png' in comment.username.picture.url %}{% static 'images/profilepic_default_temp.png' %}{% else %}{{ comment.username.picture.url }}{% endif %}"
+                             class="w-8 h-8 rounded-full border object-cover flex-shrink-0"
+                             alt="{{ comment.username.username }}">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between mb-1">
+                                <p class="text-xs font-bold">@{{ comment.username.username }}</p>
+                                <p class="text-[10px] uppercase tracking-wider">{{ comment.postedDate|timesince }}
+                                    ago</p>
+                            </div>
+                            <p class="text-sm leading-relaxed">
+                                {{ comment.text }}
+                            </p>
                         </div>
-                        <p class="text-sm leading-relaxed">
-                            {{ comment.text }}
-                        </p>
                     </div>
-                </div>
-            {% empty %}
-                <div class="py-12 text-center border-2 border-dashed rounded-xl">
-                    <p>No comments yet. Be the first to help out!</p>
-                </div>
-            {% endfor %}
-        </div>
-    </section>
+                {% empty %}
+                    <div class="py-12 text-center border-2 border-dashed rounded-xl">
+                        <p>No comments yet. Be the first to help out!</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
 
-</div>
+    </div>
 {% endblock %}

@@ -1,0 +1,86 @@
+{% load static %}
+
+<c-card class="glass-panel notification-card relative flex flex-col border rounded-[32px] p-2 shadow-sm hover:shadow-md transition-all duration-200">
+
+    <a href="{% url 'HelpMe_app:post_overview' notif.questionID.questionID %}" class="absolute inset-0 z-0"></a>
+
+    <div class="z-10 flex justify-between items-center pointer-events-none"> <span class="pl-2">
+        {% if notif.notificationType == 'LIKE' %}
+            <i data-lucide="heart" class="w-5 h-5"></i>
+        {% elif notif.notificationType == 'SUGGESTION' %}
+            <i data-lucide="message-circle-plus" class="w-5 h-5"></i>
+        {% else %}
+            <i data-lucide="message-circle-more" class="w-5 h-5"></i>
+        {% endif %}
+    </span>
+
+        <span class="font-semibold">
+        {{ notif.get_notificationType_display }}
+    </span>
+        {% if not notif.isRead %}
+            <c-button
+                    variant="ghost"
+                    type="button"
+                    class="circle-btn-icononly pointer-events-auto relative z-20 dismiss-notif-btn"
+                    size="icon"
+                    title="Remove"
+                    data-id="{{ notif.notificationID }}">
+                <i data-lucide="x"></i>
+            </c-button>
+        {% else %}
+            <c-button
+                    variant="ghost"
+                    class="circle-btn-icononly pointer-events-none relative z-20 opacity-0"
+                    size="icon"
+
+                    title="Remove"
+                    data-id="{{ notif.notificationID }}">
+                <i data-lucide="x"></i>
+            </c-button>
+        {% endif %}
+    </div>
+
+    <div class="z-10 pointer-events-none">
+        <p class="text-[15px] text-center pt-4">
+            <span class="font-extrabold">{{ notif.username.full_name }}</span>
+
+            {% if notif.notificationType == 'LIKE' %}
+                liked your post
+            {% elif notif.notificationType == 'SUGGESTION' %}
+                added a suggestion to
+            {% else %}
+                commented on
+            {% endif %}
+
+            <span class="font-bold">"{{ notif.questionID.title|truncatechars:35 }}"</span>
+        </p>
+
+        {% if notif.commentID %}
+            {% if notif.notificationType == 'SUGGESTION' %}
+                <div class="border-l-4 pl-4 py-1 mt-3">
+                    <p class="text-sm font-bold leading-relaxed">
+                        <!-- Poll items go here -->
+                    </p>
+                </div>
+            {% else %}
+                <p class="text-sm opacity-70 text-center">
+                    "{{ notif.commentID.text|truncatechars:120 }}"
+                </p>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <div class="mb-4"></div>
+
+    {% if notif.notificationType == 'SUGGESTION' %}
+        <div class="flex gap-2 p-2 z-20 mt-auto">
+            <c-button variant="outline" class="flex-1 rounded-2xl h-11">
+                <i data-lucide="thumbs-up"></i>
+            </c-button>
+            <c-button variant="outline" class="flex-1 rounded-2xl h-11">
+                <i data-lucide="thumbs-down"></i>
+            </c-button>
+        </div>
+    {% endif %}
+
+</c-card>

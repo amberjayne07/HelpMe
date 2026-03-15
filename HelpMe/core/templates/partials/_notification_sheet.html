@@ -1,31 +1,57 @@
 {% load static %}
 
 <c-sheet>
-            <c-sheet.trigger>
-                <c-button variant='outline' class="circle-btn-icononly" size="icon">
-                    <i data-lucide="bell" class="w-5 h-5"></i>
-                </c-button>
-            </c-sheet.trigger>
+    <c-sheet.trigger>
+        <c-button variant='outline' class="circle-btn-icononly relative" size="icon" id="notif-trigger-btn">
+            {% if unread_notifications %}
+                <div id="notif-badge"
+                     class="bg-red-500 text-white rounded-full w-7 h-7 flex items-center justify-center text-[16px] font-bold">
+                    {{ unread_notifications|length }}
+                </div>
+                <i data-lucide="bell" id="fallback-bell" class="w-5 h-5 hidden"></i>
+            {% else %}
+                <i data-lucide="bell" class="w-5 h-5"></i>
+            {% endif %}
+        </c-button>
+    </c-sheet.trigger>
 
-            <c-sheet.content
-                    side='right'
-                    class="!inset-y-4 !right-4 !h-[calc(100vh-2rem)] w-[400px] !rounded-3xl border shadow-2xl bg-white p-6 outline-none flex flex-col"
-            >
-                <c-sheet.header>
-                    <c-sheet.title class="text-2xl font-bold">Notifications</c-sheet.title>
-                    <c-sheet.description class="text-slate-500">
-                        Comments show here.
-                    </c-sheet.description>
-                </c-sheet.header>
+    <c-sheet.content side='right'
+                     class="glass-panel !inset-y-2 !right-2 w-112 !rounded-[32px] border shadow-2xl flex flex-col overflow-hidden !h-[calc(100vh-1rem)] !p-0">
 
-                <div class="my-6 border-t border-slate-100"></div>
+        <div class="px-5 pt-6 pb-2 shrink-0">
+            <c-sheet.header>
+                <c-sheet.title class="text-2xl font-bold">Your <b>notifications</b>.</c-sheet.title>
+            </c-sheet.header>
+        </div>
 
-                <div class="flex-grow flex flex-col items-center justify-center text-center space-y-4">
-                    <p class="text-sm text-slate-400">No new notifications yet!</p>
+        {% if read_notifications %}
+            <c-tabs default_value='unread' class="flex-1 flex gap-4 flex-col overflow-hidden">
+                <div class="px-5 pb-2 shrink-0">
+                    <c-tabs.list class="w-full grid grid-cols-2">
+                        <c-tabs.trigger value='unread' class="font-bold">New</c-tabs.trigger>
+                        <c-tabs.trigger value='read' class="font-bold">History</c-tabs.trigger>
+                    </c-tabs.list>
                 </div>
 
-                <div class="mt-auto pt-6">
-                    <c-button variant="ghost" class="w-full rounded-full">Mark all as read</c-button>
-                </div>
-            </c-sheet.content>
-        </c-sheet>
+                <c-tabs.content value='unread' class="flex-1 overflow-hidden">
+                    {% with notifications=unread_notifications is_unread=True %}
+                        {% include "partials/_notification_list.html" %}
+                    {% endwith %}
+                </c-tabs.content>
+
+                <c-tabs.content value='read' class="flex-1 overflow-hidden">
+                    {% with notifications=read_notifications is_unread=False %}
+                        {% include "partials/_notification_list.html" %}
+                    {% endwith %}
+                </c-tabs.content>
+            </c-tabs>
+        {% else %}
+            <div class="flex-1 flex flex-col overflow-hidden">
+                {% with notifications=unread_notifications is_unread=True show_empty_bell=True %}
+                    {% include "partials/_notification_list.html" %}
+                {% endwith %}
+            </div>
+        {% endif %}
+
+    </c-sheet.content>
+</c-sheet>

@@ -15,6 +15,9 @@
         <!--Favicon for web browser.-->
         <link rel="icon" href="{% static 'images/favicon.png' %}">
 
+        <!-- Script for notifications -->
+        <script src="{% static 'js/notifications.js' %}"></script>
+
         <!-- Cosmetics, CSS and animations, including JS  -->
         <!--Use main Shadcn-Django CSS stylesheet-->
         <link rel="stylesheet" href="{% static 'css/output.css' %}"/>
@@ -58,6 +61,8 @@
             {% endif %}
         {% endwith %}
     {% endblock %}
+
+
 
     {% block footer_scripts %}
 

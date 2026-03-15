@@ -21,6 +21,14 @@ urlpatterns = [
     path('test-everything/', views.test_everything, name='test_everything'),
     path('post/<uuid:question_id>/', views.post_overview, name='post_overview'),
 
+    # RESPONDING TO POSTS.
+    path('post/<uuid:question_id>/like/', views.like_question, name='like_question'),
+
+    # NOTIFICATIONS.
+    path('notifications/mark-read/<int:notification_id>/', views.mark_notification_read, name='mark_notification_read'),
+    path('notifications/mark-all-read/', views.mark_all_notifications_read, name='mark_all_notifications_read'),
+    path('notifications/clear-history/', views.clear_notification_history, name='clear_notification_history'),
+
 ]
 
 if settings.DEBUG:

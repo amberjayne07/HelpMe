@@ -65,6 +65,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'HelpMe_app.context_processors.glow_settings',  # Added glow settings to settings for context changing.
+                'HelpMe_app.context_processors.background_notifications',
+                # Added background notifications context, comes in on refresh or change of view.
             ],
         },
     },
@@ -118,7 +120,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Login and logout
 
 AUTH_REDIRECT_URL = 'HelpMe_app:home'
@@ -135,4 +136,4 @@ STATICFILES_DIRS = [
 # HelpMe Exclusives for Cosmetics.
 # Pages that should use the glow animation and background extension.
 
-GLOW_PAGES = ['login', 'sign_up', 'change_password']
+GLOW_PAGES = ['login', 'sign_up', 'change_password', 'my_account']

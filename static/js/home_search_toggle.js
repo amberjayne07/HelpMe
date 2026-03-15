@@ -1,4 +1,4 @@
-// Joseph Beattie - JQuery for Search Bar Focus on Home.
+// Joseph Beattie - JQuery for Search Bar Focus on Home (not currently working, search removed temporarily).
 
 $(document).ready(function() {
     const $searchInput = $('#search_input');

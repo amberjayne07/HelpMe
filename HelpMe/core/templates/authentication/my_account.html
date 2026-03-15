@@ -4,56 +4,80 @@
 {% block title_block %}My Account{% endblock %}
 
 {% block content_block %}
-<section class="max-w-6xl mx-auto py-12 px-4">
-    <div class="w-full max-w-[900px] mx-auto">
-
-        <div class="flex items-end justify-between mb-8">
-            <h1 class="text-3xl">My <b>account</b></h1>
-
-            <div class="flex gap-3">
-                <a href="{% url 'HelpMe_app:change_password' %}">
-                    <c-button variant="outline" size="sm">
-                        <i data-lucide="key-round" class="w-4 h-4 mr-2"></i> Change password
-                    </c-button>
-                </a>
-
-                <form action="{% url 'HelpMe_app:logout' %}" method="post">
-                    {% csrf_token %}
-                    <c-button type="submit" variant="outline" size="sm" class="text-red-500 hover:text-red-600 hover:bg-red-50">
-                        <i data-lucide="log-out" class="w-4 h-4 mr-2 "></i> Sign out
-                    </c-button>
-                </form>
-            </div>
-        </div>
-
-        <div class="glass-panel p-8 rounded-[32px] mb-12">
-            <div class="flex gap-8 items-center">
-                <div class="w-32 h-32 rounded-full border border-slate-100 bg-slate-50 shrink-0 overflow-hidden">
-                    <img src="{{ user.picture.url|default:'/static/images/profilepic_default_temp.png' }}"
-                         class="w-full h-full object-cover">
-                </div>
-
-                <div>
-                    <h2 class="text-xl font-bold">{{ user.full_name }}</h2>
-                    <p class="text-sm opacity-60">
-                        ({{ user.dateOfBirth|date:"d/m/Y"|default:"N/A" }}) |
-                        Member since {{ user.date_joined|date:"F Y"|default:"March 2026" }}
-                    </p>
+    <section class="max-w-6xl mx-auto py-12 px-4">
+        <div class="w-full max-w-[900px] mx-auto">
+            <div class="flex items-end justify-between mb-8">
+                <h1 class="text-3xl">My <b>account</b></h1>
+                <div class="flex gap-3">
+                    <a href="{% url 'HelpMe_app:change_password' %}">
+                        <c-button variant="outline" size="sm">
+                            <i data-lucide="key-round" class="w-4 h-4 mr-2"></i> Change password
+                        </c-button>
+                    </a>
+                    <form action="{% url 'HelpMe_app:logout' %}" method="post">
+                        {% csrf_token %}
+                        <c-button type="submit" variant="outline" size="sm"
+                                  class="text-red-500 hover:text-red-600 hover:bg-red-50">
+                            <i data-lucide="log-out" class="w-4 h-4 mr-2"></i> Sign out
+                        </c-button>
+                    </form>
                 </div>
             </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-10">
-            <div>
-                <p class="opacity-60 mb-4">Recent posts</p>
-                <p class="text-sm opacity-40 italic">No posts yet.</p>
+            <div class="glass-panel p-6 rounded-[32px] mb-12">
+                <div class="flex gap-8 items-center">
+                    <div class="w-32 h-32 rounded-full border shrink-0 overflow-hidden">
+                        <img src="{{ user.picture.url|default:'/static/images/profilepic_default_temp.png' }}"
+                             class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold">{{ user.full_name }}</h2>
+                        <h2 class="text-lg opacity-60">{{ user.username }}</h2>
+                        <p class="text-sm opacity-40 mt-4">
+                            ({{ user.dateOfBirth|date:"d/m/Y"|default:"N/A" }}) |
+                            Member since {{ user.date_joined|date:"F Y"|default:"March 2026" }}
+                        </p>
+                    </div>
+                </div>
             </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
 
-            <div>
-                <p class="opacity-60 mb-4">Unread notifications</p>
-                <p class="text-sm opacity-40 italic">All caught up!</p>
+                <div class="space-y-4">
+                    <p class="opacity-60 font-semibold">Recent posts</p>
+                    <div class="space-y-4">
+                        {% for question in user_posts %}
+                            {% include "partials/_post_card.html" %}
+                        {% empty %}
+                            <p class="text-sm font-semibold opacity-40">No posts yet.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <p class="opacity-60 font-semibold">Unread notifications</p>
+
+                        {% if unread_notifications|length > 5 %}
+                            <a href="#"
+                               class="text-sm font-bold hover:underline opacity-60"
+                               data-trigger-click="notif-trigger-btn">
+                                View all ({{ unread_notifications|length }})
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="space-y-4">
+                        {% for notif in unread_notifications|slice:":5" %}
+                            <div class="notification-item w-full">
+                                {% include "partials/_notification_card.html" %}
+                            </div>
+                        {% empty %}
+                            <p class="text-sm font-semibold opacity-40">No recent notifications.</p>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+{% endblock %}
+
+{% block footer_scripts %}
+    <script src="{% static 'js/overlay_triggers.js' %}"></script>
 {% endblock %}
