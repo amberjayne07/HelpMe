@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% block title_block %}{{ question.title }}{% endblock %}
 {% block content_block %}
 <div class="max-w-4xl mx-auto py-12 px-4 space-y-8">
     <header class="space-y-4">

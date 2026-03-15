@@ -3,7 +3,7 @@
     <c-popover.trigger>
         <button class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 border-slate-200 hover:border-primary transition-all">
             <div class="flex h-full w-full items-center justify-center bg-muted text-sm font-medium">
-                <img src="{{ user.picture.url }}" alt="{{ user.username }}" class="w-full h-full object-cover">
+                <img src="{% if user.picture %}{{ user.picture.url }}{% else %}{% static 'images/profilepic_default_temp.png' %}{% endif %}" alt="{{ user.username }}" class="w-full h-full object-cover">
             </div>
         </button>
     </c-popover.trigger>
@@ -32,7 +32,7 @@
                 </c-button>
 
                 <c-button variant="ghost" class="relative justify-start w-full">
-                    <i data-lucide="key" class="w-4 h-4 mr-2"></i>
+                    <i data-lucide="key-round" class="w-4 h-4 mr-2"></i>
                     <span>Change password</span>
                     <a href="{% url 'HelpMe_app:change_password' %}" class="absolute inset-0"></a>
                 </c-button>
