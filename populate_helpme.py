@@ -51,9 +51,10 @@ def add_question(category, username, title, description, likes=0):
     )
     return q, created
 
-def add_comment(username, text):
+def add_comment(question, username, text):
     """Helper function to create or get a comment"""
     comment, created = Comment.objects.get_or_create(
+        questionID=question,
         username=username,
         text=text,
         defaults={'commentID': uuid.uuid4()}
@@ -206,12 +207,12 @@ def populate():
     # Create comments
     comments = []
     comment_data = [
-        ('user2', 'I recommend starting with the official Python tutorial.'),
-        ('user1', 'Django has more built-in features, Flask is more flexible.'),
-        ('admin', 'Use semantic HTML and validate your code.')
+        (0, 'user2', 'I recommend starting with the official Python tutorial.'),
+        (1, 'user1', 'Django has more built-in features, Flask is more flexible.'),
+        (2, 'admin', 'Use semantic HTML and validate your code.')
     ]
-    for username, text in comment_data:
-        comment, created = add_comment(users[username], text)
+    for questionID, username, text in comment_data:
+        comment, created = add_comment(questions[questionID], users[username], text)
         comments.append(comment)
     print(f'- Created {len(comments)} comments')
 
