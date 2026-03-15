@@ -4,8 +4,15 @@
     <div class="flex items-center justify-between relative z-50">
 
         <div class="flex items-center gap-1">
-            <div class="relative h-10 w-auto px-2 flex items-center overflow-hidden">
-                <img src="{% static 'images/helpme_logo.png' %}" alt="helpMe Logo" class="h-full w-auto">
+            <div class="relative h-10 w-auto flex items-center overflow-hidden">
+                <img src="{% static 'images/helpme_icon_only.png' %}"
+                     alt="helpMe Icon"
+                     class="h-8 w-auto block md:hidden">
+
+                <img src="{% static 'images/helpme_logo.png' %}"
+                     alt="helpMe Logo"
+                     class="h-full w-auto hidden md:block">
+
                 <a href="{% url 'HelpMe_app:home' %}" class="absolute inset-0 z-10"></a>
             </div>
 
@@ -27,7 +34,8 @@
         <div class="flex items-center gap-2">
             {% if url_name != 'login' and url_name != 'sign_up' %}
                 <c-dialog>
-                    <c-dialog.trigger variant="ghost" class="circle-btn-icononly"><i data-lucide="badge-plus"></i></c-dialog.trigger>
+                    <c-dialog.trigger variant="ghost" class="circle-btn-icononly"><i data-lucide="badge-plus"></i>
+                    </c-dialog.trigger>
                     {% include "partials/_create_post_form.html" %}
                 </c-dialog>
                 {% if user.is_authenticated %}
