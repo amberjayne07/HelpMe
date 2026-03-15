@@ -16,7 +16,7 @@
                 <a href="{% url 'HelpMe_app:home' %}" class="absolute inset-0 z-10"></a>
             </div>
 
-            {% if url_name != 'login' and url_name != 'sign_up' and url_name != 'home' %}
+            {% if url_name != 'login' and url_name != 'sign_up' and url_name != 'change_password' and url_name != 'home' %}
                 <c-button variant="{% if url_name == 'home' %}default{% else %}ghost{% endif %}"
                           class="relative overflow-hidden {% if url_name == 'home' %}!bg-black !text-white !rounded-full{% endif %}">
                     <i data-lucide="home" class="w-5 h-5 mr-2"></i> Home
@@ -32,7 +32,7 @@
         </div>
 
         <div class="flex items-center gap-2">
-            {% if url_name != 'login' and url_name != 'sign_up' %}
+            {% if url_name != 'login' and url_name != 'sign_up' and url_name != 'change_password' %}
                 <c-dialog>
                     <c-dialog.trigger variant="ghost" class="circle-btn-icononly"><i data-lucide="badge-plus"></i>
                     </c-dialog.trigger>

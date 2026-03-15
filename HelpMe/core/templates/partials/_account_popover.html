@@ -3,38 +3,49 @@
     <c-popover.trigger>
         <button class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 border-slate-200 hover:border-primary transition-all">
             <div class="flex h-full w-full items-center justify-center bg-muted text-sm font-medium">
-                Test
+                <img src="{{ user.picture.url }}" alt="{{ user.username }}" class="w-full h-full object-cover">
             </div>
         </button>
     </c-popover.trigger>
 
-    <c-popover.content
-            class="fixed-popover w-56 p-4 bg-white shadow-xl rounded-xl border border-slate-200 z-[100]">
-        <div>
-            <div class="space-y-3">
+    <c-popover.content class="fixed-popover p-4 bg-white shadow-xl rounded-xl border border-slate-200 z-[100]">
+        <div class="space-y-3">
+            <div class="space-y-1 text-left">
+                <p class="text-md font-bold leading-none">{{ user.full_name|default:"Unknown User" }}</p>
 
-                <div class="space-y-1 text-left">
-                    <p class="text-sm font-bold leading-none">Account</p>
-                    <p class="text-xs text-muted-foreground">{{ user.username|default:"Guest" }}</p>
+                <div class="flex items-center justify-between gap-4">
+                    <p class="text-sm text-muted-foreground">
+                        {{ user.username|default:"unknown_user_name" }}
+                    </p>
+                    <p class="text-sm text-muted-foreground opacity-60">
+                        {{ user.get_type_display|default:"unknown" }}
+                    </p>
                 </div>
-                <div class="h-px bg-slate-100"></div>
-                <div class="flex flex-col gap-1">
-                    <c-button variant="ghost" size="lg" class="justify-start w-full"
-                              href="{% url 'helpMe:myaccount' %}">
-                        <i data-lucide="user" class="w-4 h-4 mr-2"></i> My account
-                    </c-button>
-                    <hr class="my-1 border-slate-200">
-                    <c-button variant="ghost" size="sm" class="justify-start w-full"
-                              href="{% url 'helpMe:myaccount' %}">
-                        <i data-lucide="key" class="w-4 h-4 mr-2"></i> Change password
-                    </c-button>
-                    <c-button variant="ghost" size="sm"
-                              class="justify-start w-full text-red-500 hover:text-red-600 hover:bg-red-50"
-                              href="{% url 'helpMe:logout' %}">
-                        <i data-lucide="log-out" class="w-4 h-4 mr-2"></i> Sign out
-                    </c-button>
+            </div>
 
-                </div>
+            <div class="flex flex-col gap-1">
+
+                <c-button variant="ghost" class="relative justify-start w-full">
+                    <i data-lucide="user" class="w-4 h-4 mr-2"></i>
+                    <span>My account</span>
+                    <a href="{% url 'HelpMe_app:my_account' %}" class="absolute inset-0"></a>
+                </c-button>
+
+                <c-button variant="ghost" class="relative justify-start w-full">
+                    <i data-lucide="key" class="w-4 h-4 mr-2"></i>
+                    <span>Change password</span>
+                    <a href="{% url 'HelpMe_app:change_password' %}" class="absolute inset-0"></a>
+                </c-button>
+
+                <form action="{% url 'HelpMe_app:logout' %}" method="post" class="w-full">
+                    {% csrf_token %}
+                    <c-button type="submit" variant="ghost"
+                              class="justify-start w-full text-red-500 hover:text-red-600 hover:bg-red-50">
+                        <i data-lucide="log-out" class="w-4 h-4 mr-2"></i>
+                        Sign out
+                    </c-button>
+                </form>
+
             </div>
         </div>
     </c-popover.content>

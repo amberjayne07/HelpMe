@@ -100,6 +100,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Backend added to support email or username for login - why design spec why
+AUTHENTICATION_BACKENDS = [
+    'HelpMe_app.custom_login_backend.UseEmailOrUsername',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 AUTH_USER_MODEL = 'HelpMe_app.User'
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
@@ -112,6 +118,12 @@ USE_I18N = True
 
 USE_TZ = True
 
+
+# Login and logout
+
+AUTH_REDIRECT_URL = 'HelpMe_app:home'
+MY_ACCOUNT_URL = 'HelpMe_app:my_account'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
@@ -123,4 +135,4 @@ STATICFILES_DIRS = [
 # HelpMe Exclusives for Cosmetics.
 # Pages that should use the glow animation and background extension.
 
-GLOW_PAGES = ['my_account', 'login', 'sign_up', 'about_us']
+GLOW_PAGES = ['login', 'sign_up', 'change_password']

@@ -11,24 +11,23 @@
             <div class="glass-panel p-8 rounded-[32px]">
                 <form class="space-y-6" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {% if form.non_field_errors %}
-                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 border border-red-200">
-                            {% for error in form.non_field_errors %}
-                                <p>{{ error }}</p>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+
                     <div class="flex flex-col md:flex-row gap-8 items-start">
                         <div class="flex flex-col items-center justify-center flex-shrink-0 group">
                             <div class="relative w-24 h-24 rounded-full border border-slate-200 overflow-hidden bg-slate-100 flex items-center justify-center">
-                                <img id="profile-preview"
+                                <div id="preview_spinner"
+                                     class="hidden absolute inset-0 flex items-center justify-center bg-slate-100/50 z-10">
+                                    <div class="dual-circle-spinner"></div>
+                                </div>
+
+                                <img id="profile_preview"
                                      src="{% static 'images/profilepic_default_temp.png' %}"
-                                     class="w-full h-full object-cover">
+                                     class="w-full h-full object-cover transition-opacity duration-300">
                             </div>
 
                             <input type="file" name="picture" id="id_picture" class="hidden" accept="image/*">
 
-                            <c-button id="change-pic-btn" variant="outline" size="sm" class="mt-3">
+                            <c-button id="change_pic_btn" type="button" variant="outline" size="sm" class="mt-3">
                                 <i data-lucide="image-plus" class="w-5 h-5 mr-2"></i>Change picture
                             </c-button>
                         </div>
@@ -36,17 +35,24 @@
                         <div class="flex-1 w-full space-y-4">
                             <c-form.field>
                                 <c-form.label for='id_full_name'>Your full name</c-form.label>
-                                <c-input id='id_full_name' name="full_name" type='text' placeholder='e.g. John Doe'
+                                <c-input id='id_full_name'
+                                         name="full_name"
+                                         placeholder="{{ form.full_name.field.widget.attrs.placeholder }}"
                                          value="{{ form.full_name.value|default:'' }}"/>
                             </c-form.field>
+
                             <c-form.field>
                                 <c-form.label for='id_dateOfBirth'>Date of birth</c-form.label>
                                 <div class="relative">
-                                    <c-input id='id_dateOfBirth' name="dateOfBirth" type='date'
+                                    <c-input id='id_dateOfBirth'
+                                             name="dateOfBirth"
+                                             type='date'
                                              value="{{ form.dateOfBirth.value|default:'' }}"/>
-                                    <i data-lucide="calendar"
-                                       class="absolute right-3 top-2.5 w-4 h-4 text-slate-400"></i>
+                                    <i data-lucide="calendar" class="absolute right-3 top-2.5 w-4 h-4 opacity-40"></i>
                                 </div>
+                                {% if form.dateOfBirth.errors %}
+                                    <p class="text-xs mt-1 opacity-60">You need to enter your date of birth.</p>
+                                {% endif %}
                             </c-form.field>
                         </div>
                     </div>
@@ -54,19 +60,23 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <c-form.field>
                             <c-form.label for='id_username'>Username</c-form.label>
-                            <c-input id='id_username' name="username" type='text' placeholder='e.g. johndoe123'
+                            <c-input id='id_username'
+                                     name="username"
+                                     placeholder="{{ form.username.field.widget.attrs.placeholder }}"
                                      value="{{ form.username.value|default:'' }}"/>
                             {% if form.username.errors %}
-                                <p class="text-xs text-red-500 mt-1">{{ form.username.errors.0 }}</p>
+                                <p class="text-xs mt-1 opacity-60">{{ form.username.errors.0 }}</p>
                             {% endif %}
                         </c-form.field>
 
                         <c-form.field>
                             <c-form.label for='id_email'>Email address</c-form.label>
-                            <c-input id='id_email' name="email" type='email' placeholder='e.g. johndoe123@email.com'
+                            <c-input id='id_email'
+                                     name="email"
+                                     placeholder="{{ form.email.field.widget.attrs.placeholder }}"
                                      value="{{ form.email.value|default:'' }}"/>
                             {% if form.email.errors %}
-                                <p class="text-xs text-red-500 mt-1">{{ form.email.errors.0 }}</p>
+                                <p class="text-xs mt-1 opacity-60">{{ form.email.errors.0 }}</p>
                             {% endif %}
                         </c-form.field>
                     </div>
@@ -76,21 +86,34 @@
                             <c-form.label for='id_password1'>Password</c-form.label>
                             <c-input id='id_password1' name="password1" type='password' placeholder='Password'/>
                             {% if form.password1.errors %}
-                                <p class="text-xs text-red-500 mt-1">{{ form.password1.errors.0 }}</p>
+                                <p class="text-xs mt-1 opacity-60">{{ form.password1.errors.0 }}</p>
                             {% endif %}
                         </c-form.field>
 
                         <c-form.field>
-                            <c-form.label for='id_passwordHint'>Password hint (optional)</c-form.label>
-                            <c-input id='id_passwordHint' name="passwordHint" type='text' placeholder='Password hint'
-                                     value="{{ form.passwordHint.value|default:'' }}"/>
+                            <c-form.label for='id_password2'>Confirm Password</c-form.label>
+                            <c-input id='id_password2' name="password2" type='password' placeholder='Confirm Password'/>
+                            {% if form.password2.errors %}
+                                <p class="text-xs mt-1 opacity-60">{{ form.password2.errors.0 }}</p>
+                            {% endif %}
                         </c-form.field>
                     </div>
 
                     <c-form.field>
-                        <c-form.label for='id_password2'>Confirm Password</c-form.label>
-                        <c-input id='id_password2' name="password2" type='password' placeholder='Confirm Password'/>
+                        <c-form.label for='id_passwordHint'>Password hint (optional)</c-form.label>
+                        <c-input id='id_passwordHint'
+                                 name="passwordHint"
+                                 placeholder="{{ form.passwordHint.field.widget.attrs.placeholder }}"
+                                 value="{{ form.passwordHint.value|default:'' }}"/>
                     </c-form.field>
+
+                    {% if form.non_field_errors %}
+                        <div class="p-3 mb-4 text-sm border rounded-lg opacity-80 bg-red-100">
+                            {% for error in form.non_field_errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
 
                     <c-button type='submit'>
                         <i data-lucide="circle-arrow-right" class="w-4 h-4 mr-2"></i> Finish

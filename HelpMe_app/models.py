@@ -30,11 +30,11 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    full_name = models.CharField("Full name", max_length=128)
-    username = models.CharField("Username", max_length=30, unique=True)
+    full_name = models.CharField(max_length=128)
+    username = models.CharField(max_length=30, unique=True)
     email = models.EmailField("Email address", unique=True)
     dateOfBirth = models.DateField("Date of birth (YYYY-MM-DD)")
-    picture = models.ImageField("User picture", upload_to='profilepics/',default='profilepics/default.png')
+    picture = models.ImageField("User picture", upload_to='profilepics/', default='profilepics/default.png')
     joinDate = models.DateField("Join date", auto_now_add=True)
     passwordHint = models.CharField("Password hint", max_length=100)
 
@@ -59,7 +59,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.username
-    
 
 
 class Category(models.Model):
@@ -88,6 +87,7 @@ class Question(models.Model):
     def __str__(self):
         return self.title
 
+
 class Comment(models.Model):
     commentID = models.UUIDField(primary_key=True)
     username = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -98,11 +98,12 @@ class Comment(models.Model):
     def __str__(self):
         return str(self.commentID)
 
+
 class Notification(models.Model):
     notificationID = models.UUIDField(primary_key=True)
     questionID = models.ForeignKey(Question, on_delete=models.CASCADE)
     username = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+
     LIKE = 'LIKE'
     COMMENT = 'COMMENT'
     SUGGESTION = 'SUGGESTION'
@@ -134,7 +135,7 @@ class PollItem(models.Model):
     username = models.ForeignKey(User, on_delete=models.CASCADE)
     commentID = models.ForeignKey(Comment, on_delete=models.SET_NULL, null=True, blank=True)
     content = models.CharField(max_length=50)
-    
+
     CREATOR = 'CREATOR'
     NEUTRAL = 'NEUTRAL'
     APPROVED = 'APPROVED'

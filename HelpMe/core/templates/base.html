@@ -49,7 +49,7 @@
         {% block content_block %}{% endblock %}
     </main>
 
-    {% block footer %}
+    {% block footer_block %}
         {% with url_name=request.resolver_match.url_name %}
             {% if url_name != 'about_us' %}
                 <footer class="px-6 py-3">
