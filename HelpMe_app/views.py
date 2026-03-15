@@ -4,14 +4,16 @@ from django.shortcuts import render
 
 from HelpMe_app.forms import *
 from HelpMe_app.models import *
+from django.shortcuts import get_object_or_404
 
 
 def home(request):
     categories = Category.objects.prefetch_related('question_set').all()
     return render(request, 'home.html', {'categories': categories})
 
-def post_overview(request):
-    return render(request, 'post_overview.html')
+def post_overview(request, question_id):
+    question = get_object_or_404(Question, questionID=question_id)
+    return render(request, 'post_overview.html', {'question': question})
 
 def about(request):
     return render(request, 'about_us.html')

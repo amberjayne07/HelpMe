@@ -48,8 +48,6 @@
                 <c-tabs default_value="{{ categories.0.slug|default:'all' }}" class="w-full flex flex-col items-center">
 
                     <div class="flex flex-wrap items-center justify-center gap-6 w-full mb-12">
-                        <c-button variant="outline" size="sm">All categories</c-button>
-
                         <c-tabs.list class="bg-muted/50 rounded-full flex items-center p-1">
                             {% for category in categories %}
                                 <c-tabs.trigger value="{{ category.slug }}" class="rounded-full px-4">

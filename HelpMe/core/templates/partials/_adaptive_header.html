@@ -27,7 +27,7 @@
         <div class="flex items-center gap-2">
             {% if url_name != 'login' and url_name != 'sign_up' %}
                 <c-dialog>
-                    <c-dialog.trigger variant="ghost"><i data-lucide="badge-plus"></i></c-dialog.trigger>
+                    <c-dialog.trigger variant="ghost" class="circle-btn-icononly"><i data-lucide="badge-plus"></i></c-dialog.trigger>
                     {% include "partials/_create_post_form.html" %}
                 </c-dialog>
                 {% if user.is_authenticated %}

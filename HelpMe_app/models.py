@@ -85,6 +85,7 @@ class Question(models.Model):
 class Comment(models.Model):
     commentID = models.UUIDField(primary_key=True)
     username = models.ForeignKey(User, on_delete=models.CASCADE)
+    questionID = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='comments')
     text = models.TextField()
     postedDate = models.DateTimeField(auto_now_add=True)
 

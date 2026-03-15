@@ -9,7 +9,6 @@ urlpatterns = [
     path('sign-up/', views.sign_up, name='sign_up'),
     path('login/', views.login, name='login'),
     path('my-account/', views.my_account, name='my_account'),
-    path('post-overview/', views.post_overview, name='post_overview'),
-
     path('test-everything/', views.test_everything, name='test_everything'),
+    path('post/<uuid:question_id>/', views.post_overview, name='post_overview'),
 ]
