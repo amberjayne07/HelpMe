@@ -11,6 +11,7 @@
             <div class="flex items-center justify-between py-4">
                 <div class="flex items-center gap-3">
                     <img src="
+
                             {% if 'default.png' in question.username.picture.url %}{% static 'images/profilepic_default_temp.png' %}{% else %}{{ question.username.picture.url }}{% endif %}"
                          class="w-10 h-10 rounded-full border object-cover"
                          alt="{{ question.username.username }}">
@@ -21,11 +22,12 @@
                 </div>
 
                 <div class="flex items-center gap-2">
-                    <c-button variant="outline">
-                        <i data-lucide="heart"></i>
-                        <span class="font-medium">{{ question.likes }}</span>
+                    <c-button variant="outline" class="flex gap-2 items-center">
+                        <i data-lucide="heart"
+                           class="w-4 h-4 {% if user in question.liked_by.all %}fill-red-500 text-red-500{% endif %}">
+                        </i>
+                        <span class="font-medium">{{ question.liked_by.count }}</span>
                     </c-button>
-
                 </div>
             </div>
         </header>
@@ -75,6 +77,7 @@
                 {% for comment in question.comments.all %}
                     <div class="p-5 bg-white border rounded-xl flex items-start gap-4 shadow-sm">
                         <img src="
+
                                 {% if 'default.png' in comment.username.picture.url %}{% static 'images/profilepic_default_temp.png' %}{% else %}{{ comment.username.picture.url }}{% endif %}"
                              class="w-8 h-8 rounded-full border object-cover flex-shrink-0"
                              alt="{{ comment.username.username }}">

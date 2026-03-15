@@ -17,18 +17,18 @@
 
     <div class="flex items-center justify-between pt-4 border-t z-10">
         <div class="flex items-center gap-2">
-            <img src="
-
-                    {% if 'default.png' in question.username.picture.url %}{% static 'images/profilepic_default_temp.png' %}{% else %}{{ question.username.picture.url }}{% endif %}"
+            <img src="{% if 'default.png' in question.username.picture.url %}{% static 'images/profilepic_default_temp.png' %}{% else %}{{ question.username.picture.url }}{% endif %}"
                  class="w-6 h-6 rounded-full object-cover border"
                  alt="{{ question.username.username }}">
             <span class="opacity-60 font-semibold text-xs">{{ question.username.username }}</span>
         </div>
 
-        <div class="flex items-center gap-3">
-            <c-button variant="outline" class="btn-icon relative z-20 h-9 px-3 gap-2">
-                <i data-lucide="heart" class="w-3.5 h-3.5"></i>
-                <span class="text-xs font-medium">{{ question.likes }}</span>
+        <div class="flex items-center gap-2">
+            <c-button variant="outline" class="flex gap-2 items-center">
+                <i data-lucide="heart"
+                   class="w-4 h-4 {% if user in question.liked_by.all %}fill-red-500 text-red-500{% endif %}">
+                </i>
+                <span class="font-medium">{{ question.liked_by.count }}</span>
             </c-button>
         </div>
     </div>

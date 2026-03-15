@@ -4,43 +4,64 @@
 
 {% block content_block %}
     <section class="max-w-6xl mx-auto py-12 px-4 space-y-12">
-
         <div>
             <h2 class="text-xl font-bold mb-4 border-b">Users ({{ users.count }})</h2>
             <ul class="space-y-2">
                 {% for user in users %}
                     <li class="text-sm">
                         <strong>{{ user.username }}</strong> | {{ user.email }} | Type: {{ user.type }} |
-                        DOB: {{ user.dateOfBirth }}
+                        DOB: {{ user.dateOfBirth }} | ID: {{ user.id }}
                     </li>
                 {% endfor %}
             </ul>
         </div>
-
         <div>
             <h2 class="text-xl font-bold mb-4 border-b">Questions ({{ questions.count }})</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {% for q in questions %}
                     <div class="p-4 border rounded">
                         <p class="font-bold">{{ q.title }}</p>
-                        <p class="text-xs">By: {{ q.username.username }} in {{ q.categoryID.name }}</p>
-                        <p class="text-sm mt-2 italic">"{{ q.description|truncatewords:10 }}"</p>
+                        <p class="text-xs">By: {{ q.username.username }} in {{ q.categoryID.name }} | ID: {{ q.questionID }}</p>
+                        <p class="text-sm mt-2 italic">"{{ q.description|truncatewords:15 }}"</p>
+                        <p class="text-xs mt-3 font-bold">
+                            Likes ({{ q.liked_by.count }}):
+                            <span class="font-normal">
+                                {% for liker in q.liked_by.all %}{{ liker.username }}{% if not forloop.last %}, {% endif %}{% empty %}None{% endfor %}
+                            </span>
+                        </p>
                     </div>
                 {% endfor %}
             </div>
         </div>
-
         <div>
-            <h2 class="text-xl font-bold mb-4 border-b">Polls ({{ polls.count }})</h2>
+            <h2 class="text-xl font-bold mb-4 border-b">Comments ({{ comments.count }})</h2>
+            <ul class="space-y-4">
+                {% for comment in comments %}
+                    <li class="text-sm border-l-4 pl-4">
+                        <p><strong>{{ comment.username.username }}</strong> on <strong>{{ comment.questionID.title }}</strong></p>
+                        <p class="opacity-80">"{{ comment.text }}"</p>
+                        <p class="text-[10px] uppercase tracking-wider mt-1">{{ comment.postedDate }} | ID: {{ comment.commentID }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h2 class="text-xl font-bold mb-4 border-b">Polls & Suggestions ({{ polls.count }})</h2>
             {% for poll in polls %}
                 <div class="mb-6">
                     <h3 class="font-semibold">{{ poll.title }} <span
-                            class="text-xs font-normal">ID: {{ poll.pollID }}</span></h3>
-                    <ul class="ml-6 mt-2 list-disc text-sm">
+                            class="text-xs font-normal">ID: {{ poll.pollID }} | Attached to: {{ poll.questionID.title }}</span></h3>
+                    <ul class="ml-6 mt-2 space-y-3 text-sm">
                         {% for item in poll_items %}
                             {% if item.pollID == poll %}
-                                <li>{{ item.content }} (Status: {{ item.approvalStatus }}
-                                    by {{ item.username.username }})
+                                <li class="p-2 border-l-2 border-neutral-200">
+                                    <strong>{{ item.content }}</strong> (Status: {{ item.approvalStatus }})
+                                    <p class="text-xs mt-1 text-neutral-600">
+                                        Linked Comment: <span class="italic">"{{ item.commentID.text|truncatechars:50 }}"</span>
+                                    </p>
+                                    <p class="text-[10px] opacity-60 uppercase mt-1">
+                                        Submitted by: {{ item.username.username }} | Item ID: {{ item.pollItemID }} | Comment ID: {{ item.commentID.commentID|truncatechars:10 }}
+                                    </p>
                                 </li>
                             {% endif %}
                         {% endfor %}
@@ -51,26 +72,39 @@
 
         <div>
             <h2 class="text-xl font-bold mb-4 border-b">Notifications ({{ notifications.count }})</h2>
-            <table class="w-full text-left text-sm">
+            <table class="w-full text-left text-sm border-collapse">
                 <thead>
-                <tr>
-                    <th>User</th>
-                    <th>Type</th>
-                    <th>Read?</th>
+                <tr class="border-b">
+                    <th class="py-2">Recipient</th>
+                    <th class="py-2">Type</th>
+                    <th class="py-2">Read?</th>
+                    <th class="py-2">Linked Comment Context</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for n in notifications %}
-                    <tr>
-                        <td>{{ n.username.username }}</td>
-                        <td>{{ n.notificationType }}</td>
-                        <td>{{ n.isRead|yesno:"YES,NO" }}</td>
+                    <tr class="border-b border-dashed">
+                        <td class="py-2">{{ n.username.username }}</td>
+                        <td class="py-2">{{ n.notificationType }}</td>
+                        <td class="py-2">{{ n.isRead|yesno:"YES,NO" }}</td>
+                        <td class="py-2 text-xs">
+                            {% if n.commentID %}
+                                <span class="font-semibold">Text:</span> "{{ n.commentID.text|truncatechars:30 }}"<br>
+                                <span class="opacity-60">ID: {{ n.commentID.commentID|truncatechars:15 }}</span>
+                            {% else %}
+                                {% if n.notificationType == 'LIKE' %}
+                                    <span class="opacity-40 italic">None (This is expected for likes.)</span>
+                                {% else %}
+                                    <span class="text-red-500 font-bold">Missing a link to comment.</span>
+                                {% endif %}
+                            {% endif %}
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
         </div>
-        <c-button variant="outline">
+        <c-button variant="outline" class="relative">
             <i data-lucide="wrench" class="w-5 h-5 mr-2"></i> Go to admin interface
             <a href="/admin" class="absolute inset-0 z-10"></a>
         </c-button>

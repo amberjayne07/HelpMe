@@ -80,12 +80,16 @@ class Question(models.Model):
     username = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=240)
     description = models.TextField()
-    likes = models.PositiveIntegerField(default=0)
+    liked_by = models.ManyToManyField(User, related_name='liked_questions', blank=True)
     datePosted = models.DateTimeField(auto_now_add=True)
     lastUpdated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
+
+    @property
+    def total_likes(self):
+        return self.liked_by.count()
 
 
 class Comment(models.Model):
@@ -114,7 +118,13 @@ class Notification(models.Model):
     ]
     notificationType = models.CharField(max_length=10, choices=NOTIFICATION_TYPES)
     isRead = models.BooleanField(default=False)
-    commentID = models.OneToOneField(Comment, on_delete=models.SET_NULL, null=True, blank=True)
+    commentID = models.OneToOneField(Comment, on_delete=models.CASCADE, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if self.notificationType in [self.COMMENT, self.SUGGESTION] and not self.commentID:
+            raise ValueError(f"Notification type {self.notificationType} requires a comment ID to be set.")
+
+        super(Notification, self).save(*args, **kwargs)
 
     def __str__(self):
         return str(self.notificationID)
@@ -133,7 +143,7 @@ class PollItem(models.Model):
     pollItemID = models.UUIDField(primary_key=True)
     pollID = models.ForeignKey(Poll, on_delete=models.CASCADE)
     username = models.ForeignKey(User, on_delete=models.CASCADE)
-    commentID = models.ForeignKey(Comment, on_delete=models.SET_NULL, null=True, blank=True)
+    commentID = models.ForeignKey(Comment, on_delete=models.CASCADE)
     content = models.CharField(max_length=50)
 
     CREATOR = 'CREATOR'

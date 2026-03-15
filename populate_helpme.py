@@ -1,6 +1,5 @@
 import os
-os.environ.setdefault('DJANGO_SETTINGS_MODULE',
-                      'helpme_project.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'helpme_project.settings')
 import django
 django.setup()
 
@@ -37,7 +36,7 @@ def add_category(name, slug):
         cat.save()
     return cat, created
 
-def add_question(category, username, title, description, likes=0):
+def add_question(category, username, title, description):
     """Helper function to create or get a question"""
     q, created = Question.objects.get_or_create(
         categoryID=category,
@@ -46,7 +45,6 @@ def add_question(category, username, title, description, likes=0):
         defaults={
             'questionID': uuid.uuid4(),
             'description': description,
-            'likes': likes
         }
     )
     return q, created
@@ -61,12 +59,13 @@ def add_comment(question, username, text):
     )
     return comment, created
 
-def add_notification(question, username, notification_type, is_read=False):
+def add_notification(question, username, notification_type, comment=None, is_read=False):
     """Helper function to create or get a notification"""
     notif, created = Notification.objects.get_or_create(
         questionID=question,
         username=username,
         notificationType=notification_type,
+        commentID=comment,
         defaults={'notificationID': uuid.uuid4(), 'isRead': is_read}
     )
     return notif, created
@@ -79,15 +78,15 @@ def add_poll(question, title):
     )
     return poll, created
 
-def add_poll_item(poll, username, content, comment=None, approval_status='NEUTRAL'):
+def add_poll_item(poll, username, content, comment, approval_status='NEUTRAL'):
     """Helper function to create or get a poll item"""
     item, created = PollItem.objects.get_or_create(
         pollID=poll,
         content=content,
+        commentID=comment,
         defaults={
             'pollItemID': uuid.uuid4(),
             'username': username,
-            'commentID': comment,
             'approvalStatus': approval_status
         }
     )
@@ -173,21 +172,21 @@ def populate():
             'username': 'user1',
             'title': 'How to learn Python?',
             'description': 'I am new to programming and want to learn Python. Any suggestions?',
-            'likes': 5
+            'users_liked': ['user2']
         },
         {
             'category': 'Django',
             'username': 'user2',
             'title': 'Django vs Flask?',
             'description': 'Which framework is better for web development, Django or Flask?',
-            'likes': 3
+            'users_liked': ['user1', 'admin']
         },
         {
             'category': 'Web Development',
             'username': 'limited_user',
             'title': 'Best practices for HTML?',
             'description': 'What are some best practices for writing clean HTML code?',
-            'likes': 1
+            'users_liked': ['admin']
         }
     ]
 
@@ -199,8 +198,10 @@ def populate():
             username=users[q_data['username']],
             title=q_data['title'],
             description=q_data['description'],
-            likes=q_data['likes']
         )
+
+        for username_of_who_liked in q_data.get('users_liked', []):
+            question.liked_by.add(users[username_of_who_liked])
         questions.append(question)
         print(f'- Question: {q_data["title"]}')
 
@@ -219,21 +220,25 @@ def populate():
     # Create polls and poll items
     poll1, _ = add_poll(questions[0], 'Best way to learn Python?')
     poll2, _ = add_poll(questions[1], 'Preferred framework?')
+
+    suggestion_comment1, _ = add_comment(questions[0], users['user1'], 'I think online courses are the way to go.')
+    suggestion_comment2, _ = add_comment(questions[1], users['limited_user'], 'Flask is just so much lighter.')
+
     add_poll_item(poll1, users['admin'], 'Official Python Tutorial', comment=comments[0], approval_status='APPROVED')
-    add_poll_item(poll1, users['user1'], 'Online courses like Coursera', approval_status='NEUTRAL')
+    add_poll_item(poll1, users['user1'], 'Online courses like Coursera', comment=suggestion_comment1, approval_status='NEUTRAL')
     add_poll_item(poll2, users['user2'], 'Django', comment=comments[1], approval_status='APPROVED')
-    add_poll_item(poll2, users['limited_user'], 'Flask', approval_status='DECLINED')
+    add_poll_item(poll2, users['limited_user'], 'Flask', comment=suggestion_comment2, approval_status='DECLINED')
     print('- Created 2 polls with 4 poll items')
 
     # Create notifications
     notifications = []
     notification_data = [
-        (questions[0], 'user2', 'COMMENT', True),
-        (questions[1], 'user1', 'LIKE', False),
-        (questions[2], 'admin', 'SUGGESTION', False)
+        (questions[0], users['user2'], 'COMMENT', comments[0], True),
+        (questions[1], users['user1'], 'LIKE', None, False),
+        (questions[2], users['admin'], 'SUGGESTION', suggestion_comment2, False)
     ]
-    for question, username, notif_type, is_read in notification_data:
-        notif, created = add_notification(question, users[username], notif_type, is_read)
+    for question, user, notif_type, comment, is_read in notification_data:
+        notif, created = add_notification(question, user, notif_type, comment, is_read)
         notifications.append(notif)
     print(f'- Created {len(notifications)} notifications')
 
