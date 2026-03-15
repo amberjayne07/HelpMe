@@ -5,36 +5,38 @@ import uuid
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, username, email, password=None, **extra_fields):
+    def create_user(self, username, email, dateOfBirth, password=None, **extra_fields):
         if not username:
             raise ValueError("Username is required")
         if not email:
             raise ValueError("Email is required")
+        if not dateOfBirth:
+            raise ValueError("Date of birth is required")
 
         email = self.normalize_email(email)
 
         if password:
             validate_password(password)
 
-        user = self.model(username=username, email=email, **extra_fields)
+        user = self.model(username=username, email=email, dateOfBirth=dateOfBirth, **extra_fields)
         user.set_password(password)  # hashes password
         user.save()
         return user
 
-    def create_superuser(self, username, email, password=None, **extra_fields):
+    def create_superuser(self, username, email, dateOfBirth, password=None, **extra_fields):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
-        return self.create_user(username, email, password, **extra_fields)
+        return self.create_user(username, email, dateOfBirth, password, **extra_fields)
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    full_name = models.CharField(max_length=128)
-    username = models.CharField(max_length=30, unique=True)
-    email = models.EmailField(unique=True)
-    dateOfBirth = models.DateField()
-    picture = models.ImageField(upload_to='profilepics/',default='profilepics/default.png')
-    joinDate = models.DateField(auto_now_add=True)
-    passwordHint = models.CharField(max_length=100)
+    full_name = models.CharField("Full name", max_length=128)
+    username = models.CharField("Username", max_length=30, unique=True)
+    email = models.EmailField("Email address", unique=True)
+    dateOfBirth = models.DateField("Date of birth (YYYY-MM-DD)")
+    picture = models.ImageField("User picture", upload_to='profilepics/',default='profilepics/default.png')
+    joinDate = models.DateField("Join date", auto_now_add=True)
+    passwordHint = models.CharField("Password hint", max_length=100)
 
     STANDARD = 'STANDARD'
     LIMITED = 'LIMITED'
@@ -51,7 +53,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
+    REQUIRED_FIELDS = ['email', 'dateOfBirth']
 
     objects = UserManager()
 
@@ -64,6 +66,10 @@ class Category(models.Model):
     categoryID = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField()
+
+    class Meta:
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
 
     def __str__(self):
         return self.name
