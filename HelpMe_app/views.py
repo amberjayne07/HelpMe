@@ -105,6 +105,14 @@ def logout(request):
 
     return redirect('HelpMe_app:home')
 
+@login_required
+def delete_account(request):
+    if request.method =="POST":
+        current_user = request.user
+        django_logout(request)
+        current_user.delete()
+        return auth_success_response(request,"Account has been successfully deleted")
+    return redirect('HelpMe_app:home')
 
 @login_required
 def change_password(request):

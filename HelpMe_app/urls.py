@@ -20,6 +20,8 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     path('change-password/', views.change_password, name='change_password'),
     path('my-account/', views.my_account, name='my_account'),
+    path("delete-account/", views.delete_account, name="delete_account"),
+
 
     path('test-everything/', views.test_everything, name='test_everything'),
 

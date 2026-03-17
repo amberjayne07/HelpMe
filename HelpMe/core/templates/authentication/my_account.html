@@ -21,6 +21,14 @@
                             <i data-lucide="log-out"></i> Sign out
                         </c-button>
                     </form>
+                    <form action="{% url 'HelpMe_app:delete_account' %}" method="post"
+                        onsubmit="return confirm('Are you confident that you want to delete your account?');">
+                        {% csrf_token %}
+                        <c-button type="submit" variant="outline" class="destructive-btn">
+                            <i data-lucide="trash-2"></i> Delete account
+                        </c-button>
+                    </form>
+
                 </div>
             </div>
             <div class="glass-panel p-6 rounded-[32px] mb-12">
