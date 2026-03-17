@@ -1,7 +1,7 @@
 {% load static %}
 <div>
     {% block overlays_block %}
-        {% include 'partials/_overlay_dialogs.html' with question=question %}
+        {% include 'partials/requires_authentication/_overlay_dialogs.html' with question=question %}
     {% endblock %}
     <c-card class="glass-panel relative group flex flex-col border rounded-[24px] p-6 shadow-sm hover:shadow-md transition-all duration-200">
         <a href="{% url 'HelpMe_app:post_overview' question.question_id %}"

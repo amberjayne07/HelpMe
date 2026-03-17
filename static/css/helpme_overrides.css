@@ -18,14 +18,12 @@
     flex-shrink: 0 !important;
 }
 
-
 /* Make tabs pill shaped. */
 [role="tab"] {
     border-radius: 9999px !important;
     transition: background-color 0.2s, transform 0.1s;
 }
 
-/* Hover shadows */
 .inline-flex.items-center.justify-center.rounded-md:not(.hover\:underline):hover {
     transform: translateY(-1px);
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
@@ -40,23 +38,12 @@
     right: 1rem !important;
     left: auto !important;
     top: 64px !important;
+}
+
+.rounded-popover {
     border-radius: 32px !important;
 }
 
-[data-radix-collection] [role="dialog"][class*="fixed"] {
-    top: 1rem !important;
-    right: 1rem !important;
-    bottom: 1rem !important;
-    height: calc(100vh - 2rem) !important;
-    width: 400px !important;
-    border-radius: 24px !important;
-    border: 1px solid #e2e8f0 !important;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
-}
-
-[data-radix-collection] [class*="bg-black/80"] {
-    backdrop-filter: blur(4px);
-}
 
 /* Custom button shading. */
 .destructive-btn {
@@ -110,7 +97,6 @@
     background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(0px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
 }
 
@@ -120,6 +106,7 @@
     -webkit-backdrop-filter: blur(6px);
     border: 1px solid rgba(0, 0, 0, 0.08);
     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+    border-radius: 32px !important;
 }
 
 /* ANIMATIONS */

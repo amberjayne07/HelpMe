@@ -1,0 +1,34 @@
+<c-command.list class="max-h-[380px] overflow-y-auto p-2">
+    {% if results %}
+        <c-command.group heading="Posts containing '{{ query }}'">
+            {% for question in results %}
+                <c-command.item value="{{ question.question_id }}"
+                                class="rounded-2xl mx-1 cursor-pointer hover:bg-slate-50 transition-colors">
+                    <a href="{% url 'HelpMe_app:post_overview' question.question_id %}"
+                       class="flex flex-col w-full py-1 text-left">
+                        <span class="font-medium text-md">{{ question.title }}</span>
+                        <div class="flex items-center gap-2 opacity-60 text-sm mt-0.5">
+                            <span class="font-semibold">{{ question.category_id.name }}</span>
+                            <span>•</span>
+                            <span>Created by {{ question.username.username }}</span>
+                        </div>
+                    </a>
+                </c-command.item>
+            {% endfor %}
+        </c-command.group>
+    {% else %}
+        <c-command.empty class="pt-4 pb-4 text-center text-sm opacity-40">
+            No results found for "{{ query }}". Click or tap the plus to create a post to ask this!
+        </c-command.empty>
+    {% endif %}
+
+    <c-command.separator class="my-2 opacity-50"></c-command.separator>
+
+    <c-command.group heading="My account" class="px-2 pb-2">
+        <c-command.item class="rounded-2xl mx-1 cursor-pointer">
+            <a href="{% url 'HelpMe_app:my_account' %}" class="w-full">
+                My uploads
+            </a>
+        </c-command.item>
+    </c-command.group>
+</c-command.list>

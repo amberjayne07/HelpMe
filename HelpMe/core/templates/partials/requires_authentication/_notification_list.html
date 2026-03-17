@@ -1,7 +1,7 @@
-<div class="{% if is_unread and not read_notifications %}pt-0{% else %}px-4{% endif %} space-y-4 pb-10 overflow-y-auto max-h-[calc(100vh-200px)]">
+<div class="{% if is_unread and not read_notifications %}pt-0{% endif %} space-y-4 pb-10 overflow-y-auto max-h-[calc(100vh-200px)]">
     {% for notif in notifications %}
         <div class="notification-item w-full {% if not is_unread %}opacity-60 grayscale-[0.3]{% endif %}">
-            {% include "partials/_notification_card.html" %}
+            {% include "partials/requires_authentication/_notification_card.html" %}
         </div>
     {% empty %}
         <div class="opacity-60 text-center py-20">

@@ -8,7 +8,7 @@
         <div class="w-full max-w-[600px]">
             <h1 class="text-3xl mb-6">Hi there, let's get you <b>registered.</b></h1>
 
-            <div class="glass-panel p-8 rounded-[32px]">
+            <div class="glass-panel p-6 rounded-[32px]">
                 <form class="space-y-6" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
 
@@ -16,7 +16,7 @@
                         <div class="flex flex-col items-center justify-center flex-shrink-0 group">
                             <div class="relative w-24 h-24 rounded-full border border-slate-200 overflow-hidden bg-slate-100 flex items-center justify-center">
                                 <div id="preview_spinner"
-                                     class="hidden absolute inset-0 flex items-center justify-center bg-slate-100/50 z-10">
+                                     class="hidden absolute inset-0 items-center justify-center bg-slate-100/50 z-10">
                                     <div class="dual-circle-spinner"></div>
                                 </div>
 
@@ -38,7 +38,7 @@
                                 <c-input id='id_full_name'
                                          name="full_name"
                                          placeholder="{{ form.full_name.field.widget.attrs.placeholder }}"
-                                         value="{{ form.full_name.value|default:'' }}"/>
+                                         value="{{ form.full_name.value|default:'' }}"></c-input>
                             </c-form.field>
 
                             <c-form.field>
@@ -47,7 +47,7 @@
                                     <c-input id='id_date_of_birth'
                                              name="date_of_birth"
                                              type='date'
-                                             value="{{ form.date_of_birth.value|default:'' }}"/>
+                                             value="{{ form.date_of_birth.value|default:'' }}"></c-input>
                                     <i data-lucide="calendar" class="absolute right-3 top-2.5 w-4 h-4 opacity-40"></i>
                                 </div>
                                 {% if form.date_of_birth.errors %}
@@ -63,7 +63,7 @@
                             <c-input id='id_username'
                                      name="username"
                                      placeholder="{{ form.username.field.widget.attrs.placeholder }}"
-                                     value="{{ form.username.value|default:'' }}"/>
+                                     value="{{ form.username.value|default:'' }}"></c-input>
                             {% if form.username.errors %}
                                 <p class="text-xs mt-1 opacity-60">{{ form.username.errors.0 }}</p>
                             {% endif %}
@@ -74,7 +74,7 @@
                             <c-input id='id_email'
                                      name="email"
                                      placeholder="{{ form.email.field.widget.attrs.placeholder }}"
-                                     value="{{ form.email.value|default:'' }}"/>
+                                     value="{{ form.email.value|default:'' }}"></c-input>
                             {% if form.email.errors %}
                                 <p class="text-xs mt-1 opacity-60">{{ form.email.errors.0 }}</p>
                             {% endif %}
@@ -84,7 +84,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <c-form.field>
                             <c-form.label for='id_password1'>Password</c-form.label>
-                            <c-input id='id_password1' name="password1" type='password' placeholder='Password'/>
+                            <c-input id='id_password1' name="password1" type='password' placeholder='Password'></c-input>
                             {% if form.password1.errors %}
                                 <p class="text-xs mt-1 opacity-60">{{ form.password1.errors.0 }}</p>
                             {% endif %}
@@ -92,7 +92,7 @@
 
                         <c-form.field>
                             <c-form.label for='id_password2'>Confirm Password</c-form.label>
-                            <c-input id='id_password2' name="password2" type='password' placeholder='Confirm Password'/>
+                            <c-input id='id_password2' name="password2" type='password' placeholder='Confirm Password'></c-input>
                             {% if form.password2.errors %}
                                 <p class="text-xs mt-1 opacity-60">{{ form.password2.errors.0 }}</p>
                             {% endif %}
@@ -104,7 +104,7 @@
                         <c-input id='id_password_hint'
                                  name="password_hint"
                                  placeholder="{{ form.password_hint.field.widget.attrs.placeholder }}"
-                                 value="{{ form.password_hint.value|default:'' }}"/>
+                                 value="{{ form.password_hint.value|default:'' }}"></c-input>
                     </c-form.field>
 
                     {% if form.non_field_errors %}

@@ -309,9 +309,9 @@ def create_question(request):
         return render(request, "create_question.html", {"categories": categories})
     title = request.POST.get('title')
     description = request.POST.get('description')
-    category_id = request.POST.get('category_id')
+    category_id_from_form = request.POST.get('category_id')
 
-    if not title or not description or not category_id:
+    if not title or not description or not category_id_from_form:
         return redirect('HelpMe_app:home')
 
     if request.user.is_authenticated:
@@ -331,7 +331,7 @@ def create_question(request):
             author.set_unusable_password()
             author.save()
 
-    category = get_object_or_404(Category, category_id=category_id)
+    category = get_object_or_404(Category, category_id=category_id_from_form)
 
     # CREATE THE QUESTION
     new_question = Question.objects.create(
@@ -476,9 +476,11 @@ def create_category(request):
 
     return redirect('HelpMe_app:home')
 
+
 def search(request):
     query = request.GET.get("q", "").strip()
-    results = []
+    results = Question.objects.none()
+
     if query:
         results = Question.objects.filter(
             Q(title__icontains=query) |
@@ -486,9 +488,9 @@ def search(request):
             Q(category_id__name__icontains=query) |
             Q(username__username__icontains=query)
         ).distinct().order_by('-date_posted')
-
-    return render(request, "search_results.html", {
-        "results": results,
-        "query": query,
-    })
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return render(request, "partials/requires_authentication/search/_search_results_list.html", {
+            "results": results[:8],
+            "query": query,
+        })
     

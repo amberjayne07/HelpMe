@@ -3,8 +3,6 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth import authenticate
 from HelpMe_app.models import User
-
-
 class UserAuthenticationTest(TestCase):
     """Test cases for user authentication"""
 

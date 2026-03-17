@@ -1,0 +1,19 @@
+<form id="delete-account-form" action="{% url 'HelpMe_app:delete_account' %}" method="POST"
+      class="hidden">
+    {% csrf_token %}
+</form>
+
+<c-dialog>
+    <c-alert-dialog.trigger id="js-real-delete-account-trigger"
+                            class="hidden"></c-alert-dialog.trigger>
+    <c-dialog.content class="!bg-transparent">
+        <h1 class="text-2xl"><b>Delete</b> your account?</h1>
+        <h2 class="text-sm opacity-60"><b>This will remove everything you've ever made. Are you sure?</b></h2>
+        <div class="flex justify-end mt-2">
+            <c-button variant="outline"
+                      class="w-full sm:w-auto js-confirm-delete-account destructive-btn-rev">
+                <i data-lucide="trash-2"></i> Yes, delete my account.
+            </c-button>
+        </div>
+    </c-dialog.content>
+</c-dialog>

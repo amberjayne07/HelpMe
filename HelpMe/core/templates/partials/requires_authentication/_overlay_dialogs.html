@@ -35,11 +35,11 @@
 <c-dialog>
     <c-alert-dialog.trigger id="js-real-delete-{{ question.question_id }}" class="hidden"></c-alert-dialog.trigger>
     <c-dialog.content class="!bg-transparent">
-        <h1 class="text-2xl"><b>Delete</b> "{{ question.title }}"?</h1>
-        <h2 class="text-sm opacity-60 mb-6"><b>This can't be undone.</b></h2>
+        <h1 class="text-2xl"><b>Delete post:</b> "{{ question.title }}"?</h1>
+        <h2 class="text-sm opacity-60"><b>This can't be undone. Are you sure?</b></h2>
         <div class="flex justify-end mt-2">
             <c-button variant="default" type="submit" class="w-full sm:w-auto destructive-btn-rev js-confirm-delete" data-target="{{ question.question_id }}">
-                <i data-lucide="trash-2"></i> Delete post
+                <i data-lucide="trash-2"></i> Yes, delete.
             </c-button>
         </div>
     </c-dialog.content>
@@ -69,7 +69,7 @@
                     <div class="flex items-center gap-2 mb-3">
                         <input type="checkbox" name="include_poll" id="edit-poll-toggle-{{ question.question_id }}" x-model="showPoll" @change="refreshIcons"
                                class="w-6 h-6 rounded-md border-2 border-slate-300 bg-transparent text-black cursor-pointer checked:bg-black">
-                        <label for="edit-poll-toggle-{{ question.question_id }}" class="text-sm font-bold opacity-70 cursor-pointer">Manage poll</label>
+                        <label for="edit-poll-toggle-{{ question.question_id }}" class="text-sm font-bold opacity-70 cursor-pointer">Add a poll</label>
                     </div>
 
                     <div x-show="showPoll" x-transition class="space-y-6 border rounded-lg border-dashed p-4">

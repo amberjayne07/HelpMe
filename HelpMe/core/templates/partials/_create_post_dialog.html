@@ -16,68 +16,81 @@
         </div>
 
         <div style="max-height: 80vh; overflow-y: auto;" class="pr-2">
-            <form action="{% url 'HelpMe_app:create_question' %}" method="POST" class="flex flex-col gap-6 pt-4" x-data="pollManager(['', ''], false)">
+            <form action="{% url 'HelpMe_app:create_question' %}" method="POST" class="flex flex-col gap-6 pt-4"
+                  x-data="pollManager(['', ''], false)">
                 {% csrf_token %}
 
                 <div class="flex flex-col gap-2">
                     <label class="text-sm font-bold opacity-70">Title</label>
-                    <c-input name="title" placeholder="What's on your mind?" required/>
+                    <c-input name="title" placeholder="What's on your mind?" required></c-input>
                 </div>
 
                 <div class="flex flex-col gap-2">
                     <label class="text-sm font-bold opacity-70">Category:</label>
-                    <select id="create-category" name="category_id" class="w-full h-10 px-3 py-2 text-sm rounded-xl border bg-transparent" required>
+                    <select id="create-category" name="category_id"
+                            class="w-full h-10 px-3 py-2 text-sm rounded-xl border bg-transparent" required>
                         <option value="" disabled selected hidden>Select a category...</option>
                         {% for cat in categories %}
-                            <option>{{ cat.name }}</option>
+                            <option value="{{ cat.category_id }}">{{ cat.name }}</option>
                         {% endfor %}
                     </select>
                 </div>
 
                 <div class="flex flex-col gap-2">
                     <label class="text-sm font-bold opacity-70">Description</label>
-                    <textarea name="description" class="w-full min-h-[120px] p-3 text-sm rounded-md border bg-transparent" required></textarea>
+                    <textarea name="description"
+                              class="w-full min-h-[120px] p-3 text-sm rounded-md border bg-transparent"
+                              required></textarea>
                 </div>
 
                 <div class="pt-4">
                     <div class="flex items-center gap-2 mb-3">
-                        <input type="checkbox" name="include_poll" id="poll-toggle" x-model="showPoll" @change="refreshIcons"
+                        <input type="checkbox" name="include_poll" id="poll-toggle" x-model="showPoll"
+                               @change="refreshIcons"
                                class="w-6 h-6 rounded-md border-2 border-slate-300 bg-transparent text-black cursor-pointer checked:bg-black">
                         <label for="poll-toggle" class="text-sm font-bold opacity-70 cursor-pointer">Add poll</label>
                     </div>
 
                     <div x-show="showPoll" x-transition class="space-y-6 border rounded-lg border-dashed p-4">
                         <div class="flex items-center gap-2">
-                            <input type="checkbox" id="custom-title-toggle" x-model="customTitle" name="use_custom_poll_title"
+                            <input type="checkbox" id="custom-title-toggle" x-model="customTitle"
+                                   name="use_custom_poll_title"
                                    class="w-4 h-4 rounded border-slate-300 bg-transparent text-black checked:bg-black cursor-pointer">
-                            <label class="text-sm font-semibold opacity-70 cursor-pointer" for="custom-title-toggle">Use custom poll title</label>
+                            <label class="text-sm font-semibold opacity-70 cursor-pointer" for="custom-title-toggle">Use
+                                custom poll title</label>
                         </div>
 
                         <div x-show="customTitle" x-transition>
-                            <c-input name="poll_title_custom" placeholder="Enter a specific poll question..." />
+                            <c-input name="poll_title_custom" placeholder="Enter a specific poll question..."/>
                         </div>
 
                         <div class="flex flex-col gap-3">
                             <label class="text-sm font-semibold opacity-70">Choices (at least 2):</label>
                             <template x-for="(choice, index) in choices" :key="index">
                                 <div class="flex items-center gap-2">
-                                    <input type="text" :name="'poll_option_' + index" class="flex-1 h-10 px-3 py-2 text-sm rounded-md border bg-transparent" :placeholder="'Choice ' + (index + 1)" x-model="choices[index]">
+                                    <input type="text" :name="'poll_option_' + index"
+                                           class="flex-1 h-10 px-3 py-2 text-sm rounded-md border bg-transparent"
+                                           :placeholder="'Choice ' + (index + 1)" x-model="choices[index]">
 
-                                    <c-button type="button" variant="outline" class="destructive-btn" x-show="choices.length > 2" @click="removeChoice(index)">
+                                    <c-button type="button" variant="outline" class="destructive-btn"
+                                              x-show="choices.length > 2" @click="removeChoice(index)">
                                         <i data-lucide="trash-2"></i>
                                     </c-button>
                                 </div>
                             </template>
                         </div>
 
-                        <c-button type="button" variant="outline" x-show="choices.length < 6" @click="addChoice" class="w-full justify-center">
+                        <c-button type="button" variant="outline" x-show="choices.length < 6" @click="addChoice"
+                                  class="w-full justify-center">
                             <i data-lucide="plus-circle"></i> Add Choice
                         </c-button>
                     </div>
                 </div>
 
                 <div class="flex justify-end pb-4">
-                    <c-button variant="outline" type="submit" class="w-full sm:w-auto save-btn-rev"><i data-lucide="send"></i> Upload</c-button>
+                    <c-button variant="outline" type="submit" class="w-full sm:w-auto save-btn-rev"><i
+                            data-lucide="send"></i> Upload
+                    </c-button>
                 </div>
             </form>
         </div>

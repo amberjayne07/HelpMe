@@ -5,6 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="author" content="Web Application Systems Group B - Aaron, Amber, Angelo, Iona, Joseph">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>HelpMe - {% block title_block %}Welcome{% endblock %}</title>
 
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -47,12 +48,16 @@
         </header>
     {% endblock %}
 
-    <main class="flex-grow container mx-auto px-4 py-8">
+    <main class="flex-grow container px-2 mx-auto py-8">
         {% block content_block %}{% endblock %}
     </main>
 
     {% include 'partials/_create_post_dialog.html' %}
-    {% include 'partials/_create_category_dialog.html' %}
+    {% include 'partials/requires_authentication/_create_category_dialog.html' %}
+
+    {% if user.is_authenticated %}
+        {% include 'partials/requires_authentication/_account_delete_dialog.html' %}
+    {% endif %}
 
     {% block footer_block %}
         {% with url_name=request.resolver_match.url_name %}

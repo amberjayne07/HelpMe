@@ -1,7 +1,6 @@
 {% load static %}
 {% csrf_token %}
-<c-card class="glass-panel notification-card relative flex flex-col border rounded-[32px] p-2 shadow-sm hover:shadow-md transition-all duration-200">
-
+<c-card class="glass-panel notification-card relative flex flex-col rounded-[32px] p-2 shadow-lg hover:shadow-md transition-all duration-200">
     <a href="{% url 'HelpMe_app:post_overview' notif.question_id.question_id %}" class="absolute inset-0 z-0"></a>
 
     <div class="z-10 flex justify-between items-center pointer-events-none">
@@ -72,7 +71,7 @@
     {% if notif.notification_type == 'SUGGESTION' %}
         <div class="flex gap-2 p-2 z-20 mt-auto pointer-events-auto">
             {% with item=notif.comment_id.pollitem_set.first %}
-                {% include 'partials/_poll_item_approval.html' with item=item %}
+                {% include 'partials/requires_authentication/_poll_item_approval.html' with item=item %}
             {% endwith %}
         </div>
     {% endif %}

@@ -47,8 +47,8 @@
                         </c-button>
                     {% endif %}
 
-                    {% include "partials/_notification_sheet.html" %}
-                    {% include "partials/_account_popover.html" %}
+                    {% include "partials/requires_authentication/_notification_sheet.html" %}
+                    {% include "partials/requires_authentication/_account_popover.html" %}
                 {% else %}
                     <c-button class="relative overflow-hidden">
                         Login

@@ -6,7 +6,6 @@ django.setup()
 import uuid
 from HelpMe_app.models import User, Category, Question, Notification, Poll, Comment, PollItem, Vote
 
-
 def add_user(username, password, user_type, full_name, email, date_of_birth, picture, password_hint):
     """Helper function to create or get a user"""
     user, created = User.objects.get_or_create(
