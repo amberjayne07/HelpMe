@@ -45,6 +45,8 @@ urlpatterns = [
 
     # ADMIN ONLY
     path('category/create/', views.create_category, name='create_category'),
+    
+    path("search/", views.search, name="search"),
 ]
 
 if settings.DEBUG:
