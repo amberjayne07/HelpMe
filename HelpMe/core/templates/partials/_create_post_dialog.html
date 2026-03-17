@@ -29,7 +29,7 @@
                     <select id="create-category" name="category_id" class="w-full h-10 px-3 py-2 text-sm rounded-xl border bg-transparent" required>
                         <option value="" disabled selected hidden>Select a category...</option>
                         {% for cat in categories %}
-                            <option value="{{ cat.category_id }}">{{ cat.name }}</option>
+                            <li>{{ cat.name }}</li>
                         {% endfor %}
                     </select>
                 </div>

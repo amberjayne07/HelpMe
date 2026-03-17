@@ -301,8 +301,11 @@ def go_back(request):
     return redirect(previous_url)
 
 # USER CREATION / EDITING TOOLS
-@require_POST
+@require_http_methods(["GET", "POST"])
 def create_question(request):
+    if request.method == "GET":
+        categories = Category.objects.all().order_by("name")
+        return render(request, "create_question.html", {"categories": categories})
     title = request.POST.get('title')
     description = request.POST.get('description')
     category_id = request.POST.get('category_id')
