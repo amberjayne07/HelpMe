@@ -463,3 +463,20 @@ def create_category(request):
         )
 
     return redirect('HelpMe_app:home')
+
+def search(request):
+    query = request.GET.get("q", "").strip()
+    results = []
+    if query:
+        results = Question.objects.filter(
+            Q(title__icontains=query) |
+            Q(description__icontains=query) |
+            Q(category_id__name__icontains=query) |
+            Q(username__username__icontains=query)
+        ).distinct().order_by('-date_posted')
+
+    return render(request, "search_results.html", {
+        "results": results,
+        "query": query,
+    })
+    

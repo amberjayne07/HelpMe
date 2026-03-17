@@ -1,0 +1,14 @@
+<form action="{% url 'HelpMe_app:search' %}" method="GET"
+      class="w-full max-w-md mx-auto flex items-center gap-2 mt-4">
+
+    <c-input 
+        name="q" 
+        placeholder="Search questions..." 
+        class="w-full">
+    </c-input>
+
+    <c-button type="submit" variant="default">
+        <i data-lucide="search" class="w-4 h-4"></i>
+        Search
+    </c-button>
+</form>
