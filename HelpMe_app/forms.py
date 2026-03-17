@@ -23,7 +23,13 @@ class RegistrationForm(UserCreationForm):
         user.email = self.cleaned_data.get('email')
         user.date_of_birth = self.cleaned_data.get('date_of_birth')
         user.password_hint = self.cleaned_data.get('password_hint')
-        user.picture = self.cleaned_data.get('picture')
+
+        picture = self.cleaned_data.get('picture')
+
+        if picture:
+            user.picture = picture
+        else:
+            user.picture = 'profilepics/default.png'
 
         if commit:
             user.save()

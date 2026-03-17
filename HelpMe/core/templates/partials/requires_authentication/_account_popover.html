@@ -3,9 +3,7 @@
     <c-popover.trigger>
         <button class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full border hover:opacity-80 transition-all">
             <div class="flex h-full w-full items-center justify-center bg-muted">
-                <img src="
-                        {% if user.picture %}{{ user.picture.url }}{% else %}{% static 'images/profilepic_default_temp.png' %}{% endif %}"
-                     alt="{{ user.username }}" class="w-full h-full object-cover">
+                <img src="{{ user.picture.url }}" alt="{{ user.username }}" class="w-full h-full object-cover">
             </div>
         </button>
     </c-popover.trigger>

@@ -13,8 +13,7 @@
             </div>
             <div class="glass-panel p-8 rounded-[32px] mb-12">
                 <div class="flex items-center gap-3 mb-6 pb-6">
-                    <img src="
-                            {% if 'default.png' in question.username.picture.url %}{% static 'images/profilepic_default_temp.png' %}{% else %}{{ question.username.picture.url }}{% endif %}"
+                    <img src="{{ question.username.picture.url }}"
                          class="w-10 h-10 rounded-full border object-cover"
                          alt="{{ question.username.username }}">
                     <div>
@@ -114,7 +113,7 @@
                     {% for comment in question.comments.all reversed %}
                         <div class="p-5 glass-panel border rounded-2xl flex flex-col gap-4">
                             <div class="flex items-start gap-4">
-                                <img src="{% if 'default.png' in comment.username.picture.url %}{% static 'images/profilepic_default_temp.png' %}{% else %}{{ comment.username.picture.url }}{% endif %}"
+                                <img src="{{ comment.username.picture.url }}"
                                      class="w-8 h-8 rounded-full border object-cover shrink-0"
                                      alt="{{ comment.username.username }}">
                                 <div class="flex-1">

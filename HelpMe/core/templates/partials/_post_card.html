@@ -22,8 +22,7 @@
             <div class="flex items-center justify-between pt-4 relative z-20">
 
                 <div class="flex items-center gap-2 pointer-events-none">
-                    <img src="
-                            {% if 'default.png' in question.username.picture.url %}{% static 'images/profilepic_default_temp.png' %}{% else %}{{ question.username.picture.url }}{% endif %}"
+                    <img src="{{ question.username.picture.url }}"
                          class="w-6 h-6 rounded-full object-cover border" alt="...">
                     <span class="opacity-60 font-semibold text-sm">
                         {% if question.username.type == 'LIMITED' %}
