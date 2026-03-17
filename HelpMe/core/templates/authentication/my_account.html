@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title_block %}My Account{% endblock %}
+{% block title_block %}My account{% endblock %}
 
 {% block content_block %}
     <section class="max-w-6xl mx-auto py-12 px-4">
@@ -10,15 +10,15 @@
                 <h1 class="text-3xl">My <b>account</b></h1>
                 <div class="flex gap-3">
                     <a href="{% url 'HelpMe_app:change_password' %}">
-                        <c-button variant="outline" size="sm">
-                            <i data-lucide="key-round" class="w-4 h-4 mr-2"></i> Change password
+                        <c-button variant="outline">
+                            <i data-lucide="key-round"></i> Change password
                         </c-button>
                     </a>
                     <form action="{% url 'HelpMe_app:logout' %}" method="post">
                         {% csrf_token %}
-                        <c-button type="submit" variant="outline" size="sm"
-                                  class="text-red-500 hover:text-red-600 hover:bg-red-50">
-                            <i data-lucide="log-out" class="w-4 h-4 mr-2"></i> Sign out
+                        <c-button type="submit" variant="outline"
+                                  class="destructive-btn">
+                            <i data-lucide="log-out"></i> Sign out
                         </c-button>
                     </form>
                 </div>
@@ -30,10 +30,15 @@
                              class="w-full h-full object-cover">
                     </div>
                     <div>
-                        <h2 class="text-xl font-bold">{{ user.full_name }}</h2>
+                        <div class="flex items-center gap-3">
+                            <h2 class="text-xl font-bold">{{ user.full_name }}</h2>
+                            <span class="text-xs font-bold px-2 py-1 border rounded-md opacity-80">
+                            {{ user.get_type_display }}
+                            </span>
+                        </div>
                         <h2 class="text-lg opacity-60">{{ user.username }}</h2>
                         <p class="text-sm opacity-40 mt-4">
-                            ({{ user.dateOfBirth|date:"d/m/Y"|default:"N/A" }}) |
+                            ({{ user.date_of_birth|date:"d/m/Y"|default:"N/A" }}) |
                             Member since {{ user.date_joined|date:"F Y"|default:"March 2026" }}
                         </p>
                     </div>
@@ -45,7 +50,7 @@
                     <p class="opacity-60 font-semibold">Recent posts</p>
                     <div class="space-y-4">
                         {% for question in user_posts %}
-                            {% include "partials/_post_card.html" %}
+                            {% include "partials/_post_card.html" with hide_footer=True %}
                         {% empty %}
                             <p class="text-sm font-semibold opacity-40">No posts yet.</p>
                         {% endfor %}
@@ -53,7 +58,7 @@
                 </div>
                 <div class="space-y-4">
                     <div class="flex items-center justify-between">
-                        <p class="opacity-60 font-semibold">Unread notifications</p>
+                        <p class="opacity-60 font-semibold">Unread notifications (top 5)</p>
 
                         {% if unread_notifications|length > 5 %}
                             <a href="#"
@@ -63,10 +68,10 @@
                             </a>
                         {% endif %}
                     </div>
-                    <div class="space-y-4">
-                        {% for notif in unread_notifications|slice:":5" %}
-                            <div class="notification-item w-full">
-                                {% include "partials/_notification_card.html" %}
+                    <div class="space-y-4" id="account-notif-container">
+                        {% for notif in unread_notifications %}
+                            <div class="notification-item w-full transition-all duration-300 {% if forloop.counter > 5 %}hidden opacity-0{% endif %}">
+                                {% include "partials/../partials/_notification_card.html" %}
                             </div>
                         {% empty %}
                             <p class="text-sm font-semibold opacity-40">No recent notifications.</p>
@@ -79,5 +84,6 @@
 {% endblock %}
 
 {% block footer_scripts %}
+    {{ block.super }}
     <script src="{% static 'js/overlay_triggers.js' %}"></script>
 {% endblock %}

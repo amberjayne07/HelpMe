@@ -1,0 +1,100 @@
+{% load static %}
+
+<form id="delete-post-form-{{ question.question_id }}" action="{% url 'HelpMe_app:delete_question' question.question_id %}" method="POST" class="hidden">
+    {% csrf_token %}
+</form>
+
+<c-dialog>
+    <c-alert-dialog.trigger id="js-real-comment-trigger-{{ question.question_id }}" class="hidden"></c-alert-dialog.trigger>
+    <c-dialog.content class="sm:max-w-[525px] !bg-transparent">
+        <h1 class="text-2xl"><b>Add</b> comment.</h1>
+
+        <form action="{% url 'HelpMe_app:create_comment' question.question_id %}" method="POST" class="flex flex-col gap-6 pt-4">
+            {% csrf_token %}
+
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-bold opacity-70">Your thoughts:</label>
+                <textarea name="text" class="w-full min-h-[120px] p-3 text-sm rounded-md border bg-transparent" placeholder="Write your comment here..." required></textarea>
+            </div>
+
+            <div class="pt-4 border-t border-dashed">
+                <label class="text-sm font-bold opacity-70">Add an option to the poll? (Optional)</label>
+                <p class="text-[10px] opacity-40 mb-3 italic">This will add a new choice for people to vote on.</p>
+                <c-input name="new_poll_item" placeholder="Type a new choice here..."></c-input>
+            </div>
+
+            <div class="flex justify-end mt-2">
+                <c-button variant="outline" type="submit" class="w-full sm:w-auto save-btn">
+                    <i data-lucide="send"></i> Post comment
+                </c-button>
+            </div>
+        </form>
+    </c-dialog.content>
+</c-dialog>
+
+<c-dialog>
+    <c-alert-dialog.trigger id="js-real-delete-{{ question.question_id }}" class="hidden"></c-alert-dialog.trigger>
+    <c-dialog.content class="!bg-transparent">
+        <h1 class="text-2xl"><b>Delete</b> "{{ question.title }}"?</h1>
+        <h2 class="text-sm opacity-60 mb-6"><b>This can't be undone.</b></h2>
+        <div class="flex justify-end mt-2">
+            <c-button variant="default" type="submit" class="w-full sm:w-auto destructive-btn-rev js-confirm-delete" data-target="{{ question.question_id }}">
+                <i data-lucide="trash-2"></i> Delete post
+            </c-button>
+        </div>
+    </c-dialog.content>
+</c-dialog>
+
+<c-dialog>
+    <c-alert-dialog.trigger id="js-real-edit-trigger-{{ question.question_id }}" class="hidden"></c-alert-dialog.trigger>
+    <c-dialog.content class="sm:max-w-[525px] !bg-transparent">
+        <h1 class="text-2xl"><b>Edit</b> post.</h1>
+
+        <div style="max-height: 80vh; overflow-y: auto;" class="pr-2">
+            <form action="{% url 'HelpMe_app:edit_question' question.question_id %}" method="POST" class="flex flex-col gap-6 pt-4"
+                  x-data="pollManager([{% if question.poll %}{% for item in question.poll.pollitem_set.all %}'{{ item.content|escapejs }}'{% if not forloop.last %}, {% endif %}{% endfor %}{% else %}'', ''{% endif %}], {% if question.poll %}true{% else %}false{% endif %})">
+                {% csrf_token %}
+
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-bold opacity-70">Title:</label>
+                    <c-input name="title" value="{{ question.title }}" required></c-input>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-bold opacity-70">Description:</label>
+                    <textarea name="description" class="w-full min-h-[200px] p-3 text-sm rounded-md border bg-transparent" required>{{ question.description }}</textarea>
+                </div>
+
+                <div class="pt-4">
+                    <div class="flex items-center gap-2 mb-3">
+                        <input type="checkbox" name="include_poll" id="edit-poll-toggle-{{ question.question_id }}" x-model="showPoll" @change="refreshIcons"
+                               class="w-6 h-6 rounded-md border-2 border-slate-300 bg-transparent text-black cursor-pointer checked:bg-black">
+                        <label for="edit-poll-toggle-{{ question.question_id }}" class="text-sm font-bold opacity-70 cursor-pointer">Manage poll</label>
+                    </div>
+
+                    <div x-show="showPoll" x-transition class="space-y-6 border rounded-lg border-dashed p-4">
+                        <div class="flex flex-col gap-3">
+                            <template x-for="(choice, index) in choices" :key="index">
+                                <div class="flex items-center gap-2">
+                                    <input type="text" :name="'poll_option_' + index" class="flex-1 h-10 px-3 py-2 text-sm rounded-md border bg-transparent" x-model="choices[index]">
+
+                                    <c-button type="button" variant="outline" class="destructive-btn" x-show="choices.length > 2" @click="removeChoice(index)">
+                                        <i data-lucide="trash-2"></i>
+                                    </c-button>
+                                </div>
+                            </template>
+                        </div>
+
+                        <c-button type="button" variant="outline" x-show="choices.length < 10" @click="addChoice" class="w-full justify-center">
+                            <i data-lucide="plus-circle"></i> Add Choice
+                        </c-button>
+                    </div>
+                </div>
+
+                <div class="flex justify-end pb-4">
+                    <c-button variant="outline" type="submit" class="w-full sm:w-auto save-btn"><i data-lucide="check"></i> Save changes</c-button>
+                </div>
+            </form>
+        </div>
+    </c-dialog.content>
+</c-dialog>

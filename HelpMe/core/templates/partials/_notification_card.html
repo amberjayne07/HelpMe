@@ -1,70 +1,67 @@
 {% load static %}
-
+{% csrf_token %}
 <c-card class="glass-panel notification-card relative flex flex-col border rounded-[32px] p-2 shadow-sm hover:shadow-md transition-all duration-200">
 
-    <a href="{% url 'HelpMe_app:post_overview' notif.questionID.questionID %}" class="absolute inset-0 z-0"></a>
+    <a href="{% url 'HelpMe_app:post_overview' notif.question_id.question_id %}" class="absolute inset-0 z-0"></a>
 
-    <div class="z-10 flex justify-between items-center pointer-events-none"> <span class="pl-2">
-        {% if notif.notificationType == 'LIKE' %}
-            <i data-lucide="heart" class="w-5 h-5"></i>
-        {% elif notif.notificationType == 'SUGGESTION' %}
-            <i data-lucide="message-circle-plus" class="w-5 h-5"></i>
-        {% else %}
-            <i data-lucide="message-circle-more" class="w-5 h-5"></i>
-        {% endif %}
-    </span>
+    <div class="z-10 flex justify-between items-center pointer-events-none">
+        <span class="pl-2">
+            {% if notif.notification_type == 'LIKE' %}
+                <i data-lucide="heart" class="w-5 h-5"></i>
+            {% elif notif.notification_type == 'SUGGESTION' %}
+                <i data-lucide="message-circle-plus" class="w-5 h-5"></i>
+            {% else %}
+                <i data-lucide="message-circle-more" class="w-5 h-5"></i>
+            {% endif %}
+        </span>
 
-        <span class="font-semibold">
-        {{ notif.get_notificationType_display }}
-    </span>
-        {% if not notif.isRead %}
+        <span class="font-semibold text-sm opacity-60">
+            {{ notif.notification_type }}
+        </span>
+
+        {% if not notif.is_read %}
             <c-button
                     variant="ghost"
                     type="button"
                     class="circle-btn-icononly pointer-events-auto relative z-20 dismiss-notif-btn"
                     size="icon"
                     title="Remove"
-                    data-id="{{ notif.notificationID }}">
+                    data-id="{{ notif.notification_id }}">
                 <i data-lucide="x"></i>
             </c-button>
         {% else %}
-            <c-button
-                    variant="ghost"
-                    class="circle-btn-icononly pointer-events-none relative z-20 opacity-0"
-                    size="icon"
-
-                    title="Remove"
-                    data-id="{{ notif.notificationID }}">
-                <i data-lucide="x"></i>
-            </c-button>
+            <div class="w-10 h-10"></div>
         {% endif %}
     </div>
 
-    <div class="z-10 pointer-events-none">
-        <p class="text-[15px] text-center pt-4">
-            <span class="font-extrabold">{{ notif.username.full_name }}</span>
+    <div class="z-10 pointer-events-none px-4">
+        <p class="text-[15px] text-center pt-4 leading-tight">
+            <span class="font-extrabold">{{ notif.username.full_name|default:notif.username.username }}</span>
 
-            {% if notif.notificationType == 'LIKE' %}
+            {% if notif.notification_type == 'LIKE' %}
                 liked your post
-            {% elif notif.notificationType == 'SUGGESTION' %}
-                added a suggestion to
+            {% elif notif.notification_type == 'SUGGESTION' %}
+                suggested a choice for
             {% else %}
                 commented on
             {% endif %}
 
-            <span class="font-bold">"{{ notif.questionID.title|truncatechars:35 }}"</span>
+            <span class="font-bold">"{{ notif.question_id.poll_set.first.title|default:notif.question_id.title|truncatechars:35 }}"</span>
         </p>
 
-        {% if notif.commentID %}
-            {% if notif.notificationType == 'SUGGESTION' %}
-                <div class="border-l-4 pl-4 py-1 mt-3">
-                    <p class="text-sm font-bold leading-relaxed">
-                        <!-- Poll items go here -->
-                    </p>
+        {% if notif.comment_id %}
+            {% if notif.notification_type == 'SUGGESTION' %}
+                <div class="flex flex-col items-center justify-center border border-dashed rounded-xl p-4 mt-4 text-center bg-black/[0.02]">
+                    {% for item in notif.comment_id.pollitem_set.all %}
+                        <p class="text-md font-bold leading-relaxed">
+                            {{ item.content }}
+                        </p>
+                    {% endfor %}
+                    <p class="text-[11px] opacity-40 mt-2 italic line-clamp-1">"{{ notif.comment_id.text }}"</p>
                 </div>
             {% else %}
-                <p class="text-sm opacity-70 text-center">
-                    "{{ notif.commentID.text|truncatechars:120 }}"
+                <p class="text-sm opacity-70 text-center mt-3 px-2 italic">
+                    "{{ notif.comment_id.text|truncatechars:120 }}"
                 </p>
             {% endif %}
         {% endif %}
@@ -72,14 +69,11 @@
 
     <div class="mb-4"></div>
 
-    {% if notif.notificationType == 'SUGGESTION' %}
-        <div class="flex gap-2 p-2 z-20 mt-auto">
-            <c-button variant="outline" class="flex-1 rounded-2xl h-11">
-                <i data-lucide="thumbs-up"></i>
-            </c-button>
-            <c-button variant="outline" class="flex-1 rounded-2xl h-11">
-                <i data-lucide="thumbs-down"></i>
-            </c-button>
+    {% if notif.notification_type == 'SUGGESTION' %}
+        <div class="flex gap-2 p-2 z-20 mt-auto pointer-events-auto">
+            {% with item=notif.comment_id.pollitem_set.first %}
+                {% include 'partials/_poll_item_approval.html' with item=item %}
+            {% endwith %}
         </div>
     {% endif %}
 

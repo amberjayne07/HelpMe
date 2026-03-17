@@ -11,23 +11,23 @@ class UserAdmin(BaseUserAdmin):
     # Sort users into sections
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
-        ('Personal', {'fields': ('full_name', 'email', 'dateOfBirth', 'picture', 'passwordHint')}),
+        ('Personal', {'fields': ('full_name', 'email', 'date_of_birth', 'picture', 'password_hint')}),
         ('User permissions',
          {'fields': ('type', 'is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
-        ('Important dates', {'fields': ('last_login', 'joinDate')}),
+        ('Important dates', {'fields': ('last_login', 'join_date')}),
     )
 
     # Things to check for when creating admin in the admin interface.
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'email', 'full_name', 'dateOfBirth', 'type', 'password'),
+            'fields': ('username', 'email', 'full_name', 'date_of_birth', 'type', 'password'),
         }),
     )
 
     search_fields = ('username', 'email', 'full_name')
     ordering = ('username',)
-    readonly_fields = ('joinDate',)
+    readonly_fields = ('join_date',)
 
     # Create image preview.
     def image_preview(self, obj):

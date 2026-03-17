@@ -5,9 +5,8 @@
     <head>
         <meta charset="UTF-8">
         <meta name="author" content="Web Application Systems Group B - Aaron, Amber, Angelo, Iona, Joseph">
-        <title>HelpMe - {% block title_block %}{% endblock %}</title>
+        <title>HelpMe - {% block title_block %}Welcome{% endblock %}</title>
 
-        <!--Install JQuery, icons, JavaScript access-->
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <script src="https://unpkg.com/lucide@latest"></script>
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -52,6 +51,9 @@
         {% block content_block %}{% endblock %}
     </main>
 
+    {% include 'partials/_create_post_dialog.html' %}
+    {% include 'partials/_create_category_dialog.html' %}
+
     {% block footer_block %}
         {% with url_name=request.resolver_match.url_name %}
             {% if url_name != 'about_us' %}
@@ -62,10 +64,12 @@
         {% endwith %}
     {% endblock %}
 
-
-
     {% block footer_scripts %}
-
+        <script src="{% static 'js/overlay_triggers.js' %}"></script>
+        <script src="{% static 'js/post_creator_actions.js' %}"></script>
+        <script src="{% static 'js/post_viewer_actions.js' %}"></script>
+        <script src="{% static 'js/suggestion_actions.js' %}"></script>
+        <script src="{% static 'js/poll_edit_create.js' %}"></script>
     {% endblock %}
     </body>
     </html>

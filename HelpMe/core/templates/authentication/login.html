@@ -32,8 +32,13 @@
                             {% endfor %}
                         </div>
                     {% endif %}
+
+                    {% if password_hint %}
+                        <div class="p-3 mb-4 text-sm border rounded-lg opacity-80">
+                            <p><b>Password hint:</b> {{ password_hint }}</p>
+                        </div>
+                    {% endif %}
                     <div class="flex flex-col gap-4 pt-2">
-                        <a href="#" class="font-semibold hover:underline opacity-80">Forgotten password?</a>
                         <div class="flex items-center gap-3">
                             <c-button type='submit' class="flex-1">
                                 <i data-lucide="circle-arrow-right" class="w-4 h-4 mr-2"></i> Sign in

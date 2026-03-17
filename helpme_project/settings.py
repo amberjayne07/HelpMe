@@ -65,8 +65,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'HelpMe_app.context_processors.glow_settings',  # Added glow settings to settings for context changing.
-                'HelpMe_app.context_processors.background_notifications',
-                # Added background notifications context, comes in on refresh or change of view.
+                'HelpMe_app.context_processors.background_notifications', # Added background notifications context, comes in on refresh or change of view.
+                'HelpMe_app.context_processors.global_categories', # Added categories so they can be accessed from create post view.
+
             ],
         },
     },
@@ -112,9 +113,9 @@ AUTH_USER_MODEL = 'HelpMe_app.User'
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-GB'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'GMT'
 
 USE_I18N = True
 
@@ -124,6 +125,12 @@ USE_TZ = True
 
 AUTH_REDIRECT_URL = 'HelpMe_app:home'
 MY_ACCOUNT_URL = 'HelpMe_app:my_account'
+
+LOGIN_URL = 'HelpMe_app:login'
+LOGIN_REDIRECT_URL = 'HelpMe_app:home'
+
+# Email backend for forgotten password stuff - would be smtp in real app.
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
@@ -136,4 +143,4 @@ STATICFILES_DIRS = [
 # HelpMe Exclusives for Cosmetics.
 # Pages that should use the glow animation and background extension.
 
-GLOW_PAGES = ['login', 'sign_up', 'change_password', 'my_account']
+GLOW_PAGES = ['login', 'sign_up', 'change_password', 'my_account', 'account_upsell']

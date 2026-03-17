@@ -2,103 +2,187 @@
 {% load static %}
 {% block title_block %}{{ question.title }}{% endblock %}
 {% block content_block %}
-    <div class="max-w-4xl mx-auto py-12 px-4 space-y-8">
-        <header class="space-y-4">
-            <h1 class="text-3xl font-bold tracking-tight">
-                {{ question.title }}
-            </h1>
+    {% csrf_token %}
 
-            <div class="flex items-center justify-between py-4">
-                <div class="flex items-center gap-3">
-                    <img src="
+    <section class="max-w-6xl mx-auto py-12 px-4">
+        <div class="w-full max-w-[900px] mx-auto">
 
-                            {% if 'default.png' in question.username.picture.url %}{% static 'images/profilepic_default_temp.png' %}{% else %}{{ question.username.picture.url }}{% endif %}"
+            <div class="flex items-end justify-between mb-8">
+                <h1 class="text-3xl max-w-2xl leading-tight">{{ question.title }}</h1>
+
+                {% include 'partials/_control_strip.html' with question=question is_card=False %}
+            </div>
+
+            <div class="glass-panel p-8 rounded-[32px] mb-12">
+                <div class="flex items-center gap-3 mb-6 pb-6">
+                    <img src="{% if 'default.png' in question.username.picture.url %}{% static 'images/profilepic_default_temp.png' %}{% else %}{{ question.username.picture.url }}{% endif %}"
                          class="w-10 h-10 rounded-full border object-cover"
                          alt="{{ question.username.username }}">
                     <div>
-                        <p class="font-semibold text-sm">@{{ question.username.username }}</p>
-                        <p class="text-xs">{{ question.datePosted|date:"j F Y" }}</p>
-                    </div>
-                </div>
+                        <p class="font-bold text-sm">
+                            {% if question.username.type == 'LIMITED' %}
+                                Post shared anonymously
+                            {% elif question.username == user %}
+                                Created by me
+                            {% else %}
+                                Created by: {{ question.username.username }}
+                            {% endif %}
+                        </p>
+                        <div class="flex items-center gap-2 text-sm opacity-60">
+                            <p>{{ question.date_posted|date:"j F Y" }}</p>
 
-                <div class="flex items-center gap-2">
-                    <c-button variant="outline" class="flex gap-2 items-center">
-                        <i data-lucide="heart"
-                           class="w-4 h-4 {% if user in question.liked_by.all %}fill-red-500 text-red-500{% endif %}">
-                        </i>
-                        <span class="font-medium">{{ question.liked_by.count }}</span>
-                    </c-button>
-                </div>
-            </div>
-        </header>
-
-        <div class="bg-white border rounded-2xl p-6 shadow-sm">
-            <div class="prose max-w-none">
-                <p class="text-lg leading-relaxed">
-                    {{ question.description }}
-                </p>
-            </div>
-        </div>
-
-        {% if question.poll %}
-            <section class="bg-white border rounded-2xl p-6 space-y-4">
-                <div class="flex items-center gap-2 mb-2">
-                    <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
-                    <h2 class="text-xl font-bold">{{ question.poll.title }}</h2>
-                </div>
-
-                <div class="grid gap-3">
-                    {% for item in question.poll.pollitem_set.all %}
-                        <button class="flex items-center justify-between w-full p-4 transition-all text-left">
-                            <span class="font-medium">{{ item.content }}</span>
-                            <span class="text-xs">Vote</span>
-                        </button>
-                    {% endfor %}
-                </div>
-            </section>
-        {% endif %}
-
-        <section class="space-y-6 pt-6">
-            <div class="flex items-center justify-between">
-                <h2 class="text-2xl font-bold">Comments</h2>
-                <div class="text-sm">Sorted by Newest</div>
-            </div>
-
-            <div class="p-4 border rounded-xl">
-            <textarea class="w-full p-3 bg-white border rounded-lg text-sm focus:outline-none"
-                      rows="3"
-                      placeholder="Write a helpful response..."></textarea>
-                <div class="flex justify-end mt-3">
-                    <c-button class="rounded-lg">Post Comment</c-button>
-                </div>
-            </div>
-
-            <div class="space-y-4">
-                {% for comment in question.comments.all %}
-                    <div class="p-5 bg-white border rounded-xl flex items-start gap-4 shadow-sm">
-                        <img src="
-
-                                {% if 'default.png' in comment.username.picture.url %}{% static 'images/profilepic_default_temp.png' %}{% else %}{{ comment.username.picture.url }}{% endif %}"
-                             class="w-8 h-8 rounded-full border object-cover flex-shrink-0"
-                             alt="{{ comment.username.username }}">
-                        <div class="flex-1">
-                            <div class="flex items-center justify-between mb-1">
-                                <p class="text-xs font-bold">@{{ comment.username.username }}</p>
-                                <p class="text-[10px] uppercase tracking-wider">{{ comment.postedDate|timesince }}
-                                    ago</p>
-                            </div>
-                            <p class="text-sm leading-relaxed">
-                                {{ comment.text }}
-                            </p>
+                            {% if question.last_updated|date:"U" > question.date_posted|date:"U" %}
+                                <span class="text-md font-semibold">•</span>
+                                <p class="text-xs">Edited {{ question.last_updated|timesince }} ago</p>
+                            {% endif %}
                         </div>
                     </div>
-                {% empty %}
-                    <div class="py-12 text-center border-2 border-dashed rounded-xl">
-                        <p>No comments yet. Be the first to help out!</p>
-                    </div>
-                {% endfor %}
-            </div>
-        </section>
+                </div>
 
-    </div>
+                <div class="prose max-w-none">
+                    <p class="text-lg leading-relaxed opacity-90">
+                        {{ question.description }}
+                    </p>
+                </div>
+
+                {% if question.poll %}
+                    <div class="border rounded-[32px] mt-8 p-8 space-y-6 glass-panel">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="bar-chart-2" class="w-5 h-5 opacity-40"></i>
+                                <h2 class="text-sm font-semibold opacity-40">Poll: {{ question.poll.title }}</h2>
+                            </div>
+                            {% if user_vote %}
+                                <span class="text-xs font-bold opacity-30">Results</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="grid gap-4">
+                            {% for item in question.poll.pollitem_set.all %}
+                                {% if item.approval_status == 'CREATOR' or item.approval_status == 'APPROVED' %}
+
+                                    {% if user_vote %}
+                                        <div class="w-full p-4 border rounded-2xl bg-white/60 min-h-[56px] transition-all duration-500"
+                                             style="background: linear-gradient(to right,
+                                                     rgba(255, 85, 87, 0.04) 0%,
+                                                     rgba(204, 1, 211, 0.04) {% widthratio item.vote_set.count question.poll.get_total_votes 100 %}%,
+                                                     transparent {% widthratio item.vote_set.count question.poll.get_total_votes 100 %}%,
+                                                     transparent 100%);">
+
+                                            <div class="flex items-center justify-between relative z-10">
+                                                <div class="flex items-center gap-3">
+                <span class="font-bold text-sm {% if user_vote.pollitem_id == item %}underline underline-offset-8{% endif %}">
+                    {{ item.content }}
+                </span>
+                                                    {% if user_vote.pollitem_id == item %}
+                                                        <i data-lucide="check-circle-2"
+                                                           class="w-3.5 h-3.5 opacity-60"></i>
+                                                    {% endif %}
+                                                </div>
+
+                                                <span class="text-xs font-black opacity-60">
+                {% widthratio item.vote_set.count question.poll.get_total_votes 100 %}%
+            </span>
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <form action="{% url 'HelpMe_app:vote_on_poll' item.pollitem_id %}"
+                                              method="POST">
+                                            {% csrf_token %}
+                                            <button type="submit"
+                                                    class="flex items-center justify-between w-full p-4 bg-white border rounded-2xl transition-all text-left hover:border-black group">
+                                                <span class="font-bold text-sm">{{ item.content }}</span>
+                                                <div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                    <i data-lucide="check" class="w-4 h-4"></i>
+                                                    <span class="text-sm font-bold">Select to vote</span>
+                                                </div>
+                                            </button>
+                                        </form>
+                                    {% endif %}
+
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+                        {% if user_vote %}
+                            <p class="text-center text-sm font-bold opacity-30 pt-2">
+                                {{ question.poll.get_total_votes }} vote(s) counted.
+                            </p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-2xl">Post <b>comments</b>.</h2>
+                    <p class="text-sm font-semibold opacity-60">Newest first</p>
+                </div>
+
+                <div class="space-y-4">
+                    {% for comment in question.comments.all reversed %}
+                        <div class="p-5 glass-panel border rounded-2xl flex flex-col gap-4">
+
+                            <div class="flex items-start gap-4">
+                                <img src="
+
+
+
+
+
+
+
+
+
+                                        {% if 'default.png' in comment.username.picture.url %}{% static 'images/profilepic_default_temp.png' %}{% else %}{{ comment.username.picture.url }}{% endif %}"
+                                     class="w-8 h-8 rounded-full border object-cover shrink-0"
+                                     alt="{{ comment.username.username }}">
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between">
+                                        <p class="text-sm font-bold">{{ comment.username.username }}</p>
+                                        <p class="text-xs font-semibold opacity-60">{{ comment.posted_date|timesince }}
+                                            ago</p>
+                                    </div>
+                                    <p class="text-md leading-relaxed opacity-90">
+                                        {{ comment.text }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            {% if comment.pollitem_set.all %}
+                                <div class="space-y-3">
+                                    {% for item in comment.pollitem_set.all %}
+                                        <div class="border rounded-xl p-3 flex items-center justify-between gap-4 bg-white/30">
+                                            <div class="flex-1">
+                                                <p class="text-sm mb-1 opacity-30">
+                                                    Suggestion:</p>
+                                                <p class="text-md font-bold">"{{ item.content }}"</p>
+                                            </div>
+
+                                            <div class="flex items-center gap-3 shrink-0 pointer-events-auto">
+                                                {% if question.username == user %}
+                                                    {% include 'partials/_poll_item_approval.html' with item=item %}
+                                                {% else %}
+                                                    <span class="text-sm font-bold opacity-40 px-3">
+                            {{ item.get_approval_status_display }}
+                        </span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                        </div>
+                    {% empty %}
+                        <div class="py-12 text-center border-2 border-dashed rounded-2xl opacity-50">
+                            <p class="text-md font-semibold">No comments yet.</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </section>
+    {% include 'partials/_overlay_dialogs.html' with question=question %}
 {% endblock %}

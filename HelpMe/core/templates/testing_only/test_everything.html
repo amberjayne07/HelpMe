@@ -10,7 +10,7 @@
                 {% for user in users %}
                     <li class="text-sm">
                         <strong>{{ user.username }}</strong> | {{ user.email }} | Type: {{ user.type }} |
-                        DOB: {{ user.dateOfBirth }} | ID: {{ user.id }}
+                        DOB: {{ user.date_of_birth }} | ID: {{ user.id }}
                     </li>
                 {% endfor %}
             </ul>
@@ -21,7 +21,7 @@
                 {% for q in questions %}
                     <div class="p-4 border rounded">
                         <p class="font-bold">{{ q.title }}</p>
-                        <p class="text-xs">By: {{ q.username.username }} in {{ q.categoryID.name }} | ID: {{ q.questionID }}</p>
+                        <p class="text-xs">By: {{ q.username.username }} in {{ q.category_id.name }} | ID: {{ q.question_id }}</p>
                         <p class="text-sm mt-2 italic">"{{ q.description|truncatewords:15 }}"</p>
                         <p class="text-xs mt-3 font-bold">
                             Likes ({{ q.liked_by.count }}):
@@ -38,9 +38,9 @@
             <ul class="space-y-4">
                 {% for comment in comments %}
                     <li class="text-sm border-l-4 pl-4">
-                        <p><strong>{{ comment.username.username }}</strong> on <strong>{{ comment.questionID.title }}</strong></p>
+                        <p><strong>{{ comment.username.username }}</strong> on <strong>{{ comment.question_id.title }}</strong></p>
                         <p class="opacity-80">"{{ comment.text }}"</p>
-                        <p class="text-[10px] uppercase tracking-wider mt-1">{{ comment.postedDate }} | ID: {{ comment.commentID }}</p>
+                        <p class="text-[10px] uppercase tracking-wider mt-1">{{ comment.posted_date }} | ID: {{ comment.comment_id }}</p>
                     </li>
                 {% endfor %}
             </ul>
@@ -50,17 +50,17 @@
             {% for poll in polls %}
                 <div class="mb-6">
                     <h3 class="font-semibold">{{ poll.title }} <span
-                            class="text-xs font-normal">ID: {{ poll.pollID }} | Attached to: {{ poll.questionID.title }}</span></h3>
+                            class="text-xs font-normal">ID: {{ poll.poll_id }} | Attached to: {{ poll.question_id.title }}</span></h3>
                     <ul class="ml-6 mt-2 space-y-3 text-sm">
                         {% for item in poll_items %}
-                            {% if item.pollID == poll %}
+                            {% if item.poll_id == poll %}
                                 <li class="p-2 border-l-2 border-neutral-200">
-                                    <strong>{{ item.content }}</strong> (Status: {{ item.approvalStatus }})
+                                    <strong>{{ item.content }}</strong> (Status: {{ item.approval_status }})
                                     <p class="text-xs mt-1 text-neutral-600">
-                                        Linked Comment: <span class="italic">"{{ item.commentID.text|truncatechars:50 }}"</span>
+                                        Linked Comment: <span class="italic">"{{ item.comment_id.text|truncatechars:50 }}"</span>
                                     </p>
                                     <p class="text-[10px] opacity-60 uppercase mt-1">
-                                        Submitted by: {{ item.username.username }} | Item ID: {{ item.pollItemID }} | Comment ID: {{ item.commentID.commentID|truncatechars:10 }}
+                                        Submitted by: {{ item.username.username }} | Item ID: {{ item.pollitem_id }} | Comment ID: {{ item.comment_id.comment_id|truncatechars:10 }}
                                     </p>
                                 </li>
                             {% endif %}
@@ -85,14 +85,14 @@
                 {% for n in notifications %}
                     <tr class="border-b border-dashed">
                         <td class="py-2">{{ n.username.username }}</td>
-                        <td class="py-2">{{ n.notificationType }}</td>
-                        <td class="py-2">{{ n.isRead|yesno:"YES,NO" }}</td>
+                        <td class="py-2">{{ n.notification_type }}</td>
+                        <td class="py-2">{{ n.is_read|yesno:"YES,NO" }}</td>
                         <td class="py-2 text-xs">
-                            {% if n.commentID %}
-                                <span class="font-semibold">Text:</span> "{{ n.commentID.text|truncatechars:30 }}"<br>
-                                <span class="opacity-60">ID: {{ n.commentID.commentID|truncatechars:15 }}</span>
+                            {% if n.comment_id %}
+                                <span class="font-semibold">Text:</span> "{{ n.comment_id.text|truncatechars:30 }}"<br>
+                                <span class="opacity-60">ID: {{ n.comment_id.comment_id|truncatechars:15 }}</span>
                             {% else %}
-                                {% if n.notificationType == 'LIKE' %}
+                                {% if n.notification_type == 'LIKE' %}
                                     <span class="opacity-40 italic">None (This is expected for likes.)</span>
                                 {% else %}
                                     <span class="text-red-500 font-bold">Missing a link to comment.</span>

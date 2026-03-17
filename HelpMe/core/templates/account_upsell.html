@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title_block %}Join us{% endblock %}
+{% block header_block %}{% endblock %}
+{% block content_block %}
+    <section id="signing-in" next-url="{{ redirect_url }}"
+             class="fixed inset-0 flex items-center justify-center">
+        <div class="flex flex-col items-center space-y-8 text-center">
+    <div class="space-y-8 px-8">
+        <div class="text-4xl opacity-80">There's always <b>more to enjoy</b> with an account.</div>
+        <div class="text-xl font-semibold opacity-60">Comment, like and make suggestions on posts. Organise, sort and search. Curate your profile.</div>
+
+        <c-button size="lg" class="relative">
+            <a href="{% url 'HelpMe_app:sign_up' %}" class="absolute inset-0"></a>
+            Get started
+        </c-button>
+
+        <c-button size="lg" variant="outline" class="relative" id="back-btn" data-home-url="{% url 'HelpMe_app:home' %}">
+            <a href="{% url 'HelpMe_app:go_back' %}" class="absolute inset-0"></a>
+            Maybe later
+        </c-button>
+    </div>
+</div>
+    </section>
+{% endblock %}
+{% block footer_block %}{% endblock %}
+{% block footer_scripts %}<script src="{% static 'js/browser_navigation.js' %}"></script>{% endblock %}

@@ -40,6 +40,7 @@
     right: 1rem !important;
     left: auto !important;
     top: 64px !important;
+    border-radius: 32px !important;
 }
 
 [data-radix-collection] [role="dialog"][class*="fixed"] {
@@ -57,6 +58,51 @@
     backdrop-filter: blur(4px);
 }
 
+/* Custom button shading. */
+.destructive-btn {
+    color: rgb(239, 68, 68);
+    background-color: white;
+    transition: all 0.2s ease-in-out;
+}
+
+.destructive-btn:hover {
+    color: rgb(220, 38, 38);
+    background-color: rgb(254, 242, 242);
+}
+
+.destructive-btn-rev {
+    color: white;
+    background-color: rgb(239, 68, 68);
+    transition: all 0.2s ease-in-out;
+}
+
+.destructive-btn-rev:hover {
+    color: rgb(254, 242, 242);
+    background-color: rgb(220, 38, 38);
+}
+
+.save-btn {
+    color: rgb(0, 100, 220);
+    background-color: white;
+    transition: all 0.2s ease-in-out;
+}
+
+.save-btn:hover {
+    color: rgb(0, 80, 200);
+    background-color: rgb(213, 229, 255);
+}
+
+.save-btn-rev {
+    color: white;
+    background-color: rgb(0, 100, 220);
+    transition: all 0.2s ease-in-out;
+}
+
+.save-btn-rev:hover {
+    color: rgb(197, 209, 255);
+    background-color: rgb(0, 80, 200);
+}
+
 /* Styling for cards */
 
 /* Glass panel to be used on top of glow backgrounds */
@@ -68,6 +114,13 @@
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
 }
 
+.glass-panel-sm {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+}
 
 /* ANIMATIONS */
 /* ALL PAGES */
@@ -241,4 +294,29 @@ main {
     opacity: 50%;
     border-color: #d40ec0;
     box-sizing: border-box;
+}
+
+@keyframes heart-pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.4); }
+    100% { transform: scale(1); }
+}
+
+.animate-pop {
+    animation: heart-pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.js-like-button.is-liked {
+    background-color: rgba(239, 68, 68, 0.05) !important;
+    color: #ef4444 !important;
+    border-color: rgba(239, 68, 68, 0.2) !important;
+}
+
+.js-like-button.is-liked i {
+    fill: currentColor;
+}
+
+.js-like-count {
+    display: block;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }

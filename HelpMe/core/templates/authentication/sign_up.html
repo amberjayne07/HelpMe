@@ -42,15 +42,15 @@
                             </c-form.field>
 
                             <c-form.field>
-                                <c-form.label for='id_dateOfBirth'>Date of birth</c-form.label>
+                                <c-form.label for='id_date_of_birth'>Date of birth</c-form.label>
                                 <div class="relative">
-                                    <c-input id='id_dateOfBirth'
-                                             name="dateOfBirth"
+                                    <c-input id='id_date_of_birth'
+                                             name="date_of_birth"
                                              type='date'
-                                             value="{{ form.dateOfBirth.value|default:'' }}"/>
+                                             value="{{ form.date_of_birth.value|default:'' }}"/>
                                     <i data-lucide="calendar" class="absolute right-3 top-2.5 w-4 h-4 opacity-40"></i>
                                 </div>
-                                {% if form.dateOfBirth.errors %}
+                                {% if form.date_of_birth.errors %}
                                     <p class="text-xs mt-1 opacity-60">You need to enter your date of birth.</p>
                                 {% endif %}
                             </c-form.field>
@@ -100,11 +100,11 @@
                     </div>
 
                     <c-form.field>
-                        <c-form.label for='id_passwordHint'>Password hint (optional)</c-form.label>
-                        <c-input id='id_passwordHint'
-                                 name="passwordHint"
-                                 placeholder="{{ form.passwordHint.field.widget.attrs.placeholder }}"
-                                 value="{{ form.passwordHint.value|default:'' }}"/>
+                        <c-form.label for='id_password_hint'>Password hint (optional)</c-form.label>
+                        <c-input id='id_password_hint'
+                                 name="password_hint"
+                                 placeholder="{{ form.password_hint.field.widget.attrs.placeholder }}"
+                                 value="{{ form.password_hint.value|default:'' }}"/>
                     </c-form.field>
 
                     {% if form.non_field_errors %}

@@ -10,26 +10,35 @@ document.addEventListener('DOMContentLoaded', () => {
         const isMarkAll = btn.classList.contains('mark-all-btn');
         const isSingle = btn.classList.contains('dismiss-notif-btn');
 
-        // Animations
-        const targets = isSingle ? [btn.closest('.notification-item')] : document.querySelectorAll('.notification-item');
-        targets.forEach(t => {
-            t.style.opacity = '0';
-            t.style.transform = 'scale(0.95)';
+        const url = isSingle ? `/notifications/mark-read/${btn.dataset.id}/` :
+            isHistory ? '/notifications/clear-history/' : '/notifications/mark-all-read/';
+
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {'X-CSRFToken': getCookie('csrftoken')}
         });
 
-        // Reload
-        setTimeout(() => {
-            if (isSingle) targets[0].remove();
-            if (isHistory || isMarkAll) location.reload();
-        }, 300);
+        if (response.ok) {
+            // Animations
+            const targets = isSingle ? [btn.closest('.notification-item')] : document.querySelectorAll('.notification-item');
+            targets.forEach(t => {
+                t.style.opacity = '0';
+                t.style.transform = 'scale(0.95)';
+                t.style.transition = '0.3s ease';
+            });
+            // Reload
+            setTimeout(() => {
+                if (isSingle) {
+                    targets[0].remove();
+                    updateBadge();
 
-        const url = isSingle ? `/notifications/mark-read/${btn.dataset.id}/` :
-                    isHistory ? '/notifications/clear-history/' : '/notifications/mark-all-read/';
-
-        await fetch(url, { method: 'POST', headers: { 'X-CSRFToken': getCookie('csrftoken') } });
-
-        // Update the badge if the x button clicked rather than all.
-        if (isSingle) updateBadge();
+                    if (window.location.pathname.includes('my-account')) {
+                        location.reload();
+                    }
+                }
+                if (isHistory || isMarkAll) location.reload();
+            }, 300);
+        }
     });
 });
 

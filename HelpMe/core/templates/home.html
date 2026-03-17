@@ -9,7 +9,11 @@
         <div class="flex flex-col items-center justify-center w-full space-y-12">
 
             <section class="w-full max-w-2xl text-center mt-4">
-                <h1 class="text-3xl">What can we <b>help</b> you with?</h1>
+                {% if user.is_authenticated %}
+                    <h1 class="text-3xl">What can we <b>help</b> you with, {{ user.username }}?</h1>
+                {% else %}
+                    <h1 class="text-3xl">What can we <b>help</b> you with?</h1>
+                {% endif %}
             </section>
 
             <section class="w-full flex flex-col items-center px-4">
@@ -24,6 +28,7 @@
                             {% endfor %}
                         </c-tabs.list>
 
+                        {% if user.is_authenticated %}
                         <div class="flex items-center gap-2">
                             <c-button variant="outline" size="sm" class="flex items-center gap-2">
                                 <i data-lucide="arrow-up-down" class="w-4 h-4"></i> Sort
@@ -32,6 +37,7 @@
                                 <i data-lucide="filter" class="w-4 h-4"></i> Filter
                             </c-button>
                         </div>
+                        {% endif %}
                     </div>
 
                     <div class="w-full max-w-5xl text-center">

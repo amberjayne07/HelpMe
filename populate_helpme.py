@@ -4,7 +4,8 @@ import django
 django.setup()
 
 import uuid
-from HelpMe_app.models import User, Category, Question, Notification, Poll, Comment, PollItem
+from HelpMe_app.models import User, Category, Question, Notification, Poll, Comment, PollItem, Vote
+
 
 def add_user(username, password, user_type, full_name, email, date_of_birth, picture, password_hint):
     """Helper function to create or get a user"""
@@ -15,9 +16,10 @@ def add_user(username, password, user_type, full_name, email, date_of_birth, pic
             'type': user_type,
             'full_name': full_name,
             'email': email,
-            'dateOfBirth': date_of_birth,
+            'date_of_birth': date_of_birth,
             'picture': picture,
-            'passwordHint': password_hint
+            'password_hint': password_hint,
+            'is_active': True,
         }
     )
     if created:
@@ -39,11 +41,11 @@ def add_category(name, slug):
 def add_question(category, username, title, description):
     """Helper function to create or get a question"""
     q, created = Question.objects.get_or_create(
-        categoryID=category,
+        category_id=category,
         username=username,
         title=title,
         defaults={
-            'questionID': uuid.uuid4(),
+            'question_id': uuid.uuid4(),
             'description': description,
         }
     )
@@ -52,45 +54,58 @@ def add_question(category, username, title, description):
 def add_comment(question, username, text):
     """Helper function to create or get a comment"""
     comment, created = Comment.objects.get_or_create(
-        questionID=question,
+        question_id=question,
         username=username,
         text=text,
-        defaults={'commentID': uuid.uuid4()}
+        defaults={'comment_id': uuid.uuid4()}
     )
     return comment, created
 
 def add_notification(question, username, notification_type, comment=None, is_read=False):
     """Helper function to create or get a notification"""
+    if notification_type in ['COMMENT', 'SUGGESTION'] and not comment:
+        return None, False
+
     notif, created = Notification.objects.get_or_create(
-        questionID=question,
+        question_id=question,
         username=username,
-        notificationType=notification_type,
-        commentID=comment,
-        defaults={'notificationID': uuid.uuid4(), 'isRead': is_read}
+        notification_type=notification_type,
+        comment_id=comment,
+        defaults={'notification_id': uuid.uuid4(), 'is_read': is_read}
     )
     return notif, created
 
 def add_poll(question, title):
     """Helper function to create or get a poll"""
     poll, created = Poll.objects.get_or_create(
-        questionID=question,
-        defaults={'pollID': uuid.uuid4(), 'title': title}
+        question_id=question,
+        defaults={'poll_id': uuid.uuid4(), 'title': title}
     )
     return poll, created
 
 def add_poll_item(poll, username, content, comment, approval_status='NEUTRAL'):
     """Helper function to create or get a poll item"""
     item, created = PollItem.objects.get_or_create(
-        pollID=poll,
+        poll_id=poll,
+        username=username,
         content=content,
-        commentID=comment,
+        comment_id=comment,
         defaults={
-            'pollItemID': uuid.uuid4(),
-            'username': username,
-            'approvalStatus': approval_status
+            'pollitem_id': uuid.uuid4(),
+            'approval_status': approval_status
         }
     )
     return item, created
+
+def add_vote(username, poll_item, session_key=None):
+    """Helper function to create a vote if it doesn't exist"""
+    vote, created = Vote.objects.get_or_create(
+        username=username,
+        pollitem_id=poll_item,
+        session_key=session_key,
+        defaults={'vote_id': uuid.uuid4()}
+    )
+    return vote, created
 
 def populate():
     # User data
@@ -212,8 +227,8 @@ def populate():
         (1, 'user1', 'Django has more built-in features, Flask is more flexible.'),
         (2, 'admin', 'Use semantic HTML and validate your code.')
     ]
-    for questionID, username, text in comment_data:
-        comment, created = add_comment(questions[questionID], users[username], text)
+    for question_id, username, text in comment_data:
+        comment, created = add_comment(questions[question_id], users[username], text)
         comments.append(comment)
     print(f'- Created {len(comments)} comments')
 
@@ -229,6 +244,16 @@ def populate():
     add_poll_item(poll2, users['user2'], 'Django', comment=comments[1], approval_status='APPROVED')
     add_poll_item(poll2, users['limited_user'], 'Flask', comment=suggestion_comment2, approval_status='DECLINED')
     print('- Created 2 polls with 4 poll items')
+
+    item_tutorial = PollItem.objects.get(content='Official Python Tutorial')
+    item_django = PollItem.objects.get(content='Django')
+
+    add_vote(users['user2'], item_tutorial)
+    add_vote(users['limited_user'], item_tutorial, session_key='guest_session_123')
+    add_vote(users['limited_user'], item_django, session_key='guest_session_456')
+    add_vote(users['admin'], item_django)
+    add_vote(users['user1'], item_django)
+    print('- Added 5 votes')
 
     # Create notifications
     notifications = []
@@ -252,6 +277,7 @@ def print_summary():
     print(f'Notifications: {Notification.objects.count()}')
     print(f'Polls: {Poll.objects.count()}')
     print(f'Poll Items: {PollItem.objects.count()}')
+    print(f'Votes: {Vote.objects.count()}')
 
 if __name__ == '__main__':
     print("Starting HelpMe population script...")
