@@ -8,20 +8,24 @@ Ask questions, post your thoughts. Comment with insight. Suggest solutions. Orga
 
 helpMe is a web application built in Python and Django using CSS Frameworks, JavaScript, JQuery and AJAX that allows users to create accounts for a safe messaging and social platform to help them make decisions, whether they be about life/social, money or work/ school. Those who want to post discretely can do too, with anonymity being a core focus for us. For making suggestions or other relevant comments we do ask that you create an account for the safety of our users.
 
-This is a work-in-progress project and will be continuously developed. If you have any feedback, feel free to click the button at the bottom of this readme.
-
-### Features
-* **Account Management**: Create, edit, and delete user accounts with sign in. Or, browse, post and vote anonymously.
-* **Content Control**: Post, edit, and remove entries with categories (Social, Work, Health, Money, etc.).
-* **Dynamic Voting**: Vote on choices given by other users, and create polls of your own.
-* **Community Interaction**: Registered users can engage in discussions with comments and make their own poll suggestions.
-* **Discovery & Sorting**: Browse, filter, search and sort through posts. See what's trending.
-* **Moderation**: Admin tools to remove content that isn't suitable for the platform.
-* **Notifications**: See how your posts are getting on with your personalised feed, and take action without leaving it!
-
 ### Technologies
 * We're using Django & Python, in addition to JavaScript, JQuery and AJAX throughout this project
 * We are also using the Tailwind CSS framework with the Shadcn UI layer on top for greater user experience. Notably, we'll be using a fork of Shadcn known as <b>shadcn-django</b> for better utility in our codebase. You can find this fork [here](https://shadcn-django.com)
+
+Other frameworks / resources we use:
+* Django (6.0.3)
+* Django-Cotton
+* Tailwind CSS
+* Shadcn-django
+* Pillow
+* Alpine JS (for specific animation logic)
+* JQuery
+* PYTZ
+* SQLParse
+* TZData
+* Wheel
+* asgiref
+* Conda (virtual environment)
 
 > [!NOTE]  
 > Due to our CSS Framework used, we will be using specific versions of Django and Python. Do not use versions lower than these when contributing to the repository
