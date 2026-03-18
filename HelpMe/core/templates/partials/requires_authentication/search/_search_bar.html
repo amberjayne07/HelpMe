@@ -1,37 +1,32 @@
 <div class="relative w-full max-w-[700px] mx-auto">
-{% if user.is_authenticated %}
-    <div class="flex items-center shadow-md border border-slate-200 rounded-full transition-all px-4 py-1">
-        <c-command>
-            <c-command.input
-                    id="search_input"
-                    placeholder="Search for issues..."></c-command.input>
-        </c-command>
-    </div>
-{% else %}
-    <a href="{% url "HelpMe_app:account_upsell" %}">
-<div class="flex items-center border pointer-events-none border-slate-200 rounded-full transition-all px-4 py-1">
-        <c-command>
-            <c-command.input
-                    id="search_input"
-                    placeholder="Search for issues..."></c-command.input>
-        </c-command>
-    </div>
-    </a>
-{% endif %}
+    {% if user.is_authenticated %}
+        <div class="flex items-center shadow-md border border-slate-200 rounded-full transition-all px-4 py-1">
+            <c-command>
+                <c-command.input
+                        id="search_input"
+                        placeholder="Search for issues..."></c-command.input>
+            </c-command>
+        </div>
+    {% else %}
+        <a href="{% url "HelpMe_app:account_upsell" %}">
+            <div class="flex items-center border pointer-events-none border-slate-200 rounded-full transition-all px-4 py-1">
+                <c-command>
+                    <c-command.input
+                            id="search_input"
+                            placeholder="Search for issues..."></c-command.input>
+                </c-command>
+            </div>
+        </a>
+    {% endif %}
 
     <div id="search_results"
-         class="absolute top-full left-0 right-0 mt-3
+         class="absolute top-full left-0 right-0 mt-3 z-50
                 opacity-0 pointer-events-none duration-300">
 
         <div class="bg-white border border-slate-400 rounded-[32px] shadow-2xl overflow-hidden">
-            <c-command.list class="max-h-[380px] overflow-y-auto p-2">
-                <c-command.group heading="My account" class="px-2 pb-2">
-                    <c-command.item class="rounded-2xl mx-1 cursor-pointer">
-                        <a href="{% url 'HelpMe_app:my_account' %}" class="w-full">
-                            My uploads
-                        </a>
-                    </c-command.item>
-                </c-command.group>
+            <c-command.list
+                    class="overflow-y-auto flex flex-col items-center justify-center text-center p-4">
+                <p class="font-semibold text-sm opacity-60">Type a few characters to see search results.</p>
             </c-command.list>
         </div>
     </div>

@@ -1,10 +1,10 @@
 {% load static %}
 
 {% with url_name=request.resolver_match.url_name %}
-    <div class="flex items-center justify-between relative z-50">
+    <div class="flex items-center justify-between relative">
 
         <div class="flex items-center gap-1">
-            <div class="relative h-10 w-auto flex items-center overflow-hidden">
+            <div class="relative h-8 w-auto flex items-center overflow-hidden">
                 <img src="{% static 'images/helpme_icon_only.png' %}"
                      alt="helpMe Icon"
                      class="h-8 w-auto block md:hidden">
@@ -34,17 +34,13 @@
         <div class="flex items-center gap-2">
             {% if url_name != 'login' and url_name != 'sign_up' and url_name != 'change_password' %}
                 <c-button variant="ghost"
-                          class="circle-btn-icononly flex gap-2 items-center js-proxy-create h-9 px-4">
+                          class="circle-btn-icononly js-proxy-create">
                     <i data-lucide="badge-plus" class="pointer-events-none"></i>
                 </c-button>
 
                 {% if user.is_authenticated %}
                     {% if user.is_superuser %}
-                        <c-button variant="ghost"
-                                  class="flex gap-2 items-center h-9 px-4"
-                                  data-trigger-click="js-create-category-trigger">
-                            <i data-lucide="folder-plus" class="pointer-events-none"></i>Add category
-                        </c-button>
+
                     {% endif %}
 
                     {% include "partials/requires_authentication/_notification_sheet.html" %}

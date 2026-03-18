@@ -17,6 +17,7 @@ Other frameworks / resources we use:
 * Django-Cotton
 * Tailwind CSS
 * Shadcn-django
+* Django Unfold (administrator interface)
 * Pillow
 * Alpine JS (for specific animation logic)
 * JQuery

@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['192.168.1.221', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'unfold',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -65,8 +66,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'HelpMe_app.context_processors.glow_settings',  # Added glow settings to settings for context changing.
-                'HelpMe_app.context_processors.background_notifications', # Added background notifications context, comes in on refresh or change of view.
-                'HelpMe_app.context_processors.global_categories', # Added categories so they can be accessed from create post view.
+                'HelpMe_app.context_processors.background_notifications',
+                # Added background notifications context, comes in on refresh or change of view.
+                'HelpMe_app.context_processors.global_categories',
+                # Added categories so they can be accessed from create post view.
 
             ],
         },
@@ -139,6 +142,15 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+
+# Build of the new admin interface...
+UNFOLD = {
+    "SITE_TITLE": "helpMe for admins",
+    "SITE_LOGO": {
+        "light": "/static/images/helpme_logo.png",  # Path to light mode logo
+        "dark": "/static/images/helpme_logo.png",  # Path to dark mode logo
+    },
+}
 
 # HelpMe Exclusives for Cosmetics.
 # Pages that should use the glow animation and background extension.

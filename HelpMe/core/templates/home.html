@@ -5,7 +5,7 @@
 
 {% block content_block %}
     <section
-            class="max-w-6xl mx-auto min-h-[70vh] flex items-center justify-center md:justify-between gap-12 relative z-50">
+            class="max-w-6xl mx-auto min-h-[70vh] flex items-center justify-center md:justify-between gap-12">
         <div class="flex flex-col items-center justify-center w-full space-y-12">
 
             <section class="w-full max-w-2xl text-center mt-4">
@@ -16,9 +16,17 @@
                 {% endif %}
             </section>
 
-            <div class="w-full relative z-[100] px-4">
+
+            <div class="w-full relative px-4">
                 {% include "partials/requires_authentication/search/_search_bar.html" %}
             </div>
+
+            {% if user.is_superuser %}
+                <c-button variant="link" class="relative overflow-hidden">
+                    <i data-lucide="wrench" class="w-5 h-5 mr-2"></i> Go to your new admin dashboard
+                    <a href="admin" class="absolute inset-0 z-10"></a>
+                </c-button>
+            {% endif %}
 
             <section class="w-full flex flex-col items-center">
                 <c-tabs default_value="{{ categories.0.slug|default:'all' }}" class="w-full flex flex-col items-center">

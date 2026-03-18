@@ -9,7 +9,7 @@
             <span class="sr-only">View {{ question.title }}</span>
         </a>
 
-        <div class="flex-1 z-10 pointer-events-none">
+        <div class="flex-1 pointer-events-none">
             <h3 class="text-lg font-bold">
                 {{ question.title }}
             </h3>
@@ -19,8 +19,7 @@
         </div>
 
         {% if not hide_footer %}
-            <div class="flex items-center justify-between pt-4 relative z-20">
-
+            <div class="flex items-center justify-between pt-4">
                 <div class="flex items-center gap-2 pointer-events-none">
                     <img src="{{ question.username.picture.url }}"
                          class="w-6 h-6 rounded-full object-cover border" alt="...">

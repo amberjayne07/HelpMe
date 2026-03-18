@@ -22,9 +22,6 @@ urlpatterns = [
     path('my-account/', views.my_account, name='my_account'),
     path("delete-account/", views.delete_account, name="delete_account"),
 
-
-    path('test-everything/', views.test_everything, name='test_everything'),
-
     # RESPONDING TO POSTS
     path('post/<uuid:question_id>/', views.post_overview, name='post_overview'),
     path('post/<uuid:question_id>/like/', views.like_question, name='like_question'),
@@ -42,9 +39,6 @@ urlpatterns = [
     path('notifications/mark-read/<uuid:notification_id>/', views.mark_notification_read, name='mark_notification_read'),
     path('notifications/mark-all-read/', views.mark_all_notifications_read, name='mark_all_notifications_read'),
     path('notifications/clear-history/', views.clear_notification_history, name='clear_notification_history'),
-
-    # ADMIN ONLY
-    path('category/create/', views.create_category, name='create_category'),
     
     path("search/", views.search, name="search"),
 ]

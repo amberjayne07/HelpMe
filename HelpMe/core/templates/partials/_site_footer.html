@@ -7,12 +7,6 @@
             © 2026 helpMe
         </div>
         <div class="flex justify-end">
-            {% if user.is_superuser %}
-            <c-button variant="link" class="relative overflow-hidden">
-                <i data-lucide="wrench" class="w-5 h-5 mr-2"></i> Debug
-                <a href="{% url 'HelpMe_app:test_everything' %}" class="absolute inset-0 z-10"></a>
-            </c-button>
-            {% endif %}
             <c-button variant="link" class="relative overflow-hidden">
                 <i data-lucide="info" class="w-5 h-5 mr-2"></i> About
                 <a href="{% url 'HelpMe_app:about_us' %}" class="absolute inset-0 z-10"></a>

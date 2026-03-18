@@ -6,26 +6,25 @@
 
 <c-dialog>
     <c-alert-dialog.trigger id="js-real-comment-trigger-{{ question.question_id }}" class="hidden"></c-alert-dialog.trigger>
-    <c-dialog.content class="sm:max-w-[525px] !bg-transparent">
+    <c-dialog.content>
         <h1 class="text-2xl"><b>Add</b> comment.</h1>
 
-        <form action="{% url 'HelpMe_app:create_comment' question.question_id %}" method="POST" class="flex flex-col gap-6 pt-4">
+        <form action="{% url 'HelpMe_app:create_comment' question.question_id %}" method="POST" class="flex flex-col gap-6">
             {% csrf_token %}
 
             <div class="flex flex-col gap-2">
-                <label class="text-sm font-bold opacity-70">Your thoughts:</label>
-                <textarea name="text" class="w-full min-h-[120px] p-3 text-sm rounded-md border bg-transparent" placeholder="Write your comment here..." required></textarea>
+                <label class="text-sm font-bold opacity-70">Enter some text for the comment:</label>
+                <c-textarea name="text" placeholder="Write your comment here..." required></c-textarea>
             </div>
 
-            <div class="pt-4 border-t border-dashed">
-                <label class="text-sm font-bold opacity-70">Add an option to the poll? (Optional)</label>
-                <p class="text-[10px] opacity-40 mb-3 italic">This will add a new choice for people to vote on.</p>
-                <c-input name="new_poll_item" placeholder="Type a new choice here..."></c-input>
+            <div>
+                <label class="text-sm font-bold opacity-70">Suggest an item to a poll? (Optional)</label>
+                <c-input name="new_poll_item" class="mt-2" placeholder="Make a suggestion"></c-input>
             </div>
 
             <div class="flex justify-end mt-2">
                 <c-button variant="outline" type="submit" class="w-full sm:w-auto save-btn">
-                    <i data-lucide="send"></i> Post comment
+                    <i data-lucide="message-square-more"></i> Post comment
                 </c-button>
             </div>
         </form>

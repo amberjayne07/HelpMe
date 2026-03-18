@@ -1,8 +1,9 @@
 asgiref==3.11.1
 Django==6.0.3
-django-cotton==2.6.1
+django-cotton==2.6.2
+django-unfold==0.85.0
 packaging==24.0
-pillow==10.2.0
+pillow==12.1.1
 pytz==2026.1.post1
 setuptools==80.10.2
 sqlparse==0.5.5

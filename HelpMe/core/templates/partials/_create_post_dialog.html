@@ -15,8 +15,8 @@
             {% endif %}
         </div>
 
-        <div style="max-height: 80vh; overflow-y: auto;" class="pr-2">
-            <form action="{% url 'HelpMe_app:create_question' %}" method="POST" class="flex flex-col gap-6 pt-4"
+        <div style="max-height: 80vh; overflow-y: auto;">
+            <form action="{% url 'HelpMe_app:create_question' %}" method="POST" class="flex flex-col gap-4"
                   x-data="pollManager(['', ''], false)">
                 {% csrf_token %}
 
@@ -87,7 +87,7 @@
                     </div>
                 </div>
 
-                <div class="flex justify-end pb-4">
+                <div class="flex justify-end">
                     <c-button variant="outline" type="submit" class="w-full sm:w-auto save-btn-rev"><i
                             data-lucide="send"></i> Upload
                     </c-button>

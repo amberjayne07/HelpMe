@@ -4,7 +4,7 @@
 {% block content_block %}
     {% csrf_token %}
 
-    <section class="max-w-6xl mx-auto py-12 px-4">
+    <section class="max-w-6xl mx-auto px-4">
         <div class="w-full max-w-[900px] mx-auto">
             <div class="flex items-end justify-between mb-8">
                 <h1 class="text-3xl max-w-2xl leading-tight">{{ question.title }}</h1>
@@ -20,7 +20,7 @@
                         <p class="font-bold text-sm">
                             {% if question.username.type == 'LIMITED' %}
                                 Post shared anonymously
-                            {% elif question.username == user %}
+                            {% elif qnnuestion.username == user %}
                                 Created by me
                             {% else %}
                                 Created by: {{ question.username.username }}

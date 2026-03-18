@@ -4,6 +4,13 @@
     <div class="flex items-center gap-2 pointer-events-auto">
         {% if user.is_authenticated %}
             {% if question.username == user and question.username.type != 'LIMITED' %}
+                <c-button variant="ghost"
+                          class="flex gap-2 items-center js-like-button h-9 px-3 relative z-30 pointer-events-none {% if user in question.liked_by.all %}is-liked{% endif %}">
+                    <i data-lucide="heart" class="w-4 h-4 pointer-events-none"></i>
+                    <div class="overflow-hidden h-4 pointer-events-none">
+                        <span class="js-like-count text-xs font-bold block">{{ question.liked_by.count }}</span>
+                    </div>
+                </c-button>
                 <c-button variant="outline" class="flex gap-2 items-center js-proxy-edit h-9 px-3 relative z-30" data-target="{{ question.question_id }}">
                     <i data-lucide="pencil" class="w-4 h-4 pointer-events-none"></i>
                 </c-button>
@@ -42,6 +49,13 @@
     <div class="flex gap-3 shrink-0 mb-1">
         {% if user.is_authenticated %}
             {% if question.username == user %}
+                <c-button variant="ghost" size="lg"
+                          class="h-auto py-4 pointer-events-none flex flex-col items-center justify-center gap-1 js-like-button {% if user in question.liked_by.all %}is-liked{% endif %}">
+                    <i data-lucide="heart"></i>
+                    <div class="overflow-hidden h-5">
+                        <span class="js-like-count text-sm font-bold block">{{ question.liked_by.count }}</span>
+                    </div>
+                </c-button>
                 <c-button variant="outline" size="lg" class="h-auto py-4 flex flex-col items-center justify-center gap-1 js-proxy-edit" data-target="{{ question.question_id }}">
                     <i data-lucide="pencil"></i> Edit
                 </c-button>

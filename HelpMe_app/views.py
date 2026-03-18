@@ -138,20 +138,6 @@ def my_account(request):
         'user_posts': user_posts,
     })
 
-
-def test_everything(request):
-    context = {
-        'users': User.objects.all(),
-        'categories': Category.objects.all(),
-        'questions': Question.objects.all(),
-        'comments': Comment.objects.all(),
-        'notifications': Notification.objects.all(),
-        'polls': Poll.objects.all(),
-        'poll_items': PollItem.objects.all(),
-    }
-    return render(request, 'testing_only/test_everything.html', context)
-
-
 # RESPONDING TO POSTS
 
 @login_required
@@ -460,22 +446,6 @@ def mark_all_notifications_read(request):
         is_read=False
     ).exclude(username=request.user).update(is_read=True)
     return JsonResponse({'status': 'success'})
-
-# ADMIN ONLY.
-@staff_member_required
-@require_POST
-def create_category(request):
-    name = request.POST.get('name')
-    if name:
-        new_slug = slugify(name)
-
-        category, created = Category.objects.get_or_create(
-            name=name,
-            defaults={'slug': new_slug}
-        )
-
-    return redirect('HelpMe_app:home')
-
 
 def search(request):
     query = request.GET.get("q", "").strip()

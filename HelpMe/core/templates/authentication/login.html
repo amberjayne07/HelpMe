@@ -4,7 +4,7 @@
 {% block title_block %}Login{% endblock %}
 
 {% block content_block %}
-    <section class="max-w-6xl mx-auto min-h-[70vh] flex items-center justify-center md:justify-between gap-12 px-4 relative z-10">
+    <section class="max-w-6xl mx-auto min-h-[70vh] flex items-center justify-center md:justify-between gap-12 px-2">
         <div class="w-full max-w-[400px]">
             <h1 class="text-3xl mb-6">Hey, let's <b>login</b>.</h1>
             <div class="glass-panel p-6 rounded-[32px]">
@@ -41,12 +41,12 @@
                     <div class="flex flex-col gap-4 pt-2">
                         <div class="flex items-center gap-3">
                             <c-button type='submit' class="flex-1">
-                                <i data-lucide="circle-arrow-right" class="w-4 h-4 mr-2"></i> Sign in
+                                <i data-lucide="circle-arrow-right"></i> Sign in
                             </c-button>
 
                             <c-button variant="outline" class="flex-1 relative overflow-hidden">
-                                <i data-lucide="key-round" class="w-4 h-4 mr-2"></i> Register
-                                <a href="{% url 'HelpMe_app:sign_up' %}" class="absolute inset-0 z-10"></a>
+                                <i data-lucide="key-round"></i> Register
+                                <a href="{% url 'HelpMe_app:sign_up' %}"></a>
                             </c-button>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
             </div>
         </div>
         <div class="hidden md:block max-w-[600px] w-full">
-            <img src="{% static 'images/login_exp.png' %}" alt="Experience" class="w-full h-auto opacity-90">
+            <img src="{% static 'images/login_exp.png' %}" class="w-full h-auto opacity-90">
         </div>
     </section>
 {% endblock %}
