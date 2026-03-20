@@ -66,6 +66,8 @@ Then, run it on your local machine!
 python manage.py runserver
 ```
 
+**Please make sure you create tests or run existing tests if you decide to make changes. Run the migration commands above to migrate the DB as otherwise tests will fail to run**
+
 ### Feedback
 
 We'd love to hear your feedback on how the project is going, so feel free to complete GitHub issues for anything you'd like to suggest or any bugs/issues you have.
