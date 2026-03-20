@@ -53,6 +53,19 @@ And run this command
 ```bash
 pip install -r requirements.txt
 ```
+
+If you want to populate helpMe with sample users, posts etc, run the following commands within the root folder.
+```bash
+python manage.py makemigrations
+python manage.py migrate
+python population_script.py
+```
+
+Then, run it on your local machine!
+```bash
+python manage.py runserver
+```
+
 ### Feedback
 
 We'd love to hear your feedback on how the project is going, so feel free to complete GitHub issues for anything you'd like to suggest or any bugs/issues you have.
