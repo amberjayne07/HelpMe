@@ -1,3 +1,4 @@
+/* Circular / pill regular buttons, with hover and underline options considered */
 .inline-flex.items-center.justify-center.rounded-md:not(.hover\:underline) {
     border-radius: 9999px !important;
     padding-left: 1.5rem;
@@ -24,15 +25,17 @@
     transition: background-color 0.2s, transform 0.1s;
 }
 
+/*Transitions for buttons to show shadow on hover*/
 .inline-flex.items-center.justify-center.rounded-md:not(.hover\:underline):hover {
     transform: translateY(-1px);
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 }
-
 .inline-flex.items-center.justify-center.rounded-md:not(.hover\:underline):active {
     transform: translateY(0);
 }
 
+
+/* Forcing popover to show on left rather than on right of click, fixing clipping on mobile*/
 .fixed-popover {
     position: fixed !important;
     right: 1rem !important;
@@ -40,66 +43,63 @@
     top: 64px !important;
 }
 
+/*Simple border radius for popovers / drop down menus*/
 .rounded-popover {
     border-radius: 32px !important;
 }
 
-
-/* Custom button shading. */
+/* Custom button shading for delete / sign out etc. */
 .destructive-btn {
     color: rgb(239, 68, 68);
     background-color: white;
     transition: all 0.2s ease-in-out;
 }
-
 .destructive-btn:hover {
     color: rgb(220, 38, 38);
     background-color: rgb(254, 242, 242);
 }
 
+/* Reversed colours of above buttons, white on red. */
 .destructive-btn-rev {
     color: white;
     background-color: rgb(239, 68, 68);
     transition: all 0.2s ease-in-out;
 }
-
 .destructive-btn-rev:hover {
     color: rgb(254, 242, 242);
     background-color: rgb(220, 38, 38);
 }
 
+/* Button to be used for editing / saving functions */
 .save-btn {
     color: rgb(0, 100, 220);
     background-color: white;
     transition: all 0.2s ease-in-out;
 }
-
 .save-btn:hover {
     color: rgb(0, 80, 200);
     background-color: rgb(213, 229, 255);
 }
 
+/* Reversed version of above button, white on blue */
 .save-btn-rev {
     color: white;
     background-color: rgb(0, 100, 220);
     transition: all 0.2s ease-in-out;
 }
-
 .save-btn-rev:hover {
     color: rgb(197, 209, 255);
     background-color: rgb(0, 80, 200);
 }
 
-/* Styling for cards */
-
-/* Glass panel to be used on top of glow backgrounds */
+/* CARD STYLING */
+/* Glass panel to be used on top of glow backgrounds, semi transparent with blur - pwetty :3 */
 .glass-panel {
     background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(0px);
     -webkit-backdrop-filter: blur(12px);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
 }
-
 .glass-panel-sm {
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(6px);
@@ -111,13 +111,12 @@
 
 /* ANIMATIONS */
 /* ALL PAGES */
-/* Before page loads */
+/* Before page loads - simple page slide in with ease */
 main {
     opacity: 0;
     transform: scale(0.98);
     transition: opacity 0.25s ease-out, transform 0.25s ease-out;
 }
-
 .page-visible {
     opacity: 1 !important;
     transform: scale(1) !important;
@@ -139,7 +138,6 @@ main {
         opacity: 1;
     }
 }
-
 /* Animation when applied to pink bubble. */
 .background-glow::before {
     background: radial-gradient(circle, rgba(255, 0, 120, 0.4) 0%, rgba(255, 255, 255, 0) 70%);
@@ -147,7 +145,6 @@ main {
     animation-delay: 0.1s;
     opacity: 0;
 }
-
 /* Animation when applied to purple bubble. */
 .background-glow::after {
     background: radial-gradient(circle, rgba(147, 51, 234, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
@@ -155,8 +152,6 @@ main {
     animation-delay: 0.8s;
     opacity: 0;
 }
-
-
 /* Skip entrance when previous page had the animation, for smoother page links. */
 .background-glow.skip-entrance::before,
 .background-glow.skip-entrance::after {
@@ -166,7 +161,6 @@ main {
     filter: blur(45px) !important;
     transition: none !important;
 }
-
 /* Fallback to white background if CSS incompatible */
 .background-glow {
     position: fixed;
@@ -178,7 +172,6 @@ main {
     pointer-events: none;
     background-color: #ffffff;
 }
-
 /* Top right bubble (pink) */
 .background-glow::before {
     content: "";
@@ -190,7 +183,6 @@ main {
     background: radial-gradient(circle, rgba(255, 0, 120, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
     filter: blur(45px);
 }
-
 /* Second glow space */
 .background-glow::after {
     content: "";
@@ -203,28 +195,9 @@ main {
     filter: blur(45px);
 }
 
-@media (min-width: 768px) {
-    .dialog-scroll-window {
-        justify-content: center;
-        align-items: center;
-    }
-}
 
-.post-dialog-wrapper {
-    width: 100%;
-    max-width: 600px;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    margin: auto 0;
-}
-
-@media (min-width: 768px) {
-    .post-dialog-wrapper.is-expanded {
-        max-width: 1050px;
-    }
-}
-
-/* CSS SPINNER FOR SIGN IN / REGISTER */
-@keyframes spin-dual {
+/* CSS SPINNER FOR SIGN IN / REGISTER - Customised with two interlaced circles that look like the help me logo. */
+@keyframes helpme-spin {
     0% {
         transform: rotate(0deg);
     }
@@ -232,15 +205,13 @@ main {
         transform: rotate(360deg);
     }
 }
-
 .helpme-spinner {
     display: inline-block;
     width: 42px;
     height: 42px;
     position: relative;
-    animation: spin-dual 1s linear infinite;
+    animation: helpme-spin 1s linear infinite;
 }
-
 .helpme-spinner::before {
     content: '';
     position: absolute;
@@ -254,7 +225,6 @@ main {
     border-color: #fa4a67;
     box-sizing: border-box;
 }
-
 .helpme-spinner::after {
     content: '';
     position: absolute;
@@ -269,26 +239,24 @@ main {
     box-sizing: border-box;
 }
 
+
+/* Reactions. liking animations given when user clicks like */
 @keyframes heart-pop {
     0% { transform: scale(1); }
     50% { transform: scale(1.4); }
     100% { transform: scale(1); }
 }
-
 .animate-pop {
     animation: heart-pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-
 .js-like-button.is-liked {
     background-color: rgba(239, 68, 68, 0.05) !important;
     color: #ef4444 !important;
     border-color: rgba(239, 68, 68, 0.2) !important;
 }
-
 .js-like-button.is-liked i {
     fill: currentColor;
 }
-
 .js-like-count {
     display: block;
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);

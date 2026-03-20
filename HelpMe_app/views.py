@@ -138,6 +138,14 @@ def my_account(request):
         'user_posts': user_posts,
     })
 
+@login_required
+@require_POST
+def change_user_picture(request):
+    form = ChangeUserPictureForm(request.POST, request.FILES, instance=request.user)
+    if form.is_valid():
+        form.save()
+    return redirect('HelpMe_app:my_account')
+
 # RESPONDING TO POSTS
 
 @login_required

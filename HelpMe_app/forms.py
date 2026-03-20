@@ -39,3 +39,8 @@ class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
         fields = ['title', 'category_id', 'description']
+
+class ChangeUserPictureForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['picture']

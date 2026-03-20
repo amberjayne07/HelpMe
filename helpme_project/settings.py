@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from django.templatetags.static import static
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +28,7 @@ SECRET_KEY = 'django-insecure-2!#)@-u2h0xi85lwk8e*b(ajrj69xmmeekti&(mzrlsu_si-lk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.221', '127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1']
 
 # Application definition
 
@@ -147,9 +148,23 @@ STATICFILES_DIRS = [
 UNFOLD = {
     "SITE_TITLE": "helpMe for admins",
     "SITE_LOGO": {
-        "light": "/static/images/helpme_logo.png",  # Path to light mode logo
-        "dark": "/static/images/helpme_logo.png",  # Path to dark mode logo
+        "light": "/static/images/helpme_logo.png",
+        "dark": "/static/images/helpme_logo.png",
     },
+    "SITE_FAVICONS": [
+    {
+            "rel": "icon",
+            "sizes": "32x32",
+            "type": "image/png",
+            "href": lambda request: static("images/helpme_icon_only.png"),
+    }
+    ],
+    "LOGIN": {
+        "image": lambda request: static("images/helpme_logo.png")
+    },
+    "SIDEBAR": {
+        "show_search": True
+    }
 }
 
 # HelpMe Exclusives for Cosmetics.

@@ -18,9 +18,23 @@
                         <c-popover.content class="glass-panel rounded-popover fixed-popover">
                             <div class="space-y-2">
                                 <div class="flex flex-col gap-2 mb-4">
+                                    <c-button id="js-change-picture-trigger"
+                                              variant="outline"
+                                              class="w-full justify-start px-2 mb-2 save-btn">
+                                        <i data-lucide="image-up"></i> Change account picture
+                                    </c-button>
+
+                                    <form id="change-user-picture-form"
+                                          action="{% url 'HelpMe_app:change_picture' %}"
+                                          method="post"
+                                          enctype="multipart/form-data"
+                                          class="hidden">
+                                        {% csrf_token %}
+                                        <input type="file" name="picture" id="picture-input" accept="image/*">
+                                    </form>
                                     <a href="{% url 'HelpMe_app:change_password' %}">
                                         <c-button variant="outline" class="w-full justify-start border-none px-2">
-                                            <i data-lucide="key-round"></i> Change
+                                            <i data-lucide="key-round"></i> Change your
                                             password
                                         </c-button>
                                     </a>
@@ -106,10 +120,12 @@
             </div>
         </div>
     </section>
+
 {% endblock %}
 
 {% block footer_scripts %}
     {{ block.super }}
     <script src="{% static 'js/overlay_triggers.js' %}"></script>
     <script src="{% static 'js/authentication/account_actions.js' %}"></script>
+    <script src="{% static 'js/authentication/change_user_picture.js' %}"></script>
 {% endblock %}

@@ -20,6 +20,8 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     path('change-password/', views.change_password, name='change_password'),
     path('my-account/', views.my_account, name='my_account'),
+
+    path('my-account/change_picture/', views.change_user_picture, name='change_picture'),
     path("delete-account/", views.delete_account, name="delete_account"),
 
     # RESPONDING TO POSTS
