@@ -29,41 +29,47 @@
             {% endif %}
 
             <section class="w-full flex flex-col items-center">
-    <c-tabs default_value="all" class="w-full flex flex-col items-center">
+                <c-tabs default_value="all" class="w-full flex flex-col items-center">
+                    {% if user.is_authenticated %}
+                        <div class="flex flex-wrap items-center justify-center gap-6 w-full mb-12">
+                            <c-tabs.list class="bg-muted/50 rounded-full flex items-center p-1">
+                                <c-tabs.trigger value="all" class="rounded-full px-4">
+                                    All posts
+                                </c-tabs.trigger>
 
-        <div class="flex flex-wrap items-center justify-center gap-6 w-full mb-12">
-            <c-tabs.list class="bg-muted/50 rounded-full flex items-center p-1">
-                <c-tabs.trigger value="all" class="rounded-full px-4">
-                    All posts
-                </c-tabs.trigger>
+                                {% for category in categories %}
+                                    <c-tabs.trigger value="{{ category.slug }}" class="rounded-full px-4">
+                                        {{ category.name }}
+                                    </c-tabs.trigger>
+                                {% endfor %}
 
-                {% for category in categories %}
-                    <c-tabs.trigger value="{{ category.slug }}" class="rounded-full px-4">
-                        {{ category.name }}
-                    </c-tabs.trigger>
-                {% endfor %}
-            </c-tabs.list>
-        </div>
+                            </c-tabs.list>
+                        </div>
+                    {% else %}
+                        <a class="mb-8 font-semibold opacity-60" href="{% url "HelpMe_app:account_upsell" %}">Login or
+                            create an account to organise posts.</a>
+                    {% endif %}
 
-        <div class="w-full max-w-5xl text-center">
-            <c-tabs.content value="all" class="animate-in fade-in duration-300">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 text-left">
-                    {% for question in all_questions %}
-                        {% include "partials/_post_card.html" with question=question %}
-                    {% empty %}
-                        <p class="opacity-40">No posts found.</p>
-                    {% endfor %}
-                </div>
-            </c-tabs.content>
+                    <div class="w-full max-w-5xl text-center">
+                        <c-tabs.content value="all" class="animate-in fade-in duration-300">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 text-left">
+                                {% for question in all_questions %}
+                                    {% include "partials/_post_card.html" with question=question %}
+                                {% empty %}
+                                    <p class="opacity-40">No posts found.</p>
+                                {% endfor %}
+                            </div>
+                        </c-tabs.content>
 
-            {% for category in categories %}
-                <c-tabs.content value="{{ category.slug }}" class="animate-in fade-in duration-300">
-                    {% include "partials/_post_view.html" %}
-                </c-tabs.content>
-            {% endfor %}
-        </div>
-    </c-tabs>
-</section>
+
+                        {% for category in categories %}
+                            <c-tabs.content value="{{ category.slug }}" class="animate-in fade-in duration-300">
+                                {% include "partials/_post_view.html" %}
+                            </c-tabs.content>
+                        {% endfor %}
+                    </div>
+                </c-tabs>
+            </section>
         </div>
     </section>
 {% endblock %}

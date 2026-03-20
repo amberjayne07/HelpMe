@@ -2,7 +2,6 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', function(e) {
-        // Find the closest button with our action class
         const btn = e.target.closest('.js-suggestion-action');
         if (!btn) return;
 
@@ -16,11 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]')?.value;
 
         if (!csrfToken) {
-            console.error("CSRF token not found. Ensure {% csrf_token %} is present on the page.");
             return;
         }
 
-        // Prepare the request
         const formData = new FormData();
         formData.append('action', action);
         formData.append('csrfmiddlewaretoken', csrfToken);
@@ -36,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         })
         .then(response => {
-            if (!response.ok) throw new Error('Network response was not ok');
+            if (!response.ok) throw new Error('Network issue');
             return response.json();
         })
         .then(data => {
@@ -53,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     lucide.createIcons();
                 }
             } else {
-                alert("Error: " + (data.message || "Something went wrong"));
+                alert("Error: " + (data.message || "Unknown error."));
                 container.style.opacity = '1';
                 container.style.pointerEvents = 'auto';
             }

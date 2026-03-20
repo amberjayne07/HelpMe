@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 from django.templatetags.static import static
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -147,27 +148,78 @@ STATICFILES_DIRS = [
 # Build of the new admin interface...
 UNFOLD = {
     "SITE_TITLE": "helpMe for admins",
+    "SITE_SYMBOL": "help",
+    "SHOW_HISTORY": True,
     "SITE_LOGO": {
         "light": "/static/images/helpme_logo.png",
         "dark": "/static/images/helpme_logo.png",
     },
     "SITE_FAVICONS": [
-    {
+        {
             "rel": "icon",
             "sizes": "32x32",
             "type": "image/png",
             "href": lambda request: static("images/helpme_icon_only.png"),
-    }
+        }
     ],
     "LOGIN": {
         "image": lambda request: static("images/helpme_logo.png")
     },
     "SIDEBAR": {
-        "show_search": True
-    }
+        "show_all_applications": False,
+        "navigation": [
+            {
+                "title": "Personal",
+                "items": [
+                    {
+                        "title": "Users",
+                        "icon": "people",
+                        "link": reverse_lazy("admin:HelpMe_app_user_changelist"),
+                    },
+                    {
+                        "title": "Notifications",
+                        "icon": "notifications_unread",
+                        "link": reverse_lazy("admin:HelpMe_app_notification_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": "Moderation",
+                "items": [
+                    {
+                        "title": "Questions / Posts",
+                        "icon": "comic_bubble",
+                        "link": reverse_lazy("admin:HelpMe_app_question_changelist"),
+                    },
+                    {
+                        "title": "Comments",
+                        "icon": "chat_bubble",
+                        "link": reverse_lazy("admin:HelpMe_app_comment_changelist"),
+                    },
+                    {
+                        "title": "Polls",
+                        "icon": "ballot",
+                        "link": reverse_lazy("admin:HelpMe_app_poll_changelist"),
+                    },
+                    {
+                        "title": "Suggestions",
+                        "icon": "indeterminate_question_box",
+                        "link": reverse_lazy("admin:HelpMe_app_pollitem_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": "Customise",
+                "items": [
+{
+                        "title": "Categories",
+                        "icon": "view_cozy",
+                        "link": reverse_lazy("admin:HelpMe_app_category_changelist"),
+                    },
+                ],
+            },
+        ],
+    },
 }
-
-# HelpMe Exclusives for Cosmetics.
-# Pages that should use the glow animation and background extension.
 
 GLOW_PAGES = ['login', 'sign_up', 'change_password', 'my_account', 'account_upsell']
