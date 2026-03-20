@@ -172,7 +172,7 @@ def populate():
             'email': 'user2@example.com',
             'date_of_birth': '1990-02-02',
             'picture': 'profilepics/default.png',
-            'password_hint': 'My favorite color'
+            'password_hint': 'My favorite colour'
         },
         'admin': {
             'password': 'adminpass',
@@ -246,15 +246,15 @@ def populate():
         {
             'category': 'School',
             'username': 'user2',
-            'title': 'What study techniques work best for memorization?',
-            'description': 'I have trouble memorizing information for exams. What study methods have worked for others?',
+            'title': 'What study techniques work best for memorisation?',
+            'description': 'I have trouble memorising information for exams. What study methods have worked for others?',
             'users_liked': ['user1', 'admin']
         },
         {
             'category': 'School',
             'username': 'limited_user',
             'title': 'How to manage time between multiple courses?',
-            'description': 'Balancing multiple courses is overwhelming. How do you prioritize and manage your time effectively?',
+            'description': 'Balancing multiple courses is overwhelming. How do you prioritise and manage your time effectively?',
             'users_liked': ['user1']
         },
         {
@@ -322,7 +322,7 @@ def populate():
 
     # Q3 (School, limited_user)
     comments['q3_todo'], _ = add_comment(questions[3], users['user1'],
-        'Create a prioritized to-do list to keep track of what matters most.')
+        'Create a prioritised to-do list to keep track of what matters most.')
 
     # Q4 (Health, limited_user)
     comments['q4_bedtime'], _ = add_comment(questions[4], users['admin'],
@@ -361,7 +361,7 @@ def populate():
     suggestion['q1_therapy'], _ = add_comment(questions[1], users['user1'],
         'Therapy or counseling can really help build confidence.')
     suggestion['q2_mindmap'], _ = add_comment(questions[2], users['user1'],
-        'Mind mapping helps me organize and remember information visually.')
+        'Mind mapping helps me organise and remember information visually.')
     suggestion['q3_calendar'], _ = add_comment(questions[3], users['admin'],
         'Use a shared calendar and block off study times in advance.')
     suggestion['q4_limit_screen'], _ = add_comment(questions[4], users['user1'],
@@ -391,12 +391,12 @@ def populate():
                   comment=comments['q2_active_recall'], approval_status='APPROVED')
     add_poll_item(poll3, users['admin'], 'Pomodoro technique with focused blocks',
                   comment=comments['q2_pomodoro'], approval_status='APPROVED')
-    add_poll_item(poll3, users['user1'], 'Mind mapping for visual organization',
+    add_poll_item(poll3, users['user1'], 'Mind mapping for visual organisation',
                   comment=suggestion['q2_mindmap'], approval_status='NEUTRAL')
 
     add_poll_item(poll4, users['admin'], 'Use shared calendar for scheduling',
                   comment=suggestion['q3_calendar'], approval_status='APPROVED')
-    add_poll_item(poll4, users['user1'], 'Create a prioritized to-do list',
+    add_poll_item(poll4, users['user1'], 'Create a prioritised to-do list',
                   comment=comments['q3_todo'], approval_status='APPROVED')
 
     add_poll_item(poll5, users['admin'], 'Consistent bedtime routine',

@@ -7,8 +7,10 @@
     <section class="max-w-6xl mx-auto px-4">
         <div class="w-full max-w-[900px] mx-auto">
             <div class="flex items-end justify-between mb-8">
-                <h1 class="text-3xl max-w-2xl leading-tight">{{ question.title }}</h1>
-
+                <div class="gap-4">
+                    <p class="text-lg font-semibold opacity-60">{{ question.category_id }}</p>
+                    <h1 class="text-3xl max-w-2xl leading-tight">{{ question.title }}</h1>
+                </div>
                 {% include 'partials/_control_strip.html' with question=question is_card=False %}
             </div>
             <div class="glass-panel p-8 rounded-[32px] mb-12">

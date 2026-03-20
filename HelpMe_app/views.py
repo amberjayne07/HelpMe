@@ -15,9 +15,16 @@ from django.http import JsonResponse
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.text import slugify
 from django.db.models import Q
+
+
 def home(request):
     categories = Category.objects.prefetch_related('question_set').all()
-    return render(request, 'home.html', {'categories': categories})
+    all_questions = Question.objects.all().order_by('-date_posted')
+
+    return render(request, 'home.html', {
+        'categories': categories,
+        'all_questions': all_questions
+    })
 
 
 def post_overview(request, question_id):
